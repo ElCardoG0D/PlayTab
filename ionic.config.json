@@ -1,0 +1,7 @@
+{
+  "name": "PlayTab",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
