@@ -1,0 +1,69 @@
+<ion-content>
+  <ion-grid class="log-container">
+    <!-- Primera mitad, va logo y nombre -->
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <div class="logo">
+          <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+        </div>
+      </ion-col>
+    </ion-row>
+
+    <!-- Segunda mitad, va todo el login -->
+    <ion-row class="cont-login ion-justify-content-center">
+      <ion-col size="12">
+        <ion-list lines="none" class="form">
+          <!-- Correo -->
+          <ion-item class="custom-input">
+            <ion-label class="espacio">Correo:</ion-label>
+            <!--[(ngModel)] capturar el valor de la entrada y enlaza el valor del input con la variable en TypeScript.-->
+            <ion-input class="ion-text-right" type="email" [(ngModel)]="mailuser"></ion-input>
+            <ion-icon slot="end" name="at-outline"></ion-icon>
+          </ion-item>
+
+          <!-- Contraseña -->
+          <ion-item>
+            <ion-input class="ion-text-right" label="Contraseña:" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password"></ion-input>
+            <ion-icon slot="end" name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" (click)="togglePassword()"></ion-icon>
+          </ion-item>
+
+          <!-- Cositas opcionales -->
+          <ion-row class="A1 ion-align-items-center">
+            <ion-col size="4">
+              <ion-checkbox>Recuerdame</ion-checkbox>
+            </ion-col>
+            <ion-col size="8" class="ion-text-right">
+              <a class="save" (click)="recover()"><strong>Recuperar Contraseña</strong></a>
+            </ion-col>
+          </ion-row>
+          
+
+          <!-- boton de login -->
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" shape="" expand="block" (click)="login()"><strong>Iniciar sesión</strong></ion-button>
+            </ion-col>
+          </ion-row>
+
+          <!-- Crea tu cuenta -->
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <p class="Text1">¿No tienes tu cuenta PlayTab?<a class="singup" (click)="signup()"><br><strong>Crea una cuenta</strong></a></p>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Dónde estará el Alert que valide los datos -->
+  <ion-alert
+    [isOpen]="isAlertOpen"
+    header="Error"
+    [message]="alertMessage"
+    [buttons]="['OK']"
+    (didDismiss)="setAlertOpen(false)"
+  ></ion-alert>
+
+</ion-content>

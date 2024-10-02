@@ -1,0 +1,141 @@
+.log-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding: 0;
+    margin: 0;
+    /*overflow-y: hidden;  Evita scroll vertical */
+}
+
+.cont-titulo{
+    flex: 1;
+    padding-top: 70px;
+    padding-bottom: 70px;
+    .logo {
+        margin: 0 auto;
+        width: 180px;
+    }
+}
+
+.Tit1{
+    font-size: 30px;
+    color: black;
+}
+
+.cont-login{
+    flex: 2;
+    padding-top: 50px;
+    padding-bottom: 30px;
+    background: linear-gradient(135deg, #be893b, #e19018);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.espacio{
+    margin-right: 5px;
+}
+
+.form{
+    max-width: 320px;
+    margin: 0 auto;
+    background: none;
+    color: white;
+
+    ion-icon{
+        color: white;
+    }
+
+    ion-item{
+        --background: transparent;
+        border-color: white;
+        color: white;
+        border-style: solid;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+
+    .A1{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding-bottom: 10px;
+        ion-checkbox {
+            transform: scale(0.9); /* Ajusta el tamaño del checkbox */
+            font-size: 13px;
+        }
+        .save{
+            font-size: 11px;
+            color: white; 
+        }  
+    }
+
+    .botonA2{
+        --background: white;    // "--" sobreescribe los estilos
+        --background-activated: #cdcdcd;  
+        --color: black;
+        --box-shadow: none;
+        text-transform: none;         
+        min-width: 300px;
+        padding-bottom: 40px;
+        font-weight: normal;
+        font-size: 16px;
+        height: 90px;
+    }
+
+    .singup{
+        color: white;
+    }
+}
+
+/* Estilos específicos para pantallas más pequeñas */
+@media (max-width: 380px) {
+
+    .Tit1{
+        font-size: 25px;
+        color: black;
+    }
+  
+    .cont-titulo {
+      font-size: 24px;
+      padding-top: 40px;
+      padding-bottom: 40px;
+      .logo {
+        width: 150px;
+      }
+    }
+
+    .form{
+        max-width: 280px;
+        .A1{
+            display: flex;
+            padding-bottom: 8px;
+            font-size: 8px;
+            ion-checkbox {
+                transform: scale(0.9); /* Ajusta el tamaño del checkbox */
+                font-size: 10px;
+            }
+            .save{
+                font-size: 9px;
+                color: black; 
+            }  
+        }
+    
+        .botonA2{       
+            min-width: 260px;
+            height: 60px;
+            padding-bottom: 30px;
+            font-size: 14px;
+        }
+    
+        .Text1{
+            font-size: 12px;
+        }
+
+        .custom-input {
+            width: 100%;
+            font-size: 12px;
+        }
+    }
+
+  }
