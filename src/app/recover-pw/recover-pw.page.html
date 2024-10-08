@@ -1,0 +1,42 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button default-href="#"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content scroll-y="false">
+  <ion-grid class="singup-container">
+
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-title><Strong>Recupera tu cuenta</Strong></ion-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="cont-singup ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <p class="Texto1">
+          Para recuperar tu cuenta ingresa tu rut y correo. Si el correo ingresado pertenece al RUT a sociado a tu cuenta te enviáre mos un código de restablecimiento.
+        </p>
+        <ion-list lines="none" class="form">
+          <ion-item>
+            <ion-input  class="ion-text-right" label="Rut:" placeholder="sin puntos y con -" type="rut" [(ngModel)]="rut"></ion-input>
+            <ion-icon slot="end" name="finger-print-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-text-right" label="Correo: " type="email" [(ngModel)]="mailuser"></ion-input>
+            <ion-icon slot="end" name="at-outline"></ion-icon>
+          </ion-item>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" shape="" expand="block" (click)="RecoverPW()"><strong>Enviar</strong></ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>

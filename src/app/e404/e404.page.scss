@@ -1,0 +1,117 @@
+.singup-container{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    margin: 0;
+    background: linear-gradient(135deg, #be893b, #e19018);
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.cont-titulo{
+    padding-top: 10px;
+    ion-title{
+        font-size: 30px;
+        color: white;
+    }
+    .Watty{
+        width: 250px;
+    }
+}
+
+.cont-singup{
+    padding-bottom: 30px;
+    height: 85vh;
+}
+
+.Texto1{
+    color: white;
+    text-align: center;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-bottom: 10px;
+}
+
+.form{
+    max-width: 300px;
+    margin: 0 auto;
+    background: none;
+
+    ion-icon{
+        color: white;
+    }
+
+    p{
+        color: white;
+    }
+
+    ion-item{
+        --background: transparent;
+        border-color: white;
+        color: white;
+        border-style: solid;
+        margin-bottom: 15px;
+        border-radius: 5px;
+    }
+    ion-input{
+        font-size: 12px;
+    }
+
+    .A1{
+        display: flex;
+        padding-bottom: 8px;
+        font-size: 9px;
+    }
+
+    .botonA2{
+        --background: white;    // "--" sobreescribe los estilos
+        --background-activated: #cdcdcd;  
+        --color: black;
+        --box-shadow: none;
+        text-transform: none;         
+        min-width: 300px;
+        font-size: 13px;
+    }
+
+    .acuerdo{
+        text-decoration: none;
+        color: white;
+    }
+
+}
+
+
+@media (min-width: 380px) {
+
+    .cont-titulo{
+        ion-title{
+            font-size: 36px;
+        }
+    }
+
+    .form{
+        max-width: 360px;
+        .A1{
+            padding-bottom: 8px;
+            font-size: 11px;
+            .save{
+                font-size: 9px;
+                color: black; 
+            }  
+        }
+
+        ion-input{
+            font-size: 16px;
+        }
+        .botonA2{       
+            min-width: 260px;
+            height: 80px;
+            padding-bottom: 30px;
+            font-size: 16px;
+            font-weight: normal;
+        }
+    
+    }
+
+  }

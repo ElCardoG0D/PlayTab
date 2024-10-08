@@ -27,6 +27,18 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
   },
+  {
+    path: 'recover-pw',
+    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPwPageModule)
+  },
+  {
+    path: 'register',
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+  },
+  {
+    path: '**',
+    loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
+  },
 ];
 
 @NgModule({

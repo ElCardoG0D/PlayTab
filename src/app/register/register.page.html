@@ -1,0 +1,62 @@
+<ion-toolbar>
+  <ion-buttons slot="start">
+    <ion-back-button default-href="#"></ion-back-button>
+  </ion-buttons>
+</ion-toolbar>
+
+<ion-content scroll-y="false">
+  <ion-grid class="singup-container">
+
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-title><Strong>¡Crea tu cuenta!</Strong></ion-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="cont-singup ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-list lines="none" class="form">
+          
+          <ion-item>
+            <ion-input  class="ion-text-right" label="Nombre:" type="name" [(ngModel)]="nombre"></ion-input>
+            <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input  class="ion-text-right" label="Rut:" placeholder="sin puntos y con -" type="rut" [(ngModel)]="rut"></ion-input>
+            <ion-icon slot="end" name="finger-print-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-text-right" label="Correo:" type="email" [(ngModel)]="mailuser"></ion-input>
+            <ion-icon slot="end" name="at-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-text-right" label="Celular:" type="tel" placeholder="+569" [(ngModel)]="celular"></ion-input>
+            <ion-icon slot="end" name="call-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-text-right" label="Contraseña:" type="password" [(ngModel)]="password"></ion-input>
+            <ion-icon slot="end" name="key-outline"></ion-icon>
+          </ion-item>
+          <ion-item>
+            <ion-input class="ion-text-right" label="Confirma contraseña:" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="ConfirmPassword"></ion-input>
+            <ion-icon slot="end" name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" (click)="togglePassword()"></ion-icon>
+          </ion-item>
+
+          <ion-row class="A1 ion-align-items-center">
+            <ion-col size="12">
+              <p>He leído y acepto los <ion-checkbox [(ngModel)]="AceptaCondiciones"><Strong><a class="acuerdo" href="#">términos y condiciones</a></Strong></ion-checkbox></p>
+            </ion-col>
+          </ion-row>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" shape="" expand="block" (click)="SingUp()"><strong>Crear Cuenta</strong></ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+</ion-content>
