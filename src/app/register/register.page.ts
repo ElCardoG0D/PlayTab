@@ -48,14 +48,13 @@ export class RegisterPage {
       // Ahora puedes acceder al UID
       const uid = userCredential.user.uid;
 
-      // Si decides almacenar la contraseña (no recomendado)
       const userData = {
         uid: uid,
         nombre: this.nombre,
         rut: this.rut,
         celular: this.celular,
         email: this.mailuser,
-        password: this.password, // **NO RECOMENDADO**
+        password: this.password, // **Hay que encriptar porque se ven contraseñas XD lol jaja osea wow omg **
       };
 
       // Agrega el usuario a Firestore (este método ya está en tu servicio)
@@ -63,8 +62,8 @@ export class RegisterPage {
 
       console.log('Usuario registrado exitosamente:', userCredential);
 
-      // Redirigir al usuario a la página de inicio después del registro
-      this.navCtrl.navigateForward('/inicio');
+      // Redirigir al usuario a la página de login después del registro
+      this.navCtrl.navigateForward('/login');
     } catch (error) {
       console.error('Error al registrar usuario:', error);
       alert('Error al registrar el usuario, por favor intenta nuevamente.');
