@@ -43,4 +43,13 @@ export class FirebaseService {
   async logout() {
     return await signOut(this.auth);
   }
+
+  async register(email: string, password: string) {
+    try {
+      const userCredential = await createUserWithEmailAndPassword(this.auth, email, password);
+      return userCredential;
+    } catch (error) {
+      throw error; // Lanza el error para que sea capturado en el componente
+    }
+  }
 }
