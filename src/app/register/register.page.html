@@ -2,6 +2,7 @@
   <ion-buttons slot="start">
     <ion-back-button default-href="#"></ion-back-button>
   </ion-buttons>
+  <ion-title>Registro</ion-title>
 </ion-toolbar>
 
 <ion-content scroll-y="false">
@@ -19,25 +20,42 @@
             <ion-input label="Nombre:" type="text" [(ngModel)]="nombre" required></ion-input>
             <ion-icon slot="end" name="person-circle-outline"></ion-icon>
           </ion-item>
+          
           <ion-item>
             <ion-input label="Rut:" placeholder="sin puntos y con -" type="text" [(ngModel)]="rut" required></ion-input>
             <ion-icon slot="end" name="finger-print-outline"></ion-icon>
           </ion-item>
+          
           <ion-item>
             <ion-input label="Correo:" type="email" [(ngModel)]="mailuser" required></ion-input>
             <ion-icon slot="end" name="at-outline"></ion-icon>
           </ion-item>
+          
           <ion-item>
             <ion-input label="Celular:" type="tel" placeholder="+569" [(ngModel)]="celular" required></ion-input>
             <ion-icon slot="end" name="call-outline"></ion-icon>
           </ion-item>
+          
           <ion-item>
             <ion-input label="Contraseña:" type="password" [(ngModel)]="password" required></ion-input>
             <ion-icon slot="end" name="key-outline"></ion-icon>
           </ion-item>
+          
           <ion-item>
             <ion-input label="Confirma contraseña:" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="ConfirmPassword" required></ion-input>
             <ion-icon slot="end" name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" (click)="togglePassword()"></ion-icon>
+          </ion-item>
+
+          <!-- Campo para seleccionar la comuna -->
+          <ion-item>
+            <ion-label>Comuna:</ion-label>
+            <ion-select [(ngModel)]="comunaId" placeholder="Selecciona tu comuna" required>
+              <ion-select-option value="1">Comuna 1</ion-select-option>
+              <ion-select-option value="2">Comuna 2</ion-select-option>
+              <ion-select-option value="3">Comuna 3</ion-select-option>
+              <ion-select-option value="4">Comuna 4</ion-select-option>
+              <!-- Agrega más opciones según sea necesario -->
+            </ion-select>
           </ion-item>
 
           <ion-row class="A1 ion-align-items-center">
@@ -52,7 +70,7 @@
 
           <ion-row class="ion-justify-content-center">
             <ion-col size="12" class="ion-text-center">
-              <ion-button class="botonA2" expand="block" (click)="SingUp()"><strong>Crear Cuenta</strong></ion-button>
+              <ion-button class="botonA2" expand="block" (click)="onRegister()"><strong>Crear Cuenta</strong></ion-button>
             </ion-col>
           </ion-row>
 
