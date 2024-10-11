@@ -1,13 +1,89 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>tab3</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">tab3</ion-title>
+<ion-header class="ion-no-border">
+    <ion-toolbar class="toolbar">
+      <ion-buttons slot="start">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-buttons>
+      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
     </ion-toolbar>
   </ion-header>
+  
+
+<ion-content class="ion-padding">
+    <!-- Perfil -->
+    <ion-card class="profile-card">
+        <ion-card-header>
+        <ion-avatar>
+            <img src="assets/images/photo-profile.png" alt="Foto de perfil" />
+        </ion-avatar>
+        </ion-card-header>
+        <ion-card-title>Holaaaa</ion-card-title>
+    </ion-card>
+    <!-- Perfil -->
+
+    <!-- Sección Sobre Mí -->
+    <ion-list>
+        <ion-list-header>
+        <ion-label>Sobre Mí</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label>aaaaaa</ion-label>
+        <ion-note slot="end">Correo electrónico</ion-note>
+        </ion-item>
+
+        <ion-item>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        <ion-label>+94567890</ion-label>
+        <ion-note slot="end">Número de teléfono</ion-note>
+        </ion-item>
+    </ion-list>
+
+    <!-- Sección Configuraciones -->
+    <ion-list>
+        <ion-list-header>
+        <ion-label>Configuraciones</ion-label>
+        </ion-list-header>
+
+        <ion-item>
+        <ion-icon name="home-outline" slot="start"></ion-icon>
+        <ion-label>Mis ambientes</ion-label>
+        <ion-note slot="end">1</ion-note>
+        </ion-item>
+
+        <ion-item>
+        <ion-icon name="globe-outline" slot="start"></ion-icon>
+        <ion-label>Español</ion-label>
+        <ion-note slot="end">Idioma</ion-note>
+        </ion-item>
+
+        <ion-item>
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label>Modo Silencioso</ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+        <ion-icon name="moon-outline" slot="start"></ion-icon>
+        <ion-label>Modo Oscuro</ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+        </ion-item>
+
+        <ion-item>
+        <ion-icon name="key-outline" slot="start"></ion-icon>
+        <ion-label>Cámara</ion-label>
+        <ion-note slot="end">Permisos del dispositivo</ion-note>
+        </ion-item>
+    </ion-list>
+
+    <!-- Pie de Página -->
+    <ion-footer class="ion-text-center">
+        <ion-text color="medium">
+        <small>Privacidad y Política</small>
+        </ion-text>
+    </ion-footer>
+
+    <div class="container">
+        <ion-button shape="round" (click)="logOut()">Cerrar sesión</ion-button>
+    </div>
 </ion-content>
