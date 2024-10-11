@@ -1,0 +1,25 @@
+//Configuración del Header
+.header-main{
+    display: flex;
+    background: linear-gradient(135deg, #be893b, #e19018) !important;
+    justify-content: space-between;
+    align-items: center;
+    height: 90px;
+    border-radius: 10px;
+}
+//logo central
+.col-center{
+    position: relative;
+    overflow: visible;
+}
+.logoW img{
+    height: auto;
+    max-width: none;
+}
+//logo derecha e izquierda
+.logoSec{
+    height: 30px;
+}
+.logoTerc{
+    height: 30px;
+}

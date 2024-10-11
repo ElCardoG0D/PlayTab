@@ -1,9 +1,23 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>Actividad rápida</ion-title>
-  </ion-toolbar>
-</ion-header>
+  <ion-row class="header-main">
+    <!-- Primera columna -->
+    <ion-col class="col-left">
+      <ion-img class="logoSec" src="../../../assets/icon/notificacion.png"></ion-img>
+    </ion-col>
 
+    <!-- Segunda columna con la imagen centrada -->
+    <ion-col class="col-center">
+      <div class="logo">
+        <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+      </div>
+    </ion-col>
+
+    <!-- Tercera columna -->
+    <ion-col class="col-right">
+      <ion-img class="logoSec" src="../../../assets/icon/perfil.png"></ion-img>
+    </ion-col>
+  </ion-row>
+</ion-header>
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
