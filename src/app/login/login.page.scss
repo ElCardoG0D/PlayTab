@@ -1,142 +1,160 @@
-.log-container{
+.log-container { 
     position: relative;
     display: flex;
     flex-direction: column;
     height: 100vh;
     padding: 0;
     margin: 0;
-    /*overflow-y: hidden;  Evita scroll vertical */
+    /* overflow-y: hidden;  Evita scroll vertical */
 }
 
-.cont-titulo{
+.cont-titulo {
     flex: 1;
     padding-top: 70px;
     padding-bottom: 70px;
+
     .logo {
         margin: 0 auto;
-        width: 200px !important;
+        width: 250px !important; /* Tamaño del logo */
     }
 }
 
-.Tit1{
+.Tit1 {
     font-size: 30px;
     color: black;
 }
 
-.cont-login{
+.cont-login {
     flex: 2;
     padding-top: 50px;
     padding-bottom: 30px;
-    background: linear-gradient(135deg, #be893b, #e19018);
+    background: linear-gradient(135deg, #FFA500, #FF8C00); /* Degradado más naranja */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
 
-.espacio{
+.espacio {
     margin-right: 5px;
 }
 
-.form{
-    max-width: 320px;
+.form {
+    max-width: 350px; /* Aumenté el ancho máximo del formulario */
     margin: 0 auto;
     background: none;
     color: white;
 
-    ion-icon{
+    ion-icon {
         color: white;
+        font-size: 24px; /* Aumentar el tamaño del ícono */
     }
 
-    ion-item{
+    ion-item {
         --background: transparent;
         border-color: white;
         color: white;
         border-style: solid;
-        margin-bottom: 15px;
+        margin-bottom: 10px; /* Espacio entre los campos */
+        border-width: 1px; /* Grosor del borde reducido */
         border-radius: 5px;
+        padding: 10px; /* Ajusté el padding para que sean más cómodos */
+        font-size: 16px; /* Tamaño de fuente más grande */
+        display: flex;
+        align-items: center; /* Centrar verticalmente */
     }
 
-    .A1{
+    .A1 {
         display: flex;
         justify-content: space-between;
         align-items: center;
         padding-bottom: 10px;
+
         ion-checkbox {
-            transform: scale(0.9); /* Ajusta el tamaño del checkbox */
-            font-size: 13px;
+            transform: scale(1.1); /* Ajusta el tamaño del checkbox */
+            font-size: 13px; /* Aumentar el tamaño del checkbox */
         }
-        .save{
-            font-size: 11px;
+
+        .save {
+            font-size: 13px; /* Tamaño más grande para "Recuérdame" */
             color: white; 
         }  
     }
 
-    .botonA2{
-        --background: white;    // "--" sobreescribe los estilos
+    .botonA2 {
+        --background: white;    
         --background-activated: #cdcdcd;  
         --color: black;
         --box-shadow: none;
         text-transform: none;         
-        min-width: 300px;
-        padding-bottom: 40px;
-        font-weight: normal;
-        font-size: 16px;
-        height: 90px;
+        width: 100%; /* Ancho completo */
+        padding: 12px; /* Espacio alrededor del botón */
+        font-weight: bold; /* Cambié a bold para resaltar el texto */
+        font-size: 18px; /* Aumenté el tamaño de fuente del botón */
+        border-radius: 5px; /* Bordes redondeados */
     }
 
-    .singup{
+    .recuperar {
+        font-size: 14px; /* Aumentar el tamaño de fuente */
+        color: white; /* Color para que destaque */
+        text-decoration: underline; /* Subrayado para llamar la atención */
+        margin-top: 10px; /* Espacio arriba */
+        display: block; /* Asegurar que esté en su propia línea */
+        text-align: center; /* Centrar el texto */
+    }
+
+    .singup {
         color: white;
     }
 }
 
-
 /* Estilos específicos para pantallas más pequeñas */
 @media (max-width: 380px) {
-
-    .Tit1{
+    .Tit1 {
         font-size: 25px;
         color: black;
     }
   
     .cont-titulo {
-      font-size: 24px;
-      padding-top: 40px;
-      padding-bottom: 40px;
-      .logo {
-        width: 150px;
-      }
+        font-size: 24px;
+        padding-top: 40px;
+        padding-bottom: 40px;
+        
+        .logo {
+            width: 200px; /* Tamaño del logo en pantallas pequeñas */
+        }
     }
 
-    .form{
-        max-width: 280px;
-        .A1{
-            display: flex;
+    .form {
+        max-width: 90%; 
+        
+        ion-item {
+            padding: 8px 10px; /* Padding ajustado para pantallas pequeñas */
+            font-size: 16px; /* Tamaño de fuente más pequeño */
+            border-width: 1px; /* Grosor del borde reducido */
+        }
+
+        .A1 {
+            display: inline-block;
             padding-bottom: 8px;
-            font-size: 8px;
+            font-size: 16px; /* Tamaño de fuente ajustado */
             ion-checkbox {
-                transform: scale(0.9); /* Ajusta el tamaño del checkbox */
-                font-size: 10px;
+                transform: scale(1); /* Ajusta el tamaño del checkbox */
+                font-size: 10px; /* Tamaño del checkbox */
             }
-            .save{
-                font-size: 9px;
-                color: black; 
+            .save {
+                font-size: 11px; /* Tamaño más grande para "Recuérdame" */
+                color: rgb(0, 0, 0); 
             }  
         }
-    
-        .botonA2{       
-            min-width: 260px;
-            height: 60px;
-            padding-bottom: 30px;
-            font-size: 14px;
-        }
-    
-        .Text1{
-            font-size: 12px;
+
+        .botonA2 {       
+            min-width: 100%; 
+            height: auto; /* Ajuste automático de altura */
+            padding: 10px; 
+            font-size: 16px; 
         }
 
-        .custom-input {
-            width: 100%;
-            font-size: 12px;
+        .recuperar {
+            font-size: 12px; /* Tamaño de fuente más pequeño para recuperar contraseña */
         }
     }
-
-  }
+}
