@@ -1,3 +1,26 @@
+ion-header {
+    .toolbar {
+      --background: linear-gradient(135deg, #be893b, #e19018) !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
+    }
+  
+    ion-buttons {
+      ion-icon {
+        font-size: 30px;
+        color: #000;
+      }
+    }
+    
+    .logoW {
+      max-width: 100px;
+      height: auto;
+    }
+}
+
 .BotonFlotante{
     padding-bottom: 10px;
     padding-right: 10px;

@@ -1,21 +1,26 @@
 ion-header {
-    .toolbar{
-        --background: linear-gradient(135deg, #be893b, #e19018) !important;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 0 10px; // Ajustar el padding según sea necesario
+    .toolbar {
+      --background: linear-gradient(135deg, #be893b, #e19018) !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
     }
   
     ion-buttons {
       ion-icon {
-        font-size: 24px; // Tamaño del ícono
-        color: #000; // Color negro o ajustarlo según el diseño
+        font-size: 30px;
+        color: #000;
       }
     }
-  
+    
     .logoW {
-      max-width: 120px; // Ajusta el tamaño de la imagen del logo
-      height: auto; // Mantiene la proporción
+      max-width: 100px;
+      height: auto;
     }
-  }
+}
+  
+  
+
+

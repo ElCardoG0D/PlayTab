@@ -1,22 +1,22 @@
-//Configuración del Header
-.header-main{
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    height: 90px;
-    border-radius: 10px;
-}
-//logo central
-.col-center{
-}
-
-.logoW img{
-    height: auto;
-}
-//logo derecha e izquierda
-.logoSec{
-    height: 30px;
-}
-.logoTerc{
-    height: 30px;
+ion-header {
+    .toolbar {
+      --background: linear-gradient(135deg, #be893b, #e19018) !important;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 10px;
+      position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
+    }
+  
+    ion-buttons {
+      ion-icon {
+        font-size: 30px;
+        color: #000;
+      }
+    }
+    
+    .logoW {
+      max-width: 100px;
+      height: auto;
+    }
 }

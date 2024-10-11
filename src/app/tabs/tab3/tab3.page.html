@@ -1,11 +1,16 @@
 <ion-header class="ion-no-border">
     <ion-toolbar class="toolbar">
       <ion-buttons slot="start">
-        <ion-icon name="notifications-outline"></ion-icon>
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
-      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+      <div class="toolbar-logo-container">
+        <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+      </div>
     </ion-toolbar>
-  </ion-header>
+</ion-header>
+  
   
 
 <ion-content class="ion-padding">
@@ -13,10 +18,10 @@
     <ion-card class="profile-card">
         <ion-card-header>
         <ion-avatar>
-            <img src="assets/images/photo-profile.png" alt="Foto de perfil" />
+            <img src="../../assets/icon/perfil.png" alt="Foto de perfil" />
         </ion-avatar>
         </ion-card-header>
-        <ion-card-title>Holaaaa</ion-card-title>
+        <ion-card-title>No sé</ion-card-title>
     </ion-card>
     <!-- Perfil -->
 
@@ -37,6 +42,12 @@
         <ion-label>+94567890</ion-label>
         <ion-note slot="end">Número de teléfono</ion-note>
         </ion-item>
+
+        <ion-item>
+            <ion-icon name="globe-outline" slot="start"></ion-icon>
+            <ion-label>Los Lagos>Puerto Montt</ion-label>
+            <ion-note slot="end">Ubicacion</ion-note>
+        </ion-item>
     </ion-list>
 
     <!-- Sección Configuraciones -->
@@ -44,18 +55,6 @@
         <ion-list-header>
         <ion-label>Configuraciones</ion-label>
         </ion-list-header>
-
-        <ion-item>
-        <ion-icon name="home-outline" slot="start"></ion-icon>
-        <ion-label>Mis ambientes</ion-label>
-        <ion-note slot="end">1</ion-note>
-        </ion-item>
-
-        <ion-item>
-        <ion-icon name="globe-outline" slot="start"></ion-icon>
-        <ion-label>Español</ion-label>
-        <ion-note slot="end">Idioma</ion-note>
-        </ion-item>
 
         <ion-item>
         <ion-icon name="notifications-outline" slot="start"></ion-icon>
@@ -67,12 +66,6 @@
         <ion-icon name="moon-outline" slot="start"></ion-icon>
         <ion-label>Modo Oscuro</ion-label>
         <ion-toggle slot="end"></ion-toggle>
-        </ion-item>
-
-        <ion-item>
-        <ion-icon name="key-outline" slot="start"></ion-icon>
-        <ion-label>Cámara</ion-label>
-        <ion-note slot="end">Permisos del dispositivo</ion-note>
         </ion-item>
     </ion-list>
 
