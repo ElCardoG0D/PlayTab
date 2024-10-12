@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { DatabaseService } from '../database.service'; // Importa tu servicio
-import { NavController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Importa AlertController
 
 @Component({
@@ -21,8 +21,8 @@ export class RegisterPage {
   showPassword: boolean = false;
 
   constructor(
+    private router : Router,
     private dbService: DatabaseService, // Inyecta el servicio
-    private navCtrl: NavController,
     private alertController: AlertController
   ) {}
 
@@ -111,7 +111,7 @@ export class RegisterPage {
       // Llamada al servicio para registrar al usuario
       await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comunaId, this.fechaNacimiento).toPromise();
       this.presentAlert('Usuario registrado con éxito.');
-      this.navCtrl.navigateRoot('/home'); // Navega a la página principal o de inicio
+      this.router.navigate(['./login']);
     } catch (error) {
       this.presentAlert('Error al registrar el usuario.');
     }

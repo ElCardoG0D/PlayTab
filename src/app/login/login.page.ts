@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController } from '@ionic/angular';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service'; // Asegúrate de que esta ruta sea correcta
 
 @Component({
@@ -17,7 +17,7 @@ export class LoginPage {
   alertMessage: string = '';
 
   constructor(
-    private navCtrl: NavController,
+    private router: Router,
     private alertController: AlertController,
     private dbService: DatabaseService // Inyecta tu servicio
   ) {}
@@ -50,7 +50,7 @@ export class LoginPage {
 
       if (response) {
         // Redirige al usuario a la página principal si el login es exitoso
-        this.navCtrl.navigateRoot('./tabs/tab1');
+        this.router.navigate(['./tabs/tab1']);
       } else {
         this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
       }
@@ -62,12 +62,12 @@ export class LoginPage {
   // Método para la recuperación de contraseña
   recover() {
     // Implementa la lógica de recuperación de contraseña aquí
-    this.presentAlert('Funcionalidad de recuperación de contraseña no implementada.');
+    this.router.navigate(['./recover-pw']);
   }
 
   // Método para navegar a la página de registro
   signup() {
-    this.navCtrl.navigateForward('/register');
+    this.router.navigate(['./register']);
   }
 
   // Método para abrir o cerrar la alerta

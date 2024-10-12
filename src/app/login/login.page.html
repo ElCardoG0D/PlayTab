@@ -16,7 +16,7 @@
 
           <!-- Correo -->
           <ion-item class="custom-input">
-            <ion-label position="floating">Correo:</ion-label>
+            <ion-label >Correo:</ion-label>
             <ion-input 
               class="ion-text-right" 
               type="email" 
@@ -28,7 +28,7 @@
 
           <!-- Contraseña -->
           <ion-item class="custom-input">
-            <ion-label position="floating">Contraseña:</ion-label>
+            <ion-label >Contraseña:</ion-label>
             <ion-input 
               class="ion-text-right" 
               [type]="showPassword ? 'text' : 'password'" 
@@ -45,7 +45,7 @@
           <!-- Opciones adicionales -->
           <ion-row class="A1 ion-align-items-center">
             <ion-col size="4">
-              <ion-checkbox [(ngModel)]="rememberMe">Recuerdame</ion-checkbox>
+              <ion-checkbox [(ngModel)]="rememberMe">Recuérdame</ion-checkbox>
             </ion-col>
             <ion-col size="8" class="ion-text-right">
               <a class="save" (click)="recover()"><strong>Recuperar Contraseña</strong></a>
@@ -66,6 +66,8 @@
             <ion-col size="12" class="ion-text-center">
               <p class="Text1">
                 ¿No tienes tu cuenta PlayTab? 
+              </p>
+              <p>
                 <a class="singup" (click)="signup()"><strong>Crea una cuenta</strong></a>
               </p>
             </ion-col>
