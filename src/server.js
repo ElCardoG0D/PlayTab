@@ -1,49 +1,76 @@
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors'); // Importar CORS
+const cors = require('cors'); // Importa CORS para permitir solicitudes de otros dominios
 const app = express();
 const port = 3000;
 
-app.use(cors()); // Habilitar CORS
-app.use(express.json()); // Para analizar las solicitudes JSON
+// Middleware
+app.use(cors()); // Habilita CORS para aceptar solicitudes desde el frontend
+app.use(express.json()); // Para analizar solicitudes con JSON
 
-// Conexión a MySQL
+// Configuración de la base de datos
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '1111',
-  database: 'playtab'
+  password: '1111', // Cambia si tu contraseña es diferente
+  database: 'PlayTab'
 });
 
-// Conectar a la base de datos
+// Conexión a la base de datos MySQL
 db.connect((err) => {
   if (err) {
     console.error('Error connecting to the database:', err);
     return;
   }
-  console.log('Connected to the database');
+  console.log('Connected to MySQL database');
 });
 
 // Ruta para registrar un usuario
 app.post('/register', (req, res) => {
-  const { User_Run, Nombre_Usuario, Email_Usuario, Contraseña_Usuario, Comuna_Id } = req.body;
+  const { Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna } = req.body;
 
-  // Validar los datos entrantes
-  if (!User_Run || !Nombre_Usuario || !Email_Usuario || !Contraseña_Usuario || !Comuna_Id) {
-    return res.status(400).send('Faltan datos requeridos');
+  // Verificación de datos
+  if (!Run_User || !Nom_User || !Correo_User || !Contra_User || !FechaNac_User || !Id_Comuna) {
+    return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
-  const query = 'INSERT INTO Usuario (User_Run, Nombre_Usuario, Email_Usuario, Contraseña_Usuario, Comuna_Id) VALUES (?, ?, ?, ?, ?)';
-  db.query(query, [User_Run, Nombre_Usuario, Email_Usuario, Contraseña_Usuario, Comuna_Id], (err, result) => {
+  // SQL query para insertar el usuario
+  const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
+                 VALUES (?, ?, ?, ?, ?, NOW(), ?, 1)`; // Id_Estado lo dejamos en 1 como estado inicial
+
+  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
       console.error('Error inserting user:', err);
-      // Verificar si el error es un duplicado
       if (err.code === 'ER_DUP_ENTRY') {
-        return res.status(409).send('El usuario ya existe');
+        return res.status(409).json({ error: 'El usuario ya existe' });
       }
-      return res.status(500).send('Error al registrar el usuario');
+      return res.status(500).json({ error: 'Error al registrar el usuario' });
     }
-    res.status(201).send('Usuario registrado exitosamente');
+    res.status(201).json({ message: 'Usuario registrado exitosamente' });
+  });
+});
+
+// Ruta para el login del usuario
+app.post('/login', (req, res) => {
+  const { Correo_User, Contra_User } = req.body;
+
+  if (!Correo_User || !Contra_User) {
+    return res.status(400).json({ error: 'Correo y contraseña son requeridos' });
+  }
+
+  // SQL query para verificar las credenciales del usuario
+  const query = 'SELECT * FROM USUARIO WHERE Correo_User = ? AND Contra_User = ?';
+  db.query(query, [Correo_User, Contra_User], (err, result) => {
+    if (err) {
+      console.error('Error during login:', err);
+      return res.status(500).json({ error: 'Error en el servidor' });
+    }
+
+    if (result.length > 0) {
+      res.status(200).json({ message: 'Login exitoso', user: result[0] });
+    } else {
+      res.status(401).json({ error: 'Credenciales inválidas' });
+    }
   });
 });
 

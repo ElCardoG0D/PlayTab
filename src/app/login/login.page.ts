@@ -1,81 +1,78 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { NavController } from '@ionic/angular';
+import { AlertController } from '@ionic/angular';
+import { DatabaseService } from '../database.service'; // Asegúrate de que esta ruta sea correcta
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
-
+export class LoginPage {
   mailuser: string = '';
   password: string = '';
+  showPassword: boolean = false;
   rememberMe: boolean = false;
   isAlertOpen: boolean = false;
   alertMessage: string = '';
-  showPassword = false; 
 
   constructor(
-    private router: Router, 
-    private navCTRL: NavController
-  ) { }
+    private navCtrl: NavController,
+    private alertController: AlertController,
+    private dbService: DatabaseService // Inyecta tu servicio
+  ) {}
 
-  ngOnInit() {
-    // Cargar el correo del localStorage si 'rememberMe' está habilitado
-    this.mailuser = localStorage.getItem('mailuser') || '';
-    if (localStorage.getItem('rememberMe') === 'true') {
-      this.rememberMe = true;
-      this.password = localStorage.getItem('password') || '';
-    }
-  }
-
-  // Método para mostrar la contraseña
+  // Método para alternar la visibilidad de la contraseña
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
-  login() {
-    // Validaciones
+  // Método para mostrar una alerta
+  async presentAlert(message: string) {
+    const alert = await this.alertController.create({
+      header: 'Error',
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
+  }
+
+  // Método para iniciar sesión
+  async login() {
     if (!this.mailuser || !this.password) {
-      this.setAlertOpen(true, "Ingrese su correo y contraseña.");
+      this.presentAlert('Por favor, complete todos los campos.');
       return;
     }
 
-    // Aquí debes realizar la lógica de inicio de sesión con tu backend
-    // Por ejemplo, realizar una solicitud HTTP para validar las credenciales.
+    try {
+      // Llama al servicio de login
+      const response = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
 
-    // Simulando la validación de usuario (reemplaza esto con tu lógica real)
-    if (this.mailuser === 'usuario@ejemplo.com' && this.password === 'contraseña123') {
-      // Guardar el correo y la contraseña en localStorage si 'rememberMe' está habilitado
-      if (this.rememberMe) {
-        localStorage.setItem('mailuser', this.mailuser);
-        localStorage.setItem('password', this.password);
-        localStorage.setItem('rememberMe', 'true');
+      if (response) {
+        // Redirige al usuario a la página principal si el login es exitoso
+        this.navCtrl.navigateRoot('./tabs/tab1');
       } else {
-        localStorage.removeItem('mailuser');
-        localStorage.removeItem('password');
-        localStorage.removeItem('rememberMe');
+        this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
       }
-
-      // Navegar a la página principal
-      this.router.navigate(['./tabs/tab1'], { queryParams: { mailuser: this.mailuser }});
-    } else {
-      this.setAlertOpen(true, "Correo o contraseña incorrectos.");
+    } catch (error) {
+      this.presentAlert('Error al iniciar sesión. Por favor, intenta de nuevo.');
     }
   }
 
-  signup() {
-    this.router.navigate(['./register']);
-  }
-
+  // Método para la recuperación de contraseña
   recover() {
-    this.router.navigate(['./recover-pw']);
+    // Implementa la lógica de recuperación de contraseña aquí
+    this.presentAlert('Funcionalidad de recuperación de contraseña no implementada.');
   }
 
-  // Método que permite abrir o cerrar una alerta.
-  setAlertOpen(isOpen: boolean, message?: string) {
-    this.isAlertOpen = isOpen;         
-    this.alertMessage = message || '';
+  // Método para navegar a la página de registro
+  signup() {
+    this.navCtrl.navigateForward('/register');
   }
+
+  // Método para abrir o cerrar la alerta
+  setAlertOpen(isOpen: boolean) {
+    this.isAlertOpen = isOpen;
+  }
+
 }

@@ -16,6 +16,7 @@ export class RegisterPage {
   password: string = '';
   ConfirmPassword: string = '';
   comunaId: number = 0;
+  fechaNacimiento: string = ''; // Agregado para la fecha de nacimiento
   AceptaCondiciones: boolean = false;
   showPassword: boolean = false;
 
@@ -25,31 +26,31 @@ export class RegisterPage {
     private alertController: AlertController
   ) {}
 
+  // Método para alternar la visibilidad de la contraseña
   togglePassword() {
     this.showPassword = !this.showPassword;
   }
 
-  // Método que permite mostrar una alerta.
+  // Método que permite mostrar una alerta
   async presentAlert(message: string) {
     const alert = await this.alertController.create({
       header: 'Error',
       message: message,
       buttons: ['OK']
     });
-
     await alert.present();
   }
 
   // Método para el registro de usuario
   async SingUp() {
     // Validar si todos los campos están llenos
-    if (!this.nombre || !this.rut || !this.mailuser || !this.celular || !this.password || !this.ConfirmPassword) {
+    if (!this.nombre || !this.rut || !this.mailuser || !this.celular || !this.password || !this.ConfirmPassword || !this.fechaNacimiento) {
       this.presentAlert('Faltan rellenar campos');
       return;
     }
 
     // Validar Nombre
-    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,30}$/;
+    const nameRegex = /^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]{1,50}$/;
     if (!nameRegex.test(this.nombre)) {
       this.presentAlert('Ingrese su nombre correctamente.');
       return;
@@ -58,7 +59,7 @@ export class RegisterPage {
     // Validar el rut
     const rutRegex = /^\d{7,8}-[kK\d]$/;
     if (!rutRegex.test(this.rut)) {
-      this.presentAlert('Ingrese un rut válido.');
+      this.presentAlert('Ingrese un RUT válido.');
       return;
     }
 
@@ -78,7 +79,7 @@ export class RegisterPage {
 
     // Validar la contraseña
     if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert('La contraseña debe tener mínimo 4 carácteres y máximo 8.');
+      this.presentAlert('La contraseña debe tener mínimo 4 caracteres y máximo 8.');
       return;
     }
 
@@ -88,12 +89,19 @@ export class RegisterPage {
       return;
     }
 
+    // Validar comuna
     if (!this.comunaId) {
-      this.presentAlert('Debe Seleccionar su comuna');
+      this.presentAlert('Debe seleccionar su comuna.');
       return;
     }
 
-    // Validar si los términos y condiciones ha sido aceptado
+    // Validar fecha de nacimiento
+    if (!this.fechaNacimiento) {
+      this.presentAlert('Debe ingresar su fecha de nacimiento.');
+      return;
+    }
+
+    // Validar si los términos y condiciones han sido aceptados
     if (!this.AceptaCondiciones) {
       this.presentAlert('Debe aceptar los términos y condiciones.');
       return;
@@ -101,14 +109,11 @@ export class RegisterPage {
 
     try {
       // Llamada al servicio para registrar al usuario
-      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comunaId).toPromise();
+      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comunaId, this.fechaNacimiento).toPromise();
       this.presentAlert('Usuario registrado con éxito.');
-      return;
-
+      this.navCtrl.navigateRoot('/home'); // Navega a la página principal o de inicio
     } catch (error) {
       this.presentAlert('Error al registrar el usuario.');
-      return;
     }
   }
-  
 }

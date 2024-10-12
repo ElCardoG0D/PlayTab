@@ -1,23 +1,45 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class DatabaseService {
-  private apiUrl = 'http://localhost:3000'; // Asegúrate de que la URL de tu servidor esté configurada correctamente
 
-  constructor(private http: HttpClient) {}
+  private apiUrl = 'http://localhost:3000'; // URL de tu servidor Node.js
+
+  constructor(private http: HttpClient) { }
 
   // Método para registrar un usuario
-  registerUser(userRun: string, nombreUsuario: string, emailUsuario: string, contraseñaUsuario: string, comunaId: number) {
+  registerUser(rut: string, nombre: string, correo: string, contraseña: string, comunaId: number, fechaNacimiento: string): Observable<any> {
+    const url = `${this.apiUrl}/register`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    // Crear el cuerpo de la solicitud
     const body = {
-      User_Run: userRun,
-      Nombre_Usuario: nombreUsuario,
-      Email_Usuario: emailUsuario,
-      Contraseña_Usuario: contraseñaUsuario,
-      Comuna_Id: comunaId
+      Run_User: rut,
+      Nom_User: nombre,
+      Correo_User: correo,
+      Contra_User: contraseña,
+      FechaNac_User: fechaNacimiento,
+      Id_Comuna: comunaId
     };
-    return this.http.post(`${this.apiUrl}/register`, body);
+
+    // Hacer la solicitud POST al servidor
+    return this.http.post(url, body, { headers });
+  }
+
+  // Método para iniciar sesión (opcional si lo necesitas)
+  loginUser(correo: string, contraseña: string): Observable<any> {
+    const url = `${this.apiUrl}/login`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    const body = {
+      Correo_User: correo,
+      Contra_User: contraseña
+    };
+
+    return this.http.post(url, body, { headers });
   }
 }
