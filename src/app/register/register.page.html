@@ -7,7 +7,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content scroll-y="false">
+<ion-content class="fondo">
   <ion-grid class="singup-container">
     <ion-row class="cont-titulo ion-justify-content-center">
       <ion-col size="12" class="ion-text-start">
@@ -31,6 +31,13 @@
             <ion-icon slot="end" name="finger-print-outline"></ion-icon>
           </ion-item>
 
+          <!-- Campo para la fecha de nacimiento -->
+          <ion-item>
+            <ion-label slot="start">Fecha de Nacimiento:</ion-label>
+            <ion-input display-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" [(ngModel)]="fechaNacimiento" required></ion-input> <!-- Cambié a ionBlur para abrir el calendario -->
+            <ion-icon slot="end" name="calendar-outline"></ion-icon>
+          </ion-item>   
+
           <!-- Correo electrónico del usuario -->
           <ion-item>
             <ion-input label="Correo:" type="email" [(ngModel)]="mailuser" required></ion-input>
@@ -43,6 +50,27 @@
             <ion-icon slot="end" name="call-outline"></ion-icon>
           </ion-item>
 
+          <!-- Campo para seleccionar la región DINÁMICO (La idea es que seleccione la región y se habiliten las comunas dipsonibles) -->
+          <ion-item>
+            <ion-label>Region:</ion-label>
+            <ion-select [(ngModel)]="regionId" placeholder="Selecciona tu comuna" required>
+              <ion-select-option value="1">Comuna 1</ion-select-option>
+              <ion-select-option value="2">Comuna 2</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Campo para seleccionar la comuna DINÁMICO -->
+          <ion-item>
+            <ion-label>Comuna:</ion-label>
+            <ion-select [(ngModel)]="comunaId" placeholder="Selecciona tu comuna" required>
+              <ion-select-option value="1">Comuna 1</ion-select-option>
+              <ion-select-option value="2">Comuna 2</ion-select-option>
+              <ion-select-option value="3">Comuna 3</ion-select-option>
+              <ion-select-option value="4">Comuna 4</ion-select-option>
+              <!-- Agrega más opciones según sea necesario -->
+            </ion-select>
+          </ion-item>       
+          
           <!-- Contraseña del usuario -->
           <ion-item>
             <ion-input label="Contraseña:" type="password" [(ngModel)]="password" required></ion-input>
@@ -54,25 +82,7 @@
             <ion-input label="Confirmar Contraseña:" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="ConfirmPassword" required></ion-input>
             <ion-icon slot="end" name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" (click)="togglePassword()"></ion-icon>
           </ion-item>
-
-          <!-- Campo para seleccionar la comuna -->
-          <ion-item>
-            <ion-label>Comuna:</ion-label>
-            <ion-select [(ngModel)]="comunaId" placeholder="Selecciona tu comuna" required>
-              <ion-select-option value="1">Comuna 1</ion-select-option>
-              <ion-select-option value="2">Comuna 2</ion-select-option>
-              <ion-select-option value="3">Comuna 3</ion-select-option>
-              <ion-select-option value="4">Comuna 4</ion-select-option>
-              <!-- Agrega más opciones según sea necesario -->
-            </ion-select>
-          </ion-item>
-
-          <!-- Campo para la fecha de nacimiento -->
-          <ion-item>
-            <ion-label>Fecha de Nacimiento:</ion-label>
-            <ion-datetime display-format="YYYY-MM-DD" [(ngModel)]="fechaNacimiento" required></ion-datetime>
-          </ion-item>
-
+          
           <!-- Campo para aceptar términos y condiciones -->
           <ion-row class="A1 ion-align-items-center">
             <ion-col size="12">

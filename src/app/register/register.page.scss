@@ -1,10 +1,13 @@
+.fondo{
+    --background: linear-gradient(135deg, #FFA500, #FF8C00); /* Degradado más naranja */
+}
+
 .singup-container {
     position: relative;
     display: flex;
     flex-direction: column;
     padding-top: 30px;
     margin: 0;
-    background: linear-gradient(135deg, #FFA500, #FF8C00); /* Degradado más naranja */
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
 }
