@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '1111', // Cambia si tu contraseña es diferente
+  password: 'root', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -36,7 +36,7 @@ app.post('/register', (req, res) => {
 
   // SQL query para insertar el usuario
   const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, NOW(), ?, 1)`; // Id_Estado lo dejamos en 1 como estado inicial
+                 VALUES (?, ?, ?, ?, ?, NOW(), ?, 10)`; // Id_Estado lo dejamos en 1 como estado inicial
 
   db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
