@@ -25,6 +25,33 @@ db.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
+// 1. Aquí se obtendrá las Regiones y Comunas disponibles para poder registrar al usuario.
+// Obtener todas las regiones.
+app.get('/regiones', (req, res) => {
+  const query = 'SELECT * FROM REGION';
+  db.query(query, (err, results) => { 
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// Obtener las comunas por id de la región.
+app.get('/comunas/:regionId', (req, res) => {
+  const regionId = req.params.regionId; // Obtiene el id de la región desde la URL
+  const query = 'SELECT * FROM COMUNA WHERE Id_Region = ?';
+  db.query(query, [regionId], (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// 2. Aquí se realizará el INSERT del usuario. 
 // Ruta para registrar un usuario
 app.post('/register', (req, res) => {
   const { Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna } = req.body;

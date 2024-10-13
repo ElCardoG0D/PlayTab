@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from '../database.service'; // Importa tu servicio
 import { Router } from '@angular/router';
 import { AlertController } from '@ionic/angular'; // Importa AlertController
@@ -15,8 +15,10 @@ export class RegisterPage {
   celular: string = '';
   password: string = '';
   ConfirmPassword: string = '';
-  regionId: number = 0;
-  comunaId: number = 0;
+  regionId: any[] = [];   
+  comunaId: any[] = []; 
+  comuna: number = 0; 
+  region: number = 0; 
   fechaNacimiento: string = ''; // Agregado para la fecha de nacimiento
   showCalendar: boolean = false;
   AceptaCondiciones: boolean = false;
@@ -27,6 +29,26 @@ export class RegisterPage {
     private dbService: DatabaseService, // Inyecta el servicio
     private alertController: AlertController
   ) {}
+
+  ngOnInit() {
+    // Obtener todas las regiones al cargar el componente
+    this.dbService.getRegiones().subscribe((data) => {
+      this.regionId = data; 
+    });
+  }
+
+  onRegionChange() {
+    console.log('Región seleccionada:', this.region);
+  
+    this.dbService.getComunasPorRegion(this.region).subscribe((data) => {
+      this.comunaId = data;
+      console.log('Datos de comunas recibidos:', data); // Verifica qué campos estás recibiendo
+    },
+    (error) => {
+      console.error('Error al obtener comunas:', error);
+    });
+  }
+  
 
   // Método para alternar la visibilidad de la contraseña
   togglePassword() {
@@ -98,7 +120,7 @@ export class RegisterPage {
     }
 
     // Validar comuna
-    if (!this.comunaId) {
+    if (!this.comuna) {
       this.presentAlert('Error','Debe seleccionar una comuna.');
       return;
     }
@@ -122,7 +144,7 @@ export class RegisterPage {
 
     try {
       // Llamada al servicio para registrar al usuario
-      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comunaId, this.fechaNacimiento).toPromise();
+      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comuna, this.fechaNacimiento).toPromise();
       this.presentAlert('¡Felicidades!','Usuario registrado con éxito.');
       this.router.navigate(['./login']);
     } catch (error) {

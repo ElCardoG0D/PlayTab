@@ -11,8 +11,19 @@ export class DatabaseService {
 
   constructor(private http: HttpClient) { }
 
-  // Método para registrar un usuario
-  registerUser(rut: string, nombre: string, correo: string, contraseña: string, comunaId: number, fechaNacimiento: string): Observable<any> {
+  // 1. Métodos para las Regiones y Comunas.
+  // Método para obtener todas las regiones
+  getRegiones(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/regiones`); 
+  }
+
+  // Método para obtener comunas filtradas por región
+  getComunasPorRegion(regionId: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/comunas/${regionId}`);
+  }
+
+  // 2. Método para registrar un usuario
+  registerUser(rut: string, nombre: string, correo: string, contraseña: string, comuna: number, fechaNacimiento: string): Observable<any> {
     const url = `${this.apiUrl}/register`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
@@ -23,7 +34,7 @@ export class DatabaseService {
       Correo_User: correo,
       Contra_User: contraseña,
       FechaNac_User: fechaNacimiento,
-      Id_Comuna: comunaId
+      Id_Comuna: comuna
     };
 
     // Hacer la solicitud POST al servidor
