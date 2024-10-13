@@ -146,6 +146,15 @@ export class RegisterPage {
       // Llamada al servicio para registrar al usuario
       await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comuna, this.fechaNacimiento).toPromise();
       this.presentAlert('¡Felicidades!','Usuario registrado con éxito.');
+      this.rut = '';
+      this.nombre = '';
+      this.mailuser = '';
+      this.celular= '';
+      this.password = '';
+      this.ConfirmPassword = '';
+      this.region = 0;
+      this.comuna = 0;
+      this.fechaNacimiento = '';
       this.router.navigate(['./login']);
     } catch (error) {
       this.presentAlert('Error', 'No se pudo registrar el usuario.');
