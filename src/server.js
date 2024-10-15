@@ -54,18 +54,18 @@ app.get('/comunas/:regionId', (req, res) => {
 // 2. Aquí se realizará el INSERT del usuario. 
 // Ruta para registrar un usuario
 app.post('/register', (req, res) => {
-  const { Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna } = req.body;
+  const { Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna } = req.body;
 
   // Verificación de datos
-  if (!Run_User || !Nom_User || !Correo_User || !Contra_User || !FechaNac_User || !Id_Comuna) {
+  if (!Run_User || !Nom_User || !Correo_User || !Contra_User || !Celular_User || !FechaNac_User || !Id_Comuna) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
   // SQL query para insertar el usuario
-  const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, NOW(), ?, 10)`; // Id_Estado lo dejamos en 1 como estado inicial
+  const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
+                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 10)`; // Id_Estado lo dejamos en 1 como estado inicial
 
-  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, FechaNac_User, Id_Comuna], (err, result) => {
+  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
       console.error('Error inserting user:', err);
       if (err.code === 'ER_DUP_ENTRY') {

@@ -23,7 +23,7 @@ export class DatabaseService {
   }
 
   // 2. Método para registrar un usuario
-  registerUser(rut: string, nombre: string, correo: string, contraseña: string, comuna: number, fechaNacimiento: string): Observable<any> {
+  registerUser(rut: string, nombre: string, correo: string, contraseña: string, celular: string, comuna: number, fechaNacimiento: string): Observable<any> {
     const url = `${this.apiUrl}/register`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
@@ -33,6 +33,7 @@ export class DatabaseService {
       Nom_User: nombre,
       Correo_User: correo,
       Contra_User: contraseña,
+      Celular_User: celular,
       FechaNac_User: fechaNacimiento,
       Id_Comuna: comuna
     };

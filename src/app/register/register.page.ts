@@ -144,7 +144,7 @@ export class RegisterPage {
 
     try {
       // Llamada al servicio para registrar al usuario
-      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.comuna, this.fechaNacimiento).toPromise();
+      await this.dbService.registerUser(this.rut, this.nombre, this.mailuser, this.password, this.celular, this.comuna, this.fechaNacimiento).toPromise();
       this.presentAlert('¡Felicidades!','Usuario registrado con éxito.');
       this.rut = '';
       this.nombre = '';

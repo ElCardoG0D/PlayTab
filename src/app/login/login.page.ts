@@ -45,18 +45,23 @@ export class LoginPage {
     }
 
     try {
-      // Llama al servicio de login
-      const response = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
-
+      const response: any = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
+    
       if (response) {
-        // Redirige al usuario a la página principal si el login es exitoso
         this.router.navigate(['./tabs/tab1']);
       } else {
         this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
       }
-    } catch (error) {
-      this.presentAlert('Error al iniciar sesión. Por favor, intenta de nuevo.');
+    } catch (error: any) {
+      if (error.status === 401) {
+        // Manejar el caso de credenciales incorrectas
+        this.presentAlert('Credenciales incorrectas o el usuario no existe en PlayTab.');
+      } else {
+        // Otro error que no sea de autorización
+        this.presentAlert('Error del servidor. Por favor intenta de nuevo más tarde :(');
+      }
     }
+    
   }
 
   // Método para la recuperación de contraseña
