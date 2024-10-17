@@ -13,13 +13,55 @@
 
 <ion-content [fullscreen]="true">
 
+  <!-- Barra de busaqueda -->
   <ion-toolbar>
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
+  <!-- barra de filtardo irá aquí -->
+
+  <!-- Aquí irán las tarjetas dinámicas  -->
+
+  <!-- Aquí irá la parte para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button>
-      <ion-icon name="add"></ion-icon>
+      <ion-icon name="add">
+        <ion-modal trigger="open-modal" (willDismiss)="onWillDismiss($event)">
+          <ng-template>
+            <ion-header>
+              <ion-toolbar>
+                <ion-buttons slot="start">
+                  <ion-button (click)="cancel()">Volver</ion-button>
+                </ion-buttons>
+                <ion-title>¡Crea tu Actividad!</ion-title>
+                <ion-buttons slot="end">
+                  <ion-button (click)="confirm()" [strong]="true">Crear</ion-button>
+                </ion-buttons>
+              </ion-toolbar>
+            </ion-header>
+            <ion-content class="ion-padding">
+              <ion-item>
+                <ion-datetime
+                presentation="date-time" 
+                [preferWheel]="true"
+                displayFormat="YYYY-MM-DD HH:mm:ss">
+              </ion-datetime>
+              </ion-item>
+              <ion-item>
+                <ion-input
+                  label="Enter your name"
+                  labelPlacement="stacked"
+                  type="text"
+                  placeholder="Your name"
+                ></ion-input>
+                <ion-input class="ion-padding">
+                  <ion-button id="open-modal" expand="block">Open</ion-button>
+                </ion-input>
+              </ion-item>
+            </ion-content>
+          </ng-template>
+        </ion-modal>
+      </ion-icon>
     </ion-fab-button>
   </ion-fab>
 

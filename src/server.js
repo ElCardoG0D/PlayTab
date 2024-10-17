@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '1111', // Cambia si tu contraseña es diferente
+  password: 'root', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -41,7 +41,7 @@ app.get('/regiones', (req, res) => {
 // Obtener las comunas por id de la región.
 app.get('/comunas/:regionId', (req, res) => {
   const regionId = req.params.regionId; // Obtiene el id de la región desde la URL
-  const query = 'SELECT * FROM COMUNA WHERE Id_Region = ?';
+  const query = 'SELECT Nombre_Comuna FROM COMUNA WHERE Id_Region = ?';
   db.query(query, [regionId], (err, results) => {
     if (err) {
       res.status(500).send(err);
