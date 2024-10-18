@@ -86,7 +86,7 @@ app.post('/login', (req, res) => {
   }
 
   // SQL query para verificar las credenciales del usuario
-  const query = 'SELECT * FROM USUARIO WHERE Correo_User = ? AND Contra_User = ?';
+  const query = 'SELECT Id_User, Correo_User FROM USUARIO WHERE Correo_User = ? AND Contra_User = ?';
   db.query(query, [Correo_User, Contra_User], (err, result) => {
     if (err) {
       console.error('Error during login:', err);

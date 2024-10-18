@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { LocalStorageService } from 'src/app/services/local-storage.service';
 
 @Component({
   selector: 'app-tab1',
@@ -7,9 +8,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Tab1Page implements OnInit {
 
-  constructor() { }
+  constructor(private localS : LocalStorageService) { }
 
   ngOnInit() {
+    const userId = this.localS.ObtenerId('Id_User');
+    console.log('Id:', userId);
   }
 
 }

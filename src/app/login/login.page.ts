@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { DatabaseService } from '../database.service'; // Asegúrate de que esta ruta sea correcta
+import { LocalStorageService } from '../services/local-storage.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,8 @@ export class LoginPage {
   constructor(
     private router: Router,
     private alertController: AlertController,
-    private dbService: DatabaseService // Inyecta tu servicio
+    private dbService: DatabaseService, // Inyecta tu servicio
+    private localS : LocalStorageService
   ) {}
 
   // Método para alternar la visibilidad de la contraseña
@@ -48,6 +50,8 @@ export class LoginPage {
       const response: any = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
     
       if (response) {
+        // Aquí Guardar el ID del usuario en localStorage
+        this.localS.GuardarId('Id_User', response.user.Id_User);
         this.router.navigate(['./tabs/tab1']);
       } else {
         this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
