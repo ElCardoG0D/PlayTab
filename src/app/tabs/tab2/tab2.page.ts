@@ -1,34 +1,25 @@
-import { Component, OnInit, ViewChild  } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
-import { IonModal } from '@ionic/angular';
-import { OverlayEventDetail } from '@ionic/core/components';
-
+import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-tab2',
   templateUrl: './tab2.page.html',
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page implements OnInit {
-  presentingElement = undefined;
-  @ViewChild(IonModal, { static: false }) modal!: IonModal;
+  isModalOpen = false;
 
-  constructor(private accion: ActionSheetController) { }
+  constructor() { }
 
   ngOnInit() {
   }
 
-  cancel() {
-    this.modal.dismiss(null, 'cancel');
+  setOpen(isOpen: boolean) {
+    this.isModalOpen = isOpen;
   }
 
-  confirm() {
-    this.modal.dismiss('confirm');
-  }
-
-  onWillDismiss(event: Event) {
-    const ev = event as CustomEvent<OverlayEventDetail<string>>;
-    if (ev.detail.role === 'confirm') {
-    }
+  crearActividad() {
+    // Simular el envío de datos a la base de datos
+    console.log('Actividad guardada exitosamente');
+    // Aquí puedes agregar lógica para enviar los datos a la base de datos
   }
 
 }
