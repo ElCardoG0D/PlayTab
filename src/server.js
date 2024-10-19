@@ -41,7 +41,7 @@ app.get('/regiones', (req, res) => {
 // Obtener las comunas por id de la región.
 app.get('/comunas/:regionId', (req, res) => {
   const regionId = req.params.regionId; // Obtiene el id de la región desde la URL
-  const query = 'SELECT Nombre_Comuna FROM COMUNA WHERE Id_Region = ?';
+  const query = 'SELECT * FROM COMUNA WHERE Id_Region = ?';
   db.query(query, [regionId], (err, results) => {
     if (err) {
       res.status(500).send(err);
@@ -63,7 +63,7 @@ app.post('/register', (req, res) => {
 
   // SQL query para insertar el usuario
   const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 10)`; // Id_Estado lo dejamos en 1 como estado inicial
+                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`; 
 
   db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {

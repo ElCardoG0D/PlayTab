@@ -157,6 +157,7 @@ export class RegisterPage {
       this.fechaNacimiento = '';
       this.router.navigate(['./login']);
     } catch (error) {
+      console.log('Comuna seleccionada:', this.comuna);
       this.presentAlert('Error', 'No se pudo registrar el usuario.');
     }
   }
