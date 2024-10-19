@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root', // Cambia si tu contraseña es diferente
+  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -20,8 +20,7 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.error('Error connecting to the database:', err);
-    return;
-  }
+    return;  }
   console.log('Connected to MySQL database');
 });
 
@@ -97,6 +96,24 @@ app.post('/login', (req, res) => {
       res.status(200).json({ message: 'Login exitoso', user: result[0] });
     } else {
       res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+  });
+});
+// Ruta para obtener los datos del usuario por ID
+app.get('/user/:id', (req, res) => {
+  const userId = req.params.id;
+  const query = 'SELECT * FROM USUARIO WHERE Id_User = ?';
+
+  db.query(query, [userId], (err, result) => {
+    if (err) {
+      console.error('Error al obtener los datos del usuario:', err);
+      return res.status(500).json({ error: 'Error en el servidor' });
+    }
+    
+    if (result.length > 0) {
+      res.json(result[0]); // Retorna el primer resultado
+    } else {
+      res.status(404).json({ error: 'Usuario no encontrado' });
     }
   });
 });

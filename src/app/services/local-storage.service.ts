@@ -10,7 +10,9 @@ export class LocalStorageService {
   //1. Funcion para guardar datos.
   GuardarId(clave: string, valor: any){
     localStorage.setItem(clave,JSON.stringify(valor))
+    
   }
+  
 
   //2. Función para obtener datos
   ObtenerId(clave: string){
@@ -18,9 +20,10 @@ export class LocalStorageService {
     //Declarar ? es como hacer un if - else, si funciona da el JSON sino retorna el null
     return valor ? JSON.parse(valor) :  null;
   }
+  
 
   //3. Elimnar Datos
-  ElimnarId(clave: string){
+  EliminarId(clave: string){
     localStorage.removeItem(clave);
   }
 

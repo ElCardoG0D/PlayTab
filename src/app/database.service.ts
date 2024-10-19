@@ -54,4 +54,9 @@ export class DatabaseService {
 
     return this.http.post(url, body, { headers });
   }
+  ///metod para llamar id en el perfil
+  getUserData(userId: number): Promise<any> {
+    return this.http.get<any>(`${this.apiUrl}/user/${userId}`).toPromise();
+  }
+  
 }
