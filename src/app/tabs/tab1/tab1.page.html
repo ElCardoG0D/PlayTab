@@ -12,10 +12,12 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-<h1 class="actividades-rapidas">Actividades Rápidas</h1>
+  <h1 class="actividades-rapidas">Actividades Rápidas</h1>
   <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]">
     <ion-card-header>
-      <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+      <div class="card-title-container">
+        <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+      </div>
       <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
     </ion-card-header>
     <ion-card-content>
