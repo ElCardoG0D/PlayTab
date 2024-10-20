@@ -198,7 +198,7 @@ app.get('/cantidad', (req, res) => {
 // 5. Este es para obtener las actividades
 // Endpoint para obtener todas las actividades
 app.get('/actividades', (req, res) => {
-  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador'; // Ajusta esta consulta según tu base de datos
+  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);

@@ -57,4 +57,5 @@ export class Tab1Page implements OnInit {
     const randomIndex = Math.floor(Math.random() * this.colors.length);
     return this.colors[randomIndex];
   }
+
 }
