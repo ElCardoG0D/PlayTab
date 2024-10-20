@@ -72,23 +72,33 @@ export class DatabaseService {
   }
 
   // 6.Método para registrar una Actividad
-  registerActividad(Nom_Actividad: string, Desc_Actividad: string, Direccion_Actividad: string, Id_MaxJugador: number, Fecha_TER_Actividad: string, Id_Comuna: number, Id_SubCategoria: number, Id_Anfitrion_Actividad:number): Observable<any> {
+  registerActividad(
+    Nom_Actividad: string,
+    Desc_Actividad: string,
+    Direccion_Actividad: string,
+    Id_MaxJugador: number,
+    Fecha_INI_Actividad: string,
+    Fecha_TER_Actividad: string,
+    Id_Comuna: number,
+    Id_SubCategoria: number,
+    Id_Anfitrion_Actividad: number
+  ): Observable<any> {
     const url = `${this.apiUrl}/actividad`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
-    // Crear el cuerpo de la solicitud
     const body = {
-      Nom_Actividad: Nom_Actividad,
-      Desc_Actividad: Desc_Actividad,
-      Direccion_Actividad: Direccion_Actividad,
-      Id_MaxJugador: Id_MaxJugador,
-      Fecha_TER_Actividad: Fecha_TER_Actividad,
-      Id_Comuna: Id_Comuna,
-      Id_SubCategoria: Id_SubCategoria,
-      Id_Anfitrion_Actividad: Id_Anfitrion_Actividad
+      Nom_Actividad,
+      Desc_Actividad,
+      Direccion_Actividad,
+      Id_MaxJugador,
+      Fecha_INI_Actividad,
+      Fecha_TER_Actividad,
+      Id_Comuna,
+      Id_SubCategoria,
+      Id_Estado: 15, 
+      Id_Anfitrion_Actividad
     };
-
-    // Hacer la solicitud POST al servidor
+  
     return this.http.post(url, body, { headers });
   }
 

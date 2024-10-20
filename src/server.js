@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root', // Cambia si tu contraseña es diferente
+  password: '1111', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -79,7 +79,18 @@ app.post('/register', (req, res) => {
 
 // 2. Aquí se realizará el INSERT de la actividad. 
 app.post('/actividad', (req, res) => {
-  const { Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad } = req.body;
+  const {
+    Nom_Actividad,
+    Desc_Actividad,
+    Direccion_Actividad,
+    Id_MaxJugador,
+    Fecha_INI_Actividad,
+    Fecha_TER_Actividad,
+    Id_Comuna,
+    Id_SubCategoria,
+    Id_Estado,
+    Id_Anfitrion_Actividad,
+  } = req.body;
 
   // Verificación de datos
   if (!Nom_Actividad || !Desc_Actividad || !Direccion_Actividad || !Id_MaxJugador || !Fecha_INI_Actividad || !Fecha_TER_Actividad || !Id_Comuna || !Id_SubCategoria || !Id_Estado || !Id_Anfitrion_Actividad) {
@@ -87,10 +98,23 @@ app.post('/actividad', (req, res) => {
   }
 
   // SQL query para insertar la actividad
-  const query = `INSERT INTO ACTIVIDAD (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad) 
-                 VALUES (?,?,?,?,'2024-10-02 11:00:00',?,?,?,15,?)`; 
-
-  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
+  const query = `
+    INSERT INTO ACTIVIDAD 
+    (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+  `;
+  db.query(query, [
+    Nom_Actividad,
+    Desc_Actividad,
+    Direccion_Actividad,
+    Id_MaxJugador,
+    Fecha_INI_Actividad,
+    Fecha_TER_Actividad,
+    Id_Comuna,
+    Id_SubCategoria,
+    Id_Estado,
+    Id_Anfitrion_Actividad,
+  ], (err, result) => {
     if (err) {
       console.error('Error inserting actividad:', err);
       if (err.code === 'ER_DUP_ENTRY') {
@@ -98,10 +122,9 @@ app.post('/actividad', (req, res) => {
       }
       return res.status(500).json({ error: 'Error al registrar la actividad' });
     }
-    res.status(201).json({ message: 'Actividad registrada exitosamente' });
+    res.status(201).json({ message: 'Actividad registrada exitosamente', id: result.insertId });
   });
 });
-
 // Ruta para el login del usuario (Obtener los datos de la consulta)
 app.post('/login', (req, res) => {
   const { Correo_User, Contra_User } = req.body;
