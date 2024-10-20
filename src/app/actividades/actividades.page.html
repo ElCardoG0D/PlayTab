@@ -1,0 +1,76 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>actividades</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title>¡Crea tu actividad!</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-item>
+    <ion-label position="stacked">Nombre de la actividad</ion-label>
+      <ion-input type="text" [(ngModel)]="nomActividad" required></ion-input>
+      <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+    </ion-item>
+    
+    <!-- Descripción de la actividad -->
+    <ion-item>
+      <ion-label position="stacked">Descripción</ion-label>
+      <ion-input type="text" [(ngModel)]="descActividad" required></ion-input>
+      <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+    </ion-item>
+
+    <!-- Dirección actividad ************************************* --> 
+    <ion-item>
+    <ion-label position="stacked">Dirección actividad</ion-label>
+    <ion-input type="text" [(ngModel)]="direccionActividad" placeholder="Si es un juego online poner N/A." required></ion-input>
+    </ion-item>
+
+    <!-- Categoría ************************************* -->
+    <ion-item>
+      <ion-label>Categoría:</ion-label>
+      <ion-select [(ngModel)]="categoriaSeleccionada" (ionChange)="cargarCategorias()" placeholder="Selecciona una categoría..." required>
+        <ion-select-option *ngFor="let categoria of categoriaId" [value]="categoria.Id_Categoria">
+          {{ categoria.Nom_Categoria }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Subcategoría -->
+    <ion-item>
+      <ion-label>Subcategoría:</ion-label>
+      <ion-select [(ngModel)]="subcategoriaSeleccionada" placeholder="Selecciona una subcategoría..." required>
+        <ion-select-option *ngFor="let subcategoria of subcategoriaId" [value]="subcategoria.Id_SubCategoria">
+          {{ subcategoria.Nom_SubCategoria }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Jugadores -->
+    <ion-item>
+      <ion-label position="stacked">Jugadores</ion-label>
+      <ion-select [(ngModel)]="maxJugadores" placeholder="¿Cantidad de jugadores?" required>
+        <ion-select-option *ngFor="let maxJugador of MaxjugadorId" [value]="maxJugador.Id_MaxJugador">
+          {{ maxJugador.Cantidad_MaxJugador }}
+        </ion-select-option>
+      </ion-select>
+    </ion-item>
+
+    <!-- Hora de término -->
+    <ion-item>
+      <ion-label position="stacked">Hora de termino</ion-label>
+      <ion-input type="time" required [(ngModel)]="horaActividad"></ion-input>
+    </ion-item>
+
+
+    <!-- Botón Guardar -->
+    <ion-item lines="none">
+      <ion-buttons slot="end">
+      <ion-button color="primary" (click)="crearActividad()">Crear</ion-button>
+      </ion-buttons>
+    </ion-item>
+</ion-content>

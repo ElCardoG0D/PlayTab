@@ -17,8 +17,8 @@ export class RegisterPage {
   ConfirmPassword: string = '';
   regionId: any[] = [];   
   comunaId: any[] = []; 
-  comuna: number = 0; 
   region: number = 0; 
+  comuna: number = 0; 
   fechaNacimiento: string = ''; // Agregado para la fecha de nacimiento
   showCalendar: boolean = false;
   AceptaCondiciones: boolean = false;
@@ -157,7 +157,6 @@ export class RegisterPage {
       this.fechaNacimiento = '';
       this.router.navigate(['./login']);
     } catch (error) {
-      console.log('Comuna seleccionada:', this.comuna);
       this.presentAlert('Error', 'No se pudo registrar el usuario.');
     }
   }

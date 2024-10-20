@@ -1,25 +1,22 @@
 import { Component, OnInit } from '@angular/core';
+import { AlertController } from '@ionic/angular';
+import { DatabaseService } from 'src/app/database.service';
+import { Router } from '@angular/router';
+
 @Component({
   selector: 'app-tab2',
   templateUrl: './tab2.page.html',
   styleUrls: ['./tab2.page.scss'],
 })
 export class Tab2Page implements OnInit {
-  isModalOpen = false;
 
-  constructor() { }
+  constructor(private alertController: AlertController, private dbService: DatabaseService, private router: Router) { }
 
   ngOnInit() {
   }
 
-  setOpen(isOpen: boolean) {
-    this.isModalOpen = isOpen;
-  }
-
-  crearActividad() {
-    // Simular el envío de datos a la base de datos
-    console.log('Actividad guardada exitosamente');
-    // Aquí puedes agregar lógica para enviar los datos a la base de datos
+  enviarPagAct(){
+    this.router.navigate(['./actividades']);
   }
 
 }

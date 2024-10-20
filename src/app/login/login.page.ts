@@ -41,32 +41,30 @@ export class LoginPage {
 
   // Método para iniciar sesión
   async login() {
-    if (!this.mailuser || !this.password) {
-      this.presentAlert('Por favor, complete todos los campos.');
-      return;
-    }
-
-    try {
-      const response: any = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
-    
-      if (response) {
-        // Aquí Guardar el ID del usuario en localStorage
-        this.localS.GuardarId('Id_User', response.user.Id_User);
-        this.router.navigate(['./tabs/tab1']);
-      } else {
-        this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
-      }
-    } catch (error: any) {
-      if (error.status === 401) {
-        // Manejar el caso de credenciales incorrectas
-        this.presentAlert('Credenciales incorrectas o el usuario no existe en PlayTab.');
-      } else {
-        // Otro error que no sea de autorización
-        this.presentAlert('Error del servidor. Por favor intenta de nuevo más tarde :(');
-      }
-    }
-    
+  if (!this.mailuser || !this.password) {
+    this.presentAlert('Por favor, complete todos los campos.');
+    return;
   }
+
+  try {
+    const response: any = await this.dbService.loginUser(this.mailuser, this.password).toPromise();
+    console.log('Respuesta recibida:', response); // Verifica la estructura completa de la respuesta
+
+    if (response && response.user) {
+      // Guardar los datos en localStorage
+      this.localS.GuardarUsuario('user', response.user);
+      this.router.navigate(['./tabs/tab1']);
+    } else {
+      this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');
+    }
+  } catch (error: any) {
+    if (error.status === 401) {
+      this.presentAlert('Credenciales incorrectas o el usuario no existe en PlayTab.');
+    } else {
+      this.presentAlert('Error del servidor. Por favor intenta de nuevo más tarde :(');
+    }
+  }
+}
 
   // Método para la recuperación de contraseña
   recover() {

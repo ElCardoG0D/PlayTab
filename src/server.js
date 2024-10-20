@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
+  password: 'root', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -20,7 +20,8 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.error('Error connecting to the database:', err);
-    return;  }
+    return;
+  }
   console.log('Connected to MySQL database');
 });
 
@@ -62,7 +63,7 @@ app.post('/register', (req, res) => {
 
   // SQL query para insertar el usuario
   const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`; 
+                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`; // Id_Estado lo dejamos en 1 como estado inicial
 
   db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
@@ -76,7 +77,32 @@ app.post('/register', (req, res) => {
   });
 });
 
-// Ruta para el login del usuario
+// 2. Aquí se realizará el INSERT de la actividad. 
+app.post('/actividad', (req, res) => {
+  const { Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad } = req.body;
+
+  // Verificación de datos
+  if (!Nom_Actividad || !Desc_Actividad || !Direccion_Actividad || !Id_MaxJugador || !Fecha_INI_Actividad || !Fecha_TER_Actividad || !Id_Comuna || !Id_SubCategoria || !Id_Estado || !Id_Anfitrion_Actividad) {
+    return res.status(400).json({ error: 'Faltan datos requeridos' });
+  }
+
+  // SQL query para insertar la actividad
+  const query = `INSERT INTO ACTIVIDAD (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad) 
+                 VALUES (?,?,?,?,'2024-10-02 11:00:00',?,?,?,15,?)`; 
+
+  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
+    if (err) {
+      console.error('Error inserting actividad:', err);
+      if (err.code === 'ER_DUP_ENTRY') {
+        return res.status(409).json({ error: 'La Actividad ya existe' });
+      }
+      return res.status(500).json({ error: 'Error al registrar la actividad' });
+    }
+    res.status(201).json({ message: 'Actividad registrada exitosamente' });
+  });
+});
+
+// Ruta para el login del usuario (Obtener los datos de la consulta)
 app.post('/login', (req, res) => {
   const { Correo_User, Contra_User } = req.body;
 
@@ -85,7 +111,15 @@ app.post('/login', (req, res) => {
   }
 
   // SQL query para verificar las credenciales del usuario
-  const query = 'SELECT Id_User, Correo_User FROM USUARIO WHERE Correo_User = ? AND Contra_User = ?';
+  const query = `
+  SELECT 
+    Id_User, Nom_User, Correo_User, Celular_User, 
+    COMUNA.Id_Comuna, COMUNA.Nombre_Comuna, 
+    REGION.Id_Region, REGION.Nombre_Region 
+  FROM USUARIO 
+  INNER JOIN COMUNA ON USUARIO.Id_Comuna = COMUNA.Id_Comuna 
+  INNER JOIN REGION ON COMUNA.Id_Region = REGION.Id_Region 
+  WHERE Correo_User = ? AND Contra_User = ?`;
   db.query(query, [Correo_User, Contra_User], (err, result) => {
     if (err) {
       console.error('Error during login:', err);
@@ -99,21 +133,42 @@ app.post('/login', (req, res) => {
     }
   });
 });
-// Ruta para obtener los datos del usuario por ID
-app.get('/user/:id', (req, res) => {
-  const userId = req.params.id;
-  const query = 'SELECT * FROM USUARIO WHERE Id_User = ?';
 
-  db.query(query, [userId], (err, result) => {
+// 3. Aquí se obtendrá las Categoria y subcategoria *************************************
+// Obtener todas las regiones.
+app.get('/categoria', (req, res) => {
+  const query = 'SELECT * FROM CATEGORIA';
+  db.query(query, (err, results) => { 
     if (err) {
-      console.error('Error al obtener los datos del usuario:', err);
-      return res.status(500).json({ error: 'Error en el servidor' });
-    }
-    
-    if (result.length > 0) {
-      res.json(result[0]); // Retorna el primer resultado
+      res.status(500).send(err);
     } else {
-      res.status(404).json({ error: 'Usuario no encontrado' });
+      res.json(results);
+    }
+  });
+});
+
+// Obtener las comunas por id de la Categoria. 
+app.get('/subcategoria/:categoriaId', (req, res) => {
+  const categoriaId = req.params.categoriaId; // Obtiene el id de la Categoria desde la URL
+  const query = 'SELECT * FROM SUBCATEGORIA WHERE Id_Categoria = ?';
+  db.query(query, [categoriaId], (err, results) => {
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
+    }
+  });
+});
+
+// 4. Aquí se obtendrá los jugadores máximos
+// Obtener todas las regiones.
+app.get('/cantidad', (req, res) => {
+  const query = 'SELECT * FROM MAXJUGADOR';
+  db.query(query, (err, results) => { 
+    if (err) {
+      res.status(500).send(err);
+    } else {
+      res.json(results);
     }
   });
 });

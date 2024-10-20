@@ -36,6 +36,10 @@ const routes: Routes = [
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
   },
   {
+    path: 'actividades',
+    loadChildren: () => import('./actividades/actividades.module').then( m => m.ActividadesPageModule)
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },

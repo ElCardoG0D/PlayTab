@@ -1,81 +1,83 @@
 <ion-header class="ion-no-border">
-  <ion-toolbar class="toolbar">
+    <ion-toolbar class="toolbar">
       <ion-buttons slot="start">
-          <ion-button>
-              <ion-icon name="notifications-outline"></ion-icon>
-          </ion-button>
+        <ion-button>
+          <ion-icon name="notifications-outline"></ion-icon>
+        </ion-button>
       </ion-buttons>
       <div class="toolbar-logo-container">
-          <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+        <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
       </div>
-  </ion-toolbar>
-</ion-header>
+    </ion-toolbar>
+  </ion-header>
+  
+  
+  
 
 <ion-content [fullscreen]="true" class="ion-padding">
-  <!-- Perfil -->
-  <ion-card class="profile-card">
-      <ion-card-header>
-          <ion-avatar>
-              <img src="../../assets/icon/perfil.png" alt="Foto de perfil" />
-          </ion-avatar>
-      </ion-card-header>
-      <ion-card-title>{{ userData?.Nom_User }}</ion-card-title> <!-- Nombre del usuario -->
-  </ion-card>
-  <!-- Perfil -->
+    <!-- Perfil -->
+    <ion-card class="profile-card">
+        <ion-card-header>
+        <ion-avatar>
+            <img src="../../assets/icon/perfil.png" alt="Foto de perfil" />
+        </ion-avatar>
+        </ion-card-header>
+        <ion-card-title>{{nombreUser}}</ion-card-title>
+    </ion-card>
+    <!-- Perfil -->
 
-  <!-- Sección Sobre Mí -->
-  <ion-list>
-      <ion-list-header>
-          <ion-label>Sobre Mí</ion-label>
-      </ion-list-header>
+    <!-- Sección Sobre Mí -->
+    <ion-list>
+        <ion-list-header>
+        <ion-label>Sobre Mí</ion-label>
+        </ion-list-header>
 
-      <ion-item>
-          <ion-icon name="mail-outline" slot="start"></ion-icon>
-          <ion-label>{{ userData?.Correo_User }}</ion-label> <!-- Correo electrónico -->
-          <ion-note slot="end">Correo electrónico</ion-note>
-      </ion-item>
+        <ion-item>
+        <ion-icon name="mail-outline" slot="start"></ion-icon>
+        <ion-label>{{correoUser}}</ion-label>
+        <ion-note slot="end">Correo</ion-note>
+        </ion-item>
 
-      <ion-item>
-          <ion-icon name="call-outline" slot="start"></ion-icon>
-          <ion-label>{{ userData?.Celular_User }}</ion-label> <!-- Número de teléfono -->
-          <ion-note slot="end">Número de teléfono</ion-note>
-      </ion-item>
+        <ion-item>
+        <ion-icon name="call-outline" slot="start"></ion-icon>
+        <ion-label>{{telefonoUser}}</ion-label>
+        <ion-note slot="end">Celular</ion-note>
+        </ion-item>
 
-      <ion-item>
-          <ion-icon name="globe-outline" slot="start"></ion-icon>
-          <ion-label>{{ userData?.Nombre_Comuna }}</ion-label> <!-- Comuna -->
- <!-- Comuna -->
-          <ion-note slot="end">Ubicación</ion-note>
-      </ion-item>
-  </ion-list>
+        <ion-item>
+            <ion-icon name="globe-outline" slot="start"></ion-icon>
+            <ion-label>{{regionUser}}>{{comunaUser}}</ion-label>
+            <ion-note slot="end">Ubicacion</ion-note>
+        </ion-item>
+    </ion-list>
 
-  <!-- Sección Configuraciones -->
-  <ion-list>
-      <ion-list-header>
-          <ion-label>Configuraciones</ion-label>
-      </ion-list-header>
+    <!-- Sección Configuraciones -->
+    <ion-list>
+        <ion-list-header>
+        <ion-label>Configuraciones</ion-label>
+        </ion-list-header>
 
-      <ion-item>
-          <ion-icon name="notifications-outline" slot="start"></ion-icon>
-          <ion-label>Modo Silencioso</ion-label>
-          <ion-toggle slot="end"></ion-toggle>
-      </ion-item>
+        <ion-item>
+        <ion-icon name="notifications-outline" slot="start"></ion-icon>
+        <ion-label>Modo Silencioso</ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+        </ion-item>
 
-      <ion-item>
-          <ion-icon name="moon-outline" slot="start"></ion-icon>
-          <ion-label>Modo Oscuro</ion-label>
-          <ion-toggle slot="end"></ion-toggle>
-      </ion-item>
-  </ion-list>
+        <ion-item>
+        <ion-icon name="moon-outline" slot="start"></ion-icon>
+        <ion-label>Modo Oscuro</ion-label>
+        <ion-toggle slot="end"></ion-toggle>
+        </ion-item>
+    </ion-list>
 
-  <!-- Pie de Página -->
-  <ion-footer class="ion-text-center">
-      <ion-text color="medium">
-          <small>Privacidad y Política</small>
-      </ion-text>
-  </ion-footer>
+    <!-- Pie de Página -->
+    <ion-footer class="ion-text-center">
+        <ion-text color="medium">
+        <small>Privacidad y Política</small>
+        </ion-text>
+    </ion-footer>
 
-  <div class="container">
-      <ion-button shape="round" (click)="logOut()">Cerrar sesión</ion-button>
-  </div>
+    <div class="container">
+        <ion-button shape="round" (click)="logOut()">Cerrar sesión</ion-button>
+    </div>
 </ion-content>

@@ -11,8 +11,8 @@ export class Tab1Page implements OnInit {
   constructor(private localS : LocalStorageService) { }
 
   ngOnInit() {
-    const userId = this.localS.ObtenerId('Id_User');
-    console.log('Id:', userId);
+    const user = this.localS.ObtenerUsuario('user');
+    console.log('Usurio:', user);
   }
 
 }

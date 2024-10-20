@@ -24,69 +24,8 @@
 
   <!-- Aquí irá la parte para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
-    <ion-fab-button expand="block" (click)="setOpen(true)">
-      <ion-icon name="add">
-        <ion-modal [isOpen]="isModalOpen" class="custom-modal">
-          <ng-template>
-            <ion-header>
-              <ion-toolbar>
-                <ion-title>¡Crea tu actividad!</ion-title>
-                <ion-buttons slot="end">
-                  <ion-button (click)="setOpen(false)">Cerrar</ion-button>
-                </ion-buttons>
-              </ion-toolbar>
-            </ion-header>
-        
-            <ion-content>
-              <!-- Nombre de la actividad -->
-              <ion-label position="stacked">Nombre de la actividad</ion-label>
-                <ion-input type="text" required></ion-input>
-                <ion-icon slot="end" name="person-circle-outline"></ion-icon>
-        
-              <!-- Dirección actividad -->
-              <ion-label position="stacked">Dirección actividad</ion-label>
-              <ion-input type="text" placeholder="Ayudará a que los demás sepan llegar." required></ion-input>
-        
-              <!-- Categoría -->
-              <ion-label position="stacked">Categoría</ion-label>
-                <ion-select interface="popover" placeholder="Selecciona una categoría">
-                  <ion-select-option value="deporte">Deporte</ion-select-option>
-                  <ion-select-option value="arte">Arte</ion-select-option>
-                  <ion-select-option value="tecnologia">Tecnología</ion-select-option>
-                </ion-select>
-        
-              <!-- Subcategoría -->
-              <ion-label position="stacked">Subcategoría</ion-label>
-              <ion-select interface="popover" placeholder="¿Qué tipo?">
-                <ion-select-option value="futbol">Fútbol</ion-select-option>
-                <ion-select-option value="pintura">Pintura</ion-select-option>
-                <ion-select-option value="programacion">Programación</ion-select-option>
-              </ion-select>
-        
-              <!-- Jugadores -->
-              <ion-label position="stacked">Jugadores</ion-label>
-                <ion-select interface="popover" placeholder="Cantidad máxima">
-                  <ion-select-option value="1">1</ion-select-option>
-                  <ion-select-option value="2">2</ion-select-option>
-                  <ion-select-option value="3">3</ion-select-option>
-              </ion-select>
-
-        
-              <!-- Hora de término -->
-              <ion-label position="stacked">Hora de termino</ion-label>
-              <ion-input type="time" required></ion-input>
-
-        
-              <!-- Botón Guardar -->
-              <ion-item lines="none">
-                <ion-buttons slot="end">
-                <ion-button color="primary" (click)="crearActividad()">Crear</ion-button>
-                </ion-buttons>
-              </ion-item>
-            </ion-content>
-          </ng-template>
-        </ion-modal>                
-      </ion-icon>
+    <ion-fab-button expand="block" (click)="enviarPagAct()">
+      <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>    
 
