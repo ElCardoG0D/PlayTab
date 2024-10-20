@@ -102,4 +102,8 @@ export class DatabaseService {
     return this.http.post(url, body, { headers });
   }
 
+  //7. Obtener actividades, este es para el tab 1
+  getActividades(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/actividades`);
+  }
 }

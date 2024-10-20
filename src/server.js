@@ -195,6 +195,18 @@ app.get('/cantidad', (req, res) => {
     }
   });
 });
+// 5. Este es para obtener las actividades
+// Endpoint para obtener todas las actividades
+app.get('/actividades', (req, res) => {
+  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador'; // Ajusta esta consulta según tu base de datos
+  db.query(query, (err, results) => {
+    if (err) {
+      console.error('Error al obtener actividades:', err);
+      return res.status(500).json({ error: 'Error al obtener actividades' });
+    }
+    res.json(results);
+  });
+});
 
 // Iniciar el servidor
 app.listen(port, () => {
