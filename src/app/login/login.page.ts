@@ -53,6 +53,7 @@ export class LoginPage {
     if (response && response.user) {
       // Guardar los datos en localStorage
       this.localS.GuardarUsuario('user', response.user);
+      localStorage.setItem('isAuthenticated', 'true');
       this.router.navigate(['./tabs/tab1']);
     } else {
       this.presentAlert('Credenciales incorrectas. Inténtalo de nuevo.');

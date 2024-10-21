@@ -31,6 +31,7 @@ export class Tab3Page implements OnInit {
 
   logOut(){
     this.localS.ElimnarUsuario('user');
+    localStorage.removeItem('isAuthenticated');
     this.router.navigate(['./login']);
   }
 
