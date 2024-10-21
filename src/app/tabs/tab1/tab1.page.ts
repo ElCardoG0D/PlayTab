@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular'; // Importa ModalController
+import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab1',
@@ -11,7 +13,7 @@ import { AlertController } from '@ionic/angular';
 export class Tab1Page implements OnInit {
   actividades: any[] = []; // Almacenar las actividades
   coloresActividades: string[] = []; // Array para almacenar los colores
-  actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
+  actividadesAleatorias: any[] = []; // Almacenar actividades aleatorias
   colors = [
     'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
   ];
@@ -19,7 +21,9 @@ export class Tab1Page implements OnInit {
   constructor(
     private localS: LocalStorageService,
     private dbService: DatabaseService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router,
+    private modalController: ModalController // Añadido el ModalController
   ) {}
 
   ngOnInit() {
@@ -68,6 +72,20 @@ export class Tab1Page implements OnInit {
   getRandomActivities(actividades: any[], count: number): any[] {
     const shuffled = actividades.sort(() => 0.5 - Math.random()); 
     return shuffled.slice(0, count); 
+  }
+
+  // Método para abrir el modal al hacer clic en una tarjeta
+  async onCardClick(actividad: any) {
+    console.log('Actividad clickeada:', actividad);
+    
+    const modal = await this.modalController.create({
+      component: ActividadDetalleModalPage, // Especifica el componente del modal
+      componentProps: {
+        actividad: actividad // Pasar los detalles de la actividad al modal
+      }
+    });
+    
+    return await modal.present();
   }
 
 }

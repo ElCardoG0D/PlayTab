@@ -18,7 +18,7 @@
     </ion-toolbar>
 
     <!-- Actividades -->
-  <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]">
+  <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
     <ion-card-header>
       <div class="card-title-container">
         <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
