@@ -11,7 +11,7 @@ import { AlertController } from '@ionic/angular';
 export class Tab1Page implements OnInit {
   actividades: any[] = []; // Almacenar las actividades
   coloresActividades: string[] = []; // Array para almacenar los colores
-
+  actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
   colors = [
     'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
   ];
@@ -32,8 +32,14 @@ export class Tab1Page implements OnInit {
     this.dbService.getActividades().subscribe(
       (data) => {
         this.actividades = data;
-        this.coloresActividades = this.actividades.map(() => this.getRandomColor());
-        console.log('Colores asignados:', this.coloresActividades); // Verifica que los colores están siendo generados
+  
+        // Obtener 6 actividades aleatorias
+        this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
+        
+        this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
+        
+        console.log('Actividades aleatorias:', this.actividadesAleatorias); 
+        console.log('Colores asignados:', this.coloresActividades);
       },
       (error) => {
         console.error('Error al obtener actividades:', error);
@@ -56,6 +62,12 @@ export class Tab1Page implements OnInit {
   getRandomColor() {
     const randomIndex = Math.floor(Math.random() * this.colors.length);
     return this.colors[randomIndex];
+  }
+
+  // Actividades aleatorias 
+  getRandomActivities(actividades: any[], count: number): any[] {
+    const shuffled = actividades.sort(() => 0.5 - Math.random()); 
+    return shuffled.slice(0, count); 
   }
 
 }

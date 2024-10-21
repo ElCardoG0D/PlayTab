@@ -13,7 +13,7 @@
 
 <ion-content [fullscreen]="true">
   <h1 class="actividades-rapidas">Actividades Rápidas</h1>
-  <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]">
+  <ion-card *ngFor="let actividad of actividadesAleatorias; let i = index" [ngClass]="coloresActividades[i]">
     <ion-card-header>
       <div class="card-title-container">
         <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
@@ -27,4 +27,5 @@
       <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
     </ion-card-content>
   </ion-card>
+  <h1 class="actividades-rapidas">También te podría interesar</h1>
 </ion-content>
