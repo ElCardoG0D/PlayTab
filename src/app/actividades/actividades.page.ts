@@ -150,4 +150,9 @@ export class ActividadesPage implements OnInit {
       });
     }
   }
+
+  //este para volver a tab2
+  volver() {
+    this.router.navigate(['/tabs/tab2']); 
+  }
 }
