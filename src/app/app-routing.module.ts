@@ -42,7 +42,11 @@ const routes: Routes = [
   {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
+  },  {
+    path: 'actividad-detalle-modal',
+    loadChildren: () => import('./actividad-detalle-modal/actividad-detalle-modal.module').then( m => m.ActividadDetalleModalPageModule)
   },
+
 ];
 
 @NgModule({

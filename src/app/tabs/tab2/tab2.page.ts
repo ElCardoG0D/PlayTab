@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular'; // Importa ModalController
+import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
 import { Router } from '@angular/router';
 
 @Component({
@@ -20,7 +21,8 @@ export class Tab2Page implements OnInit {
     private localS: LocalStorageService,
     private dbService: DatabaseService,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private modalController: ModalController
   ) {}
 
   ngOnInit() {
@@ -66,5 +68,19 @@ export class Tab2Page implements OnInit {
   // Navegar a la página de actividades
   enviarPagAct() {
     this.router.navigate(['./actividades']);
+  }
+
+    // Método para abrir el modal al hacer clic en una tarjeta
+  async onCardClick(actividad: any) {
+    console.log('Actividad clickeada:', actividad);
+    
+    const modal = await this.modalController.create({
+      component: ActividadDetalleModalPage, // Especifica el componente del modal
+      componentProps: {
+        actividad: actividad // Pasar los detalles de la actividad al modal
+      }
+    });
+    
+    return await modal.present();
   }
 }
