@@ -12,21 +12,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+    <!-- Barra de busaqueda -->
+    <ion-toolbar>
+      <ion-searchbar></ion-searchbar>
+    </ion-toolbar>
 
-  <!-- Barra de busaqueda -->
-  <ion-toolbar>
-    <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
+    <!-- Actividades -->
+  <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]">
+    <ion-card-header>
+      <div class="card-title-container">
+        <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+      </div>
+      <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content>
+      <p>{{ actividad.Nom_SubCategoria }}</p>
+      <p>{{ actividad.Desc_Actividad }}</p>
+      <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
+      <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
+    </ion-card-content>
+  </ion-card>
 
-  <!-- barra de filtardo irá aquí -->
-
-  <!-- Aquí irán las tarjetas dinámicas  -->
-
+  
   <!-- Aquí irá la parte para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button expand="block" (click)="enviarPagAct()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>    
-
 </ion-content>
