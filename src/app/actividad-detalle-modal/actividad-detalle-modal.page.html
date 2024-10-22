@@ -1,9 +1,6 @@
 <ion-header [translucent]="true">
-  <ion-toolbar color="primary">
+  <ion-toolbar color="dark">
     <ion-title>Detalles de Actividad</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="volver()">Cerrar</ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -33,13 +30,14 @@
     <ion-card-content>
       <p><strong>Fecha de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'mediumDate' }}</p>
       <p><strong>Fecha de Término:</strong> {{ actividad.Fecha_FIN_Actividad | date:'mediumDate' }}</p>
-      <p><strong>Hora de Inicio:</strong> {{ actividad.Hora_INI_Actividad | date:'shortTime' }}</p>
-      <p><strong>Hora de Término:</strong> {{ actividad.Hora_FIN_Actividad | date:'shortTime' }}</p>
+      <p><strong>Hora de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'shortTime' }}</p>
+      <p><strong>Hora de Término:</strong> {{ actividad.Fecha_TER_Actividad | date:'shortTime' }}</p>
     </ion-card-content>
   </ion-card>
 
   <!-- Botón de acción al final -->
   <div class="ion-text-center ion-padding">
-    <ion-button color="primary" expand="block" (click)="volver()">Volver</ion-button>
+    <ion-button color="secondary" expand="block" (click)="volver()">Volver</ion-button>
+    <ion-button color="success" expand="block" (click)="volver()">Unirse</ion-button>
   </div>
 </ion-content>

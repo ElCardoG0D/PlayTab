@@ -1,28 +1,56 @@
-ion-header {
-    .toolbar {
-      --background: linear-gradient(135deg, #be893b, #e19018) !important;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-    }
-  
-    ion-buttons {
-      ion-icon {
-        font-size: 30px;
-        color: #000;
-      }
-    }
-    
-    .logoW {
-      max-width: 100px;
-      height: auto;
-    }
+
+.toolbar {
+  --background: linear-gradient(135deg, #be893b, #e19018) !important;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 10px;
+  position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
-  
-  
+
+ion-buttons {
+  ion-icon {
+    font-size: 30px;
+    color: #000;
+  }
+}
+
+.logoW {
+  max-width: 100px;
+  height: auto;
+}
+
+
+//ajustar la imagen de perfil y nombre
+.profile-card {
+  padding-top: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-centered {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px;
+}
+
+ion-card-title {
+  margin-top: 10px;
+  font-size: 1.2rem;
+}
+
+.container-cerr{
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+
 
 
