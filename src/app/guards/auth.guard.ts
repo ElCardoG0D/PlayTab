@@ -11,7 +11,7 @@ export const authGuard: CanActivateFn = (route, state) => {
       return false;
     }
   } else {
-    if (state.url.startsWith('/tabs')) {
+    if (state.url.startsWith('/tabs') || state.url.startsWith('/tab')||state.url.startsWith('/actividades')||state.url.startsWith('/actividad-detalle-modal')) {
       router.navigate(['/login']);
       return false;
     }
