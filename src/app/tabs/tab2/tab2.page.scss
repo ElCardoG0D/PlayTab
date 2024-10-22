@@ -1,34 +1,27 @@
 ion-header {
-    .toolbar {
-      --background: linear-gradient(135deg, #be893b, #e19018) !important;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 10px;
-      position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
-      border-bottom-left-radius: 15px;
-      border-bottom-right-radius: 15px;
-      
-    }
-  
-    ion-buttons {
-      ion-icon {
-        font-size: 30px;
-        color: #000;
-      }
-    }
-    
-    .logoW {
-      max-width: 100px;
-      height: auto;
-    }
-}
+  .toolbar {
+    --background: linear-gradient(135deg, #FFA500, #FF8C00) !important;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+  }
 
-.BotonFlotante{
-    padding-bottom: 10px;
-    padding-right: 10px;
-}
+  ion-buttons {
+    ion-icon {
+      font-size: 30px;
+      color: #000;
+    }
+  }
 
+  .logoW {
+    max-width: 100px;
+    height: auto;
+  }
+}
 
 //font personalizado para escritura
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
