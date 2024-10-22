@@ -31,32 +31,29 @@
     <!-- Sección Sobre Mí -->
     <ion-list>
         <ion-list-header>
-        <ion-label>Sobre Mí</ion-label>
+        <ion-label class="Abt-me">Sobre Mí</ion-label>
         </ion-list-header>
 
         <ion-item>
         <ion-icon name="mail-outline" slot="start"></ion-icon>
         <ion-label>{{correoUser}}</ion-label>
-        <ion-note slot="end">Correo</ion-note>
         </ion-item>
 
         <ion-item>
         <ion-icon name="call-outline" slot="start"></ion-icon>
         <ion-label>{{telefonoUser}}</ion-label>
-        <ion-note slot="end">Celular</ion-note>
         </ion-item>
 
         <ion-item>
             <ion-icon name="globe-outline" slot="start"></ion-icon>
             <ion-label>{{regionUser}}>{{comunaUser}}</ion-label>
-            <ion-note slot="end">Ubicacion</ion-note>
         </ion-item>
     </ion-list>
 
     <!-- Sección Configuraciones -->
     <ion-list>
         <ion-list-header>
-        <ion-label>Configuraciones</ion-label>
+        <ion-label  class="Abt-me">Configuraciones</ion-label>
         </ion-list-header>
 
         <ion-item>
@@ -71,15 +68,12 @@
         <ion-toggle slot="end"></ion-toggle>
         </ion-item>
     </ion-list>
-
-    <!-- Pie de Página -->
-    <ion-footer class="ion-text-center">
-        <ion-text color="medium">
-        <small>Privacidad y Política</small>
-        </ion-text>
-    </ion-footer>
-
     <div class="container-cerr">
         <ion-button shape="round" (click)="logOut()">Cerrar sesión</ion-button>
+    </div>
+    <div class="container-cerr">
+      <ion-text color="medium">
+      <small>Privacidad y Política</small>
+      </ion-text>
     </div>
 </ion-content>
