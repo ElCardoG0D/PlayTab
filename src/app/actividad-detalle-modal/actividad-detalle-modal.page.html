@@ -1,17 +1,45 @@
 <ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>ActividadDetalleModal</ion-title>
+  <ion-toolbar color="primary">
+    <ion-title>Detalles de Actividad</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="volver()">Cerrar</ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">ActividadDetalleModal</ion-title>
-    </ion-toolbar>
-  </ion-header>
-</ion-content>
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Sección de encabezado de la actividad -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+      <ion-card-subtitle>Fecha de Inicio: {{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+      <ion-card-subtitle>Hora de Inicio: {{ actividad.Hora_INI_Actividad | date:'shortTime' }}</ion-card-subtitle>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
+      <p><strong>Dirección:</strong> {{ actividad.Direccion_Actividad }}</p>
+      <p><strong>Categoría:</strong> {{ actividad.Nom_Categoria }}</p>
+      <p><strong>Subcategoría:</strong> {{ actividad.Nom_SubCategoria }}</p>
+      <p><strong>Jugadores:</strong> Máximo {{ actividad.Cantidad_MaxJugador }}</p>
+    </ion-card-content>
+  </ion-card>
 
-<ion-buttons slot="end">
-  <ion-button color="primary" (click)="volver()">Volver</ion-button>
-</ion-buttons>
+  <!-- Sección de horario de la actividad -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Horario</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Fecha de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'mediumDate' }}</p>
+      <p><strong>Fecha de Término:</strong> {{ actividad.Fecha_FIN_Actividad | date:'mediumDate' }}</p>
+      <p><strong>Hora de Inicio:</strong> {{ actividad.Hora_INI_Actividad | date:'shortTime' }}</p>
+      <p><strong>Hora de Término:</strong> {{ actividad.Hora_FIN_Actividad | date:'shortTime' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón de acción al final -->
+  <div class="ion-text-center ion-padding">
+    <ion-button color="primary" expand="block" (click)="volver()">Volver</ion-button>
+  </div>
+</ion-content>

@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { ModalController } from '@ionic/angular'; 
+import { Component, Input, OnInit } from '@angular/core';
+import { ModalController } from '@ionic/angular';
+
 @Component({
   selector: 'app-actividad-detalle-modal',
   templateUrl: './actividad-detalle-modal.page.html',
@@ -8,16 +8,17 @@ import { ModalController } from '@ionic/angular';
 })
 export class ActividadDetalleModalPage implements OnInit {
 
+  @Input() actividad: any; 
+
   constructor(
-    private router: Router,
     private modalController: ModalController 
   ) { }
   
   ngOnInit() {
+    console.log('Actividad recibida:', this.actividad); // Verificar los datos recibidos
   }
   
-  
-  //cerrar modal
+  // Método para cerrar el modal
   volver() {
     this.modalController.dismiss(); // Cierra el modal
   }
