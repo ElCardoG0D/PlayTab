@@ -11,44 +11,53 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tab1',
-    loadChildren: () => import('./tabs/tab1/tab1.module').then( m => m.Tab1PageModule)
+    loadChildren: () => import('./tabs/tab1/tab1.module').then( m => m.Tab1PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tab2',
-    loadChildren: () => import('./tabs/tab2/tab2.module').then( m => m.Tab2PageModule)
+    loadChildren: () => import('./tabs/tab2/tab2.module').then( m => m.Tab2PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tab3',
-    loadChildren: () => import('./tabs/tab3/tab3.module').then( m => m.Tab3PageModule)
+    loadChildren: () => import('./tabs/tab3/tab3.module').then( m => m.Tab3PageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'recover-pw',
-    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPwPageModule)
+    loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPwPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'register',
-    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule)
+    loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
+    canActivate:[authGuard]
   },
   {
     path: 'actividades',
-    loadChildren: () => import('./actividades/actividades.module').then( m => m.ActividadesPageModule)
+    loadChildren: () => import('./actividades/actividades.module').then( m => m.ActividadesPageModule),
+    canActivate:[authGuard]
+  },
+  {
+    path: 'actividad-detalle-modal',
+    loadChildren: () => import('./actividad-detalle-modal/actividad-detalle-modal.module').then( m => m.ActividadDetalleModalPageModule),
+    canActivate:[authGuard]
   },
   {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
-  },  {
-    path: 'actividad-detalle-modal',
-    loadChildren: () => import('./actividad-detalle-modal/actividad-detalle-modal.module').then( m => m.ActividadDetalleModalPageModule)
   },
-
 ];
 
 @NgModule({

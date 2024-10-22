@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-e404',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class E404Page implements OnInit {
 
-  constructor() { }
+  constructor(private loc : Location) { }
 
   ngOnInit() {
+  }
+
+  volver(){
+    this.loc.back();
   }
 
 }
