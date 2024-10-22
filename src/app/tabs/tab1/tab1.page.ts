@@ -13,7 +13,7 @@ import { Router } from '@angular/router';
 export class Tab1Page implements OnInit {
   actividades: any[] = []; // Almacenar las actividades
   coloresActividades: string[] = []; // Array para almacenar los colores
-  actividadesAleatorias: any[] = []; // Almacenar actividades aleatorias
+  actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
   colors = [
     'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
   ];
@@ -23,7 +23,7 @@ export class Tab1Page implements OnInit {
     private dbService: DatabaseService,
     private alertController: AlertController,
     private router: Router,
-    private modalController: ModalController // Añadido el ModalController
+    private modalController: ModalController 
   ) {}
 
   ngOnInit() {
@@ -73,9 +73,8 @@ export class Tab1Page implements OnInit {
     const shuffled = actividades.sort(() => 0.5 - Math.random()); 
     return shuffled.slice(0, count); 
   }
-
-  // Método para abrir el modal al hacer clic en una tarjeta
-  async onCardClick(actividad: any) {
+   // Método para abrir el modal al hacer clic en una tarjeta
+   async onCardClick(actividad: any) {
     console.log('Actividad clickeada:', actividad);
     
     const modal = await this.modalController.create({
