@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: '1111', // Cambia si tu contraseña es diferente
+  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -20,8 +20,7 @@ const db = mysql.createConnection({
 db.connect((err) => {
   if (err) {
     console.error('Error connecting to the database:', err);
-    return;
-  }
+    return;  }
   console.log('Connected to MySQL database');
 });
 
