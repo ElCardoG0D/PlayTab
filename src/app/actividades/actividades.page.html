@@ -69,16 +69,12 @@
 
   <!-- Hora de inicio -->
   <ion-item>
-    <ion-label position="stacked">Hora de inicio</ion-label>
+    <ion-label position="stacked">Tiempo límite de registro</ion-label>
+    <ion-label position="stacked">Desde:</ion-label>
     <ion-input type="time" [(ngModel)]="horaActividad" required></ion-input>
-  </ion-item>
-
-  <!-- Hora de término -->
-  <ion-item>
-    <ion-label position="stacked">Hora de término</ion-label>
+    <ion-label position="stacked">Hasta:</ion-label>
     <ion-input type="time" [(ngModel)]="horaTerminoActividad" required></ion-input>
   </ion-item>
-
 
   <!-- Botón Guardar -->
   <ion-item lines="none">

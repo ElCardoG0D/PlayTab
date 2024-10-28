@@ -82,22 +82,43 @@ export class ActividadesPage implements OnInit {
   }
 
   async crearActividad() {
-    if (!this.nomActividad || !this.descActividad || !this.direccionActividad || this.maxJugadores <= 0 || !this.horaActividad || !this.horaTerminoActividad) {
+    if (
+      !this.nomActividad || 
+      !this.descActividad || 
+      !this.direccionActividad || 
+      this.maxJugadores <= 0 || 
+      !this.horaActividad || 
+      !this.horaTerminoActividad
+    ) {
       this.presentAlert('Error', 'Por favor, completa todos los campos correctamente.');
       return;
     }
-
-    // Obtener la fecha de inicio (puedes ajustar esto según necesites)
-    const fechaInicioActividad = new Date();
+  
+    // Obtener la fecha actual para combinarla con la hora ingresada
+    const fechaActual = new Date();
+  
+    // Obtener horas y minutos de las horas ingresadas
     const [horaInicio, minutosInicio] = this.horaActividad.split(':').map(Number);
-    fechaInicioActividad.setHours(horaInicio, minutosInicio, 0);
-
     const [horaTermino, minutosTermino] = this.horaTerminoActividad.split(':').map(Number);
-    const fechaTerminoActividad = new Date(fechaInicioActividad); // Clonamos la fecha de inicio
-    fechaTerminoActividad.setHours(horaTermino, minutosTermino, 0);
-
-    const fechaTerminoActividadString = fechaTerminoActividad.toISOString().slice(0, 19).replace('T', ' '); // Formato YYYY-MM-DD HH:mm:ss
-
+  
+    // Ajustar la fecha de inicio con la hora ingresada manualmente
+    const fechaInicioActividad = new Date(fechaActual);
+    fechaInicioActividad.setHours(horaInicio, minutosInicio, 0, 0);
+  
+    // Ajustar la fecha de término con la hora ingresada manualmente
+    const fechaTerminoActividad = new Date(fechaActual);
+    fechaTerminoActividad.setHours(horaTermino, minutosTermino, 0, 0);
+  
+    // Ajustar fechas según la zona horaria local del cliente
+    const offset = fechaInicioActividad.getTimezoneOffset() * 60000;
+  
+    const fechaInicioAjustada = new Date(fechaInicioActividad.getTime() - offset);
+    const fechaTerminoAjustada = new Date(fechaTerminoActividad.getTime() - offset);
+  
+    // Formatear las fechas en formato MySQL (YYYY-MM-DD HH:mm:ss)
+    const fechaInicioString = fechaInicioAjustada.toISOString().slice(0, 19).replace('T', ' ');
+    const fechaTerminoString = fechaTerminoAjustada.toISOString().slice(0, 19).replace('T', ' ');
+  
     try {
       const usuario = this.localS.ObtenerUsuario('user');
       if (usuario) {
@@ -108,22 +129,22 @@ export class ActividadesPage implements OnInit {
       } else {
         console.warn('No se encontró información del usuario en el LocalStorage.');
       }
-
+  
       // Llamada para registrar la actividad
       await this.dbService.registerActividad(
         this.nomActividad,
         this.descActividad,
         this.direccionActividad,
         this.maxJugadores,
-        fechaInicioActividad.toISOString().slice(0, 19).replace('T', ' '), // Convertir a formato de cadena si es necesario
-        fechaTerminoActividadString,   
+        fechaInicioString,
+        fechaTerminoString,
         this.Id_Comuna,
         this.subcategoriaSeleccionada,
         this.Id_Anfitrion
       ).toPromise();
-
+  
       this.presentAlert('¡Felicidades!', 'Actividad registrada con éxito.');
-
+  
       // Limpiar los campos
       this.nomActividad = '';
       this.descActividad = '';
@@ -135,6 +156,7 @@ export class ActividadesPage implements OnInit {
       this.subcategoriaSeleccionada = 0;
       this.Id_Anfitrion = 0;
       this.router.navigate(['./tabs/tab2']);
+  
     } catch (error) {
       this.presentAlert('Error', 'No se pudo registrar la actividad.');
       console.log('Preparando datos para crear actividad:', {
@@ -150,6 +172,7 @@ export class ActividadesPage implements OnInit {
       });
     }
   }
+  
 
   //este para volver a tab2
   volver() {
