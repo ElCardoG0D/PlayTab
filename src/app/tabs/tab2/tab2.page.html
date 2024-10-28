@@ -18,21 +18,21 @@
     </ion-toolbar>
 
     <!-- Actividades -->
-  <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
-    <ion-card-header>
-      <div class="card-title-container">
-        <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
-      </div>
-      <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
-    </ion-card-header>
-    <ion-card-content>
-      <p>{{ actividad.Nom_SubCategoria }}</p>
-      <p>{{ actividad.Desc_Actividad }}</p>
-      <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
-      <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
-    </ion-card-content>
-  </ion-card>
-
+    <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
+      <ion-card-header>
+        <div class="card-title-container">
+          <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+        </div>
+        <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+      </ion-card-header>
+      <ion-card-content>
+        <img [src]="actividad.Url" alt="{{ actividad.Nom_Actividad }}" class="actividad-image" />
+        <p>{{ actividad.Nom_SubCategoria }}</p>
+        <p>{{ actividad.Desc_Actividad }}</p>
+        <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
+        <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
+      </ion-card-content>
+    </ion-card>
   
   <!-- Aquí irá la parte para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">

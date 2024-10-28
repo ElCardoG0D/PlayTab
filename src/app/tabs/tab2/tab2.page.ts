@@ -30,14 +30,18 @@ export class Tab2Page implements OnInit {
     console.log('Usuario:', user);
     this.cargarActividades(); // Cargar actividades
   }
-
   cargarActividades() {
     this.dbService.getActividades().subscribe(
       (data) => {
         this.actividades = data;
-
+  
         // Asignar colores a todas las actividades
         this.coloresActividades = this.actividades.map(() => this.getRandomColor());
+  
+        // Asegúrate de que las imágenes están correctamente asignadas
+        this.actividades.forEach(actividad => {
+          actividad.Url = actividad.Url || 'assets/default-image.jpg'; // Usa una imagen predeterminada si no hay URL
+        });
         
         console.log('Actividades:', this.actividades); 
         console.log('Colores asignados:', this.coloresActividades);
