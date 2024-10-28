@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
+  password: '1111', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -197,7 +197,7 @@ app.get('/cantidad', (req, res) => {
 // 5. Este es para obtener las actividades
 // Endpoint para obtener todas las actividades
 app.get('/actividades', (req, res) => {
-  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria';
+  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);

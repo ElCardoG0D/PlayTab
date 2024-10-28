@@ -36,10 +36,11 @@ export class Tab1Page implements OnInit {
     this.dbService.getActividades().subscribe(
       (data) => {
         this.actividades = data;
-  
+
         // Obtener 6 actividades aleatorias
         this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
         
+        // Generar colores aleatorios para cada actividad
         this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
         
         console.log('Actividades aleatorias:', this.actividadesAleatorias); 
