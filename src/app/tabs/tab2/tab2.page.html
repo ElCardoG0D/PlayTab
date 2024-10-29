@@ -26,7 +26,7 @@
         <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
       </ion-card-header>
       <ion-card-content>
-        <img [src]="actividad.Url" alt="{{ actividad.Nom_Actividad }}" class="actividad-image" />
+        <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
         <p>{{ actividad.Nom_SubCategoria }}</p>
         <p>{{ actividad.Desc_Actividad }}</p>
         <p>Dirección: {{ actividad.Direccion_Actividad }}</p>

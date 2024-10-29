@@ -1,4 +1,3 @@
-////estilo header
 ion-header {
   .toolbar {
     --background: linear-gradient(135deg, #ff6600, #c0b626);
@@ -27,6 +26,16 @@ ion-header {
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)); 
   }
 }
+
+.img {
+  width: 100px; /* Ajusta el tamaño según lo que necesites */
+  height: 100px;
+  object-fit: cover; /* Mantiene la proporción sin deformar */
+  border-radius: 8px; /* Añade bordes redondeados si lo prefieres */
+  margin: 10px auto; /* Centra la imagen */
+  display: block;
+}
+
 
 // Font personalizado para escritura
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');

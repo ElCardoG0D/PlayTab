@@ -124,6 +124,7 @@ app.post('/actividad', (req, res) => {
     res.status(201).json({ message: 'Actividad registrada exitosamente', id: result.insertId });
   });
 });
+
 // Ruta para el login del usuario (Obtener los datos de la consulta)
 app.post('/login', (req, res) => {
   const { Correo_User, Contra_User } = req.body;
@@ -132,7 +133,6 @@ app.post('/login', (req, res) => {
     return res.status(400).json({ error: 'Correo y contraseña son requeridos' });
   }
 
-  // SQL query para verificar las credenciales del usuario
   const query = `
   SELECT 
     Id_User, Nom_User, Correo_User, Celular_User, 
@@ -194,10 +194,11 @@ app.get('/cantidad', (req, res) => {
     }
   });
 });
+
 // 5. Este es para obtener las actividades
 // Endpoint para obtener todas las actividades
 app.get('/actividades', (req, res) => {
-  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
+  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria inner join CATEGORIA C on s.Id_Categoria=C.Id_Categoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);

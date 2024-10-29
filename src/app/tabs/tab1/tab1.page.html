@@ -16,8 +16,7 @@
   <ion-card *ngFor="let actividad of actividadesAleatorias; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
     <ion-card-header>
       <!-- Mostrar imagen si existe, si no, mostrar imagen de reemplazo -->
-      <img [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" class="actividad-image" />
-      
+      <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
       <div class="card-title-container">
         <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
       </div>

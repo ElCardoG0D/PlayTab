@@ -9,8 +9,6 @@
   <ion-card>
     <ion-card-header>
       <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
-      <ion-card-subtitle>Fecha de Inicio: {{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
-      <ion-card-subtitle>Hora de Inicio: {{ actividad.Hora_INI_Actividad | date:'shortTime' }}</ion-card-subtitle>
     </ion-card-header>
     
     <ion-card-content>
@@ -25,11 +23,10 @@
   <!-- Sección de horario de la actividad -->
   <ion-card>
     <ion-card-header>
-      <ion-card-title>Horario</ion-card-title>
+      <ion-card-title>Lapso de inscripción</ion-card-title>
     </ion-card-header>
     <ion-card-content>
-      <p><strong>Fecha de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'mediumDate' }}</p>
-      <p><strong>Fecha de Término:</strong> {{ actividad.Fecha_FIN_Actividad | date:'mediumDate' }}</p>
+      <p><strong>Fecha:</strong> {{ actividad.Fecha_TER_Actividad | date:'mediumDate' }}</p>
       <p><strong>Hora de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'shortTime' }}</p>
       <p><strong>Hora de Término:</strong> {{ actividad.Fecha_TER_Actividad | date:'shortTime' }}</p>
     </ion-card-content>

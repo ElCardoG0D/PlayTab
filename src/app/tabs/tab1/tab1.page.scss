@@ -25,6 +25,15 @@ ion-header {
   }
 }
 
+.img {
+  width: 100px; /* Ajusta el tamaño según lo que necesites */
+  height: 100px;
+  object-fit: cover; /* Mantiene la proporción sin deformar */
+  border-radius: 8px; /* Añade bordes redondeados si lo prefieres */
+  margin: 10px auto; /* Centra la imagen */
+  display: block;
+}
+
 // textos
 .actividades-rapidas {
   margin-left: 15px;
