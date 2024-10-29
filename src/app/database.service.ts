@@ -106,4 +106,19 @@ export class DatabaseService {
   getActividades(): Observable<any> {
     return this.http.get(`${this.apiUrl}/actividades`);
   }
+
+  //8. Método para registrar al participante
+  registerParticipante(idActividad: number, idUser: number, idAsistencia: number = 800): Observable<any> {
+    const url = `${this.apiUrl}/participante`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    const body = {
+      Id_Actividad: idActividad,
+      Id_Asistencia: idAsistencia,
+      Id_User: idUser,
+    };
+  
+    return this.http.post(url, body, { headers });
+  }
+
 }

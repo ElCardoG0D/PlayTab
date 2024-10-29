@@ -198,7 +198,7 @@ app.get('/cantidad', (req, res) => {
 // 5. Este es para obtener las actividades
 // Endpoint para obtener todas las actividades
 app.get('/actividades', (req, res) => {
-  const query = 'SELECT a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria inner join CATEGORIA C on s.Id_Categoria=C.Id_Categoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
+  const query = 'SELECT a.Id_Actividad, a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria inner join CATEGORIA C on s.Id_Categoria=C.Id_Categoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
   db.query(query, (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);
@@ -207,6 +207,29 @@ app.get('/actividades', (req, res) => {
     res.json(results);
   });
 });
+
+// Función para insertar participante en la Actividad
+app.post('/participante', (req, res) => {
+  const { Id_Actividad, Id_Asistencia, Id_User } = req.body;
+
+  if (!Id_Actividad || !Id_User) {
+    return res.status(400).json({ error: 'Faltan datos requeridos' });
+  }
+
+  const query = `
+    INSERT INTO PARTICIPANTE (Id_Actividad, Id_Asistencia, Id_User) 
+    VALUES (?, ?, ?)
+  `;
+
+  db.query(query, [Id_Actividad, Id_Asistencia || 800, Id_User], (err, result) => {
+    if (err) {
+      console.error('Error al insertar participante:', err);
+      return res.status(500).json({ error: 'Error al insertar participante' });
+    }
+    res.status(201).json({ message: 'Participante registrado exitosamente' });
+  });
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {

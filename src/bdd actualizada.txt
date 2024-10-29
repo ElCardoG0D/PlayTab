@@ -157,12 +157,11 @@ CREATE TABLE FAVORITO (
     ON UPDATE NO ACTION
 );
 
--- Tabla PARTICIPANTE
 CREATE TABLE IF NOT EXISTS `PlayTab`.`PARTICIPANTE` (
   `Id_Actividad` INT NOT NULL,
-  `Id_Asistencia` INT NOT NULL,
   `Id_User` INT NOT NULL,
-  PRIMARY KEY (`Id_Actividad`, `Id_Asistencia`, `Id_User`),
+  `Id_Asistencia` INT NOT NULL,
+  PRIMARY KEY (`Id_Actividad`, `Id_User`), -- Llave primaria compuesta
   CONSTRAINT `FK_Participante_Actividad`
     FOREIGN KEY (`Id_Actividad`)
     REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
@@ -172,34 +171,20 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`PARTICIPANTE` (
     FOREIGN KEY (`Id_User`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_Participante_Asistencia`
+    FOREIGN KEY (`Id_Asistencia`)
+    REFERENCES `PlayTab`.`ASISTENCIA` (`Id_Asistencia`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
+
 
 -- Tabla ASISTENCIA
 CREATE TABLE IF NOT EXISTS `PlayTab`.`ASISTENCIA` (
   `Id_Asistencia` INT NOT NULL UNIQUE,
   `Tipo_Asistencia` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Id_Asistencia`)
-) ENGINE = InnoDB;
-
--- Tabla CHAT
-CREATE TABLE IF NOT EXISTS `PlayTab`.`CHAT` (
-  `Id_Chat` INT auto_increment NOT NULL UNIQUE,
-  `Cont_Chat` VARCHAR(300) NOT NULL,
-  `Id_User` INT NOT NULL,
-  `Id_Actividad` INT NOT NULL,
-  `Fecha_chat` DATE NOT NULL,
-  PRIMARY KEY (`Id_Chat`),
-  CONSTRAINT `FK_Chat_User`
-    FOREIGN KEY (`Id_User`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Chat_Actividad`
-    FOREIGN KEY (`Id_Actividad`)
-    REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Tabla CLASIFICACION
@@ -273,6 +258,74 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`HISTORIAL` (
 
 -- Habilitar restricciones de claves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+-- TRIGGERS's
+DELIMITER //
+
+-- Trigger para que el anfitrion no se repita por actividad
+CREATE TRIGGER AddAnfitrionToParticipante
+AFTER INSERT ON `PlayTab`.`ACTIVIDAD`
+FOR EACH ROW
+BEGIN
+    INSERT INTO `PlayTab`.`PARTICIPANTE` (
+        `Id_Actividad`, `Id_User`, `Id_Asistencia`
+    ) 
+    VALUES (
+        NEW.Id_Actividad, 
+        NEW.Id_Anfitrion_Actividad,
+        800
+    );
+END //
+
+DELIMITER ;
+
+-- Trigger para que se inscriba en las horas establecidad y no se inscriba repetidas veces.
+DELIMITER //
+
+CREATE PROCEDURE InscribirParticipanteSimple(
+    IN p_Id_Actividad INT, 
+    IN p_Id_User INT
+)
+BEGIN
+    DECLARE max_jugadores INT;
+    DECLARE jugadores_inscritos INT;
+    DECLARE fecha_inicio DATETIME;
+    DECLARE fecha_fin DATETIME;
+
+    -- Obtener la cantidad máxima de jugadores para la actividad
+    SELECT m.Cantidad_MaxJugador INTO max_jugadores
+    FROM `PlayTab`.`ACTIVIDAD` a
+    JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
+    WHERE a.Id_Actividad = p_Id_Actividad;
+
+    -- Contar los jugadores ya inscritos en la actividad
+    SELECT COUNT(*) INTO jugadores_inscritos
+    FROM `PlayTab`.`PARTICIPANTE`
+    WHERE Id_Actividad = p_Id_Actividad;
+
+    -- Obtener la fecha de inicio y fin de la actividad
+    SELECT Fecha_INI_Actividad, Fecha_TER_Actividad INTO fecha_inicio, fecha_fin
+    FROM `PlayTab`.`ACTIVIDAD`
+    WHERE Id_Actividad = p_Id_Actividad;
+
+    -- Validaciones: Verificar horario y cupo máximo
+    IF NOW() NOT BETWEEN fecha_inicio AND fecha_fin THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'La inscripción no está permitida fuera del horario de la actividad.';
+    ELSEIF jugadores_inscritos >= max_jugadores THEN
+        SIGNAL SQLSTATE '45000' 
+        SET MESSAGE_TEXT = 'No se puede inscribir más jugadores, se alcanzó el máximo permitido.';
+    ELSE
+        -- Insertar el participante en la actividad
+        INSERT INTO `PlayTab`.`PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
+        VALUES (p_Id_Actividad, p_Id_User, 1); -- 1: Asistencia predeterminada
+    END IF;
+END //
+
+DELIMITER ;
+
+
 
 
 -- Inserción en REGION
@@ -351,30 +404,16 @@ INSERT INTO `PlayTab`.`ACTIVIDAD`
 ('Partido de League of Legends', 'Encuentro amistoso de League of Legends', 'Dirección de partido',20, '2024-10-01 16:00:00', '2024-10-01 18:00:00', 200, 10002, 15, 101), -- Ana Gómez
 ('Caminata por el Lago', 'Caminata grupal alrededor del lago', 'Dirección de caminata',60, '2024-10-02 09:00:00', '2024-10-02 11:00:00', 300, 20007, 15, 102); -- Luis Martínez
 
--- Inserción en Historial
-INSERT INTO `PlayTab`.`HISTORIAL` (`Id_User`, `Id_Actividad`, `Id_SubCategoria`) VALUES
-(100, 1000, 20001),  -- Juan Pérez participó en el Torneo de Fútbol
-(101, 1001, 10002),  -- Ana Gómez participó en el Partido de League of Legends
-(102, 1002, 20007);  -- Luis Martínez participó en la Caminata por el Lago
-
 -- Inserción en Favorito
 INSERT INTO `PlayTab`.`FAVORITO` (`Id_User`, `Id_SubCategoria`) VALUES
 (100, 20001),  -- Juan Pérez marcó el Torneo de Fútbol como favorito
 (101, 10002),  -- Ana Gómez marcó el Partido de League of Legends como favorito
 (100, 20007);  -- Juan Pérez también marcó la Caminata por el Lago como favorito
 
--- Insersión Participante
-INSERT INTO `PlayTab`.`PARTICIPANTE` (`Id_Actividad`, `Id_Asistencia`, `Id_User`) VALUES
-(1000, 800, 100),  -- Juan Pérez presente en el Torneo de Fútbol
-(1000, 900, 101),  -- Ana Gómez ausente en el Torneo de Fútbol
-(1001, 800, 101),  -- Ana Gómez presente en el Partido de League of Legends
-(1002, 800, 102);  -- Luis Martínez presente en la Caminata por el Lago
-
 INSERT INTO `PlayTab`.`CLASIFICACION` (`Comentario_clasificacion`,`Id_User`,`Id_User_Clasificar`, `Id_NomClasificacion`) VALUES
 ('¡Gran torneo! Muy divertido.',100,102, 25),  -- Juan Pérez clasifica el Torneo de Fútbol como Muy Bueno
 ('Me encantó el partido.',101,103, 20),         -- Ana Gómez clasifica el Partido de League of Legends como Bueno
-('Una buena experiencia.',102,104, 15);         -- Luis Martínez clasifica la Caminata por el Lago como Regular
-
+('Una buena experiencia.',102,104, 15); 
 
 -- insert imagenes aactividades
 insert into imagen(Id_SubCategoria,Url) values(10002,"assets/portrait/lol.jpg");
