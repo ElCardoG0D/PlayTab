@@ -103,8 +103,8 @@ export class DatabaseService {
   }
 
   //7. Obtener actividades, este es para el tab 1
-  getActividades(): Observable<any> {
-    return this.http.get(`${this.apiUrl}/actividades`);
+  getActividades(idComuna: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/actividades?id_comuna=${idComuna}`);
   }
 
   //8. Método para registrar al participante

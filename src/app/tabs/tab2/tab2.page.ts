@@ -28,19 +28,23 @@ export class Tab2Page implements OnInit {
   ngOnInit() {
     const user = this.localS.ObtenerUsuario('user');
     console.log('Usuario:', user);
-    this.cargarActividades(); // Cargar actividades
+    this.cargarActividades();
   }
   cargarActividades() {
-    this.dbService.getActividades().subscribe(
+    const user = this.localS.ObtenerUsuario('user');
+    
+    // Extraer Id_Comuna del usuario
+    const idComuna = user?.Id_Comuna;
+
+    this.dbService.getActividades(idComuna).subscribe(
       (data) => {
         this.actividades = data;
   
         // Asignar colores a todas las actividades
         this.coloresActividades = this.actividades.map(() => this.getRandomColor());
   
-        // Asegúrate de que las imágenes están correctamente asignadas
         this.actividades.forEach(actividad => {
-          actividad.Url = actividad.Url || 'assets/default-image.jpg'; // Usa una imagen predeterminada si no hay URL
+          actividad.Url = actividad.Url || 'assets/default-image.jpg';
         });
         
         console.log('Actividades:', this.actividades); 

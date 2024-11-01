@@ -198,8 +198,9 @@ app.get('/cantidad', (req, res) => {
 // 5. Este es para obtener las actividades
 // Endpoint para obtener todas las actividades
 app.get('/actividades', (req, res) => {
-  const query = 'SELECT a.Id_Actividad, a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a Inner join maxjugador m on a.Id_Maxjugador=m.Id_Maxjugador Inner join subcategoria s on s.Id_SubCategoria=a.Id_SubCategoria inner join CATEGORIA C on s.Id_Categoria=C.Id_Categoria left join imagen i on s.Id_SubCategoria=i.Id_SubCategoria;';
-  db.query(query, (err, results) => {
+  const { Id_Comuna } = req.query;
+  const query = 'SELECT a.Id_Actividad, a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a INNER JOIN maxjugador m ON a.Id_Maxjugador = m.Id_Maxjugador INNER JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria INNER JOIN CATEGORIA C ON s.Id_Categoria = C.Id_Categoria LEFT JOIN imagen i ON s.Id_SubCategoria = i.Id_SubCategoria WHERE a.Id_Comuna = ?;';
+  db.query(query, [Id_Comuna], (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);
       return res.status(500).json({ error: 'Error al obtener actividades' });

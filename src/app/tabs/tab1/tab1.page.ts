@@ -29,28 +29,40 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     const user = this.localS.ObtenerUsuario('user');
     console.log('Usuario:', user);
-    this.cargarActividades(); // Cargar actividades
+    this.cargarActividades(); 
   }
 
   cargarActividades() {
-    this.dbService.getActividades().subscribe(
-      (data) => {
-        this.actividades = data;
-
-        // Obtener 6 actividades aleatorias
-        this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
-        
-        // Generar colores aleatorios para cada actividad
-        this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
-        
-        console.log('Actividades aleatorias:', this.actividadesAleatorias); 
-        console.log('Colores asignados:', this.coloresActividades);
-      },
-      (error) => {
-        console.error('Error al obtener actividades:', error);
-        this.presentAlert('Error', 'No se pudieron cargar las actividades.');
-      }
-    );
+    // Obtener el usuario completo desde Local Storage
+    const user = this.localS.ObtenerUsuario('user');
+    
+    // Extraer Id_Comuna del usuario
+    const idComuna = user?.Id_Comuna;
+    
+    if (idComuna) {
+      // Llamar al servicio con el Id_Comuna directamente
+      this.dbService.getActividades(idComuna).subscribe(
+        (data) => {
+          this.actividades = data;
+  
+          // Obtener 6 actividades aleatorias
+          this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
+          
+          // Generar colores aleatorios para cada actividad
+          this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
+          
+          console.log('Actividades aleatorias:', this.actividadesAleatorias); 
+          console.log('Colores asignados:', this.coloresActividades);
+        },
+        (error) => {
+          console.error('Error al obtener actividades:', error);
+          this.presentAlert('Error', 'No se pudieron cargar las actividades.');
+        }
+      );
+    } else {
+      console.error('No se encontró el Id_Comuna del usuario.');
+      this.presentAlert('Error', 'No se pudo cargar el Id_Comuna del usuario.');
+    }
   }
 
   // Método para mostrar una alerta
