@@ -4,13 +4,15 @@ import { DatabaseService } from 'src/app/database.service';
 import { AlertController, ModalController } from '@ionic/angular'; // Importa ModalController
 import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
 import { Router } from '@angular/router';
-
+import { WeatherService } from '../../weather.service';
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
 })
 export class Tab1Page implements OnInit {
+  weatherData: any;
+  weatherIconUrl: string='';
   actividades: any[] = []; // Almacenar las actividades
   coloresActividades: string[] = []; // Array para almacenar los colores
   actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
@@ -23,13 +25,15 @@ export class Tab1Page implements OnInit {
     private dbService: DatabaseService,
     private alertController: AlertController,
     private router: Router,
-    private modalController: ModalController 
+    private modalController: ModalController,
+    private weatherService: WeatherService
   ) {}
 
   ngOnInit() {
     const user = this.localS.ObtenerUsuario('user');
     console.log('Usuario:', user);
     this.cargarActividades(); 
+    this.getLocationAndWeather();
   }
 
   cargarActividades() {
@@ -99,5 +103,33 @@ export class Tab1Page implements OnInit {
     
     return await modal.present();
   }
+  getLocationAndWeather() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
 
+        this.weatherService.getWeatherByLocation(lat, lon).subscribe(data => {
+          this.weatherData = data; // Guardar datos del clima
+          console.log('Datos del clima:', this.weatherData);
+
+          // Obtener el código del icono y construir la URL
+          const weatherIconCode = this.weatherData.weather[0].icon; // Obtener el código del ícono
+          this.weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`; // Construir la URL del ícono
+          console.log('URL del ícono del clima:', this.weatherIconUrl); // Verificar la URL en la consola
+        }, error => {
+          console.error('Error al obtener el clima:', error);
+          this.presentAlert('Error', 'No se pudo obtener el clima.');
+        });
+      }, error => {
+        console.error('Error al obtener la ubicación:', error);
+        this.presentAlert('Error', 'No se pudo obtener la ubicación.');
+      });
+    } else {
+      console.error('Geolocalización no es soportada en este navegador.');
+      this.presentAlert('Error', 'Geolocalización no es soportada.');
+    }
+  }
+  
+  
 }

@@ -1,6 +1,6 @@
 const express = require('express');
 const mysql = require('mysql2');
-const cors = require('cors'); // Importa CORS para permitir solicitudes de otros dominios
+const cors = require('cors'); 
 const app = express();
 const port = 3000;
 
@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root', // Cambia si tu contraseña es diferente
+  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 

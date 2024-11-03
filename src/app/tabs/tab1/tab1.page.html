@@ -15,7 +15,6 @@
   <h1 class="actividades-rapidas">Actividades Rápidas</h1>
   <ion-card *ngFor="let actividad of actividadesAleatorias; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
     <ion-card-header>
-      <!-- Mostrar imagen si existe, si no, mostrar imagen de reemplazo -->
       <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
       <div class="card-title-container">
         <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
@@ -30,5 +29,23 @@
       <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
     </ion-card-content>
   </ion-card>
+
   <h1 class="actividades-rapidas">También te podría interesar</h1>
+  <ion-card *ngIf="weatherData">
+    <ion-card-header>
+      <ion-card-title>{{ weatherData.name }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p>Temperatura: {{ weatherData.main.temp }} °C</p>
+      <p>Descripción: {{ weatherData.weather[0].description }}</p>
+      <p>Humedad: {{ weatherData.main.humidity }}%</p>
+      <img *ngIf="weatherIconUrl" [src]="weatherIconUrl" alt="Icono del clima" />
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="!weatherData">
+    <ion-card-header>
+      <ion-card-title>Cargando clima...</ion-card-title>
+    </ion-card-header>
+  </ion-card>
+  
 </ion-content>
