@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
+  password: 'root', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
