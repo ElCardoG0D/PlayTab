@@ -1,9 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="notifications-outline"></ion-icon>
-      </ion-button>
     </ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
@@ -12,32 +9,39 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-    <!-- Barra de busaqueda -->
-    <ion-toolbar>
-      <ion-searchbar></ion-searchbar>
-    </ion-toolbar>
+  <!-- Barra de búsqueda -->
+  <ion-toolbar>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
 
-    <!-- Actividades -->
-    <ion-card *ngFor="let actividad of actividades; let i = index" [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
-      <ion-card-header>
-        <div class="card-title-container">
-          <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
-        </div>
-        <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
-      </ion-card-header>
-      <ion-card-content>
-        <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
-        <p>{{ actividad.Nom_SubCategoria }}</p>
-        <p>{{ actividad.Desc_Actividad }}</p>
-        <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
-        <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
-      </ion-card-content>
-    </ion-card>
-  
-  <!-- Aquí irá la parte para registrar actividad -->
+  <!-- Actividades en formato de dos tarjetas por fila -->
+  <ion-grid>
+    <ion-row>
+      <ion-col size="6" *ngFor="let actividad of actividades; let i = index">
+        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
+          <ion-card-header>
+            <div class="card-title-container">
+              <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+            </div>
+            <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
+            <p>{{ actividad.Nom_SubCategoria }}</p>
+            <p>{{ actividad.Desc_Actividad }}</p>
+            <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
+            <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!-- Botón flotante para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button expand="block" class="colorFab" (click)="enviarPagAct()">
       <ion-icon name="add"></ion-icon>
     </ion-fab-button>
   </ion-fab>    
 </ion-content>
+

@@ -77,13 +77,13 @@ ion-card.col-card5 {
   border: 2px solid #d1c4e9;
 }
 
-// Diseño de la card
+
 ion-card {
   margin-top: 30px;
   padding: 10px;
 }
 
-// Contenedor título de la card
+
 .card-title-container {
   display: flex;
   justify-content: center;
@@ -92,4 +92,19 @@ ion-card {
   text-align: center;
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
+}
+
+.weather-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.weather-details {
+  flex: 1;
+}
+
+.weather-icon {
+  width: 50px; 
+  height: auto;
 }
