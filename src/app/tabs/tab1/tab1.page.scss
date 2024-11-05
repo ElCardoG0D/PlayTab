@@ -4,26 +4,33 @@
 // configuraciones toolbar logo y botones
 ion-header {
   .toolbar {
-    --background: linear-gradient(135deg, #FFA500, #FF8C00);
+    --background: linear-gradient(135deg, #ff6600, #c0b626);
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 0 10px;
-    position: relative; /* Asegura el posicionamiento relativo para centrar el logo */
+    padding: 0 20px; 
+    position: relative;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
   }
+  
   ion-buttons {
     ion-icon {
-      font-size: 30px;
-      color: #000;
+      font-size: 30px; 
+      color: #fff; 
+      margin-left: -10px;
     }
   }
+
   .logoW {
-    max-width: 100px;
+    max-width: 90px; 
     height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)); 
   }
 }
+
 
 .img {
   width: 100px; /* Ajusta el tamaño según lo que necesites */
@@ -42,6 +49,7 @@ ion-header {
 }
 
 // colores card
+// Colores de las tarjetas
 ion-card.col-card1 {
   background-color: #FF9999;
   color: black;
@@ -77,13 +85,13 @@ ion-card.col-card5 {
   border: 2px solid #d1c4e9;
 }
 
-
+// Diseño de la card
 ion-card {
   margin-top: 30px;
   padding: 10px;
 }
 
-
+// Contenedor título de la card
 .card-title-container {
   display: flex;
   justify-content: center;
@@ -91,7 +99,17 @@ ion-card {
   height: 100%;
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  font-weight: 700;
+  font-weight: 700; /* Asegura que el texto esté en negrita */
+}
+
+// Estilo para la imagen dentro de las tarjetas
+.img {
+  width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho disponible */
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Mantiene la proporción sin deformar */
+  border-radius: 8px; /* Bordes redondeados */
+  margin: 10px auto; /* Centra la imagen */
+  display: block;
 }
 
 .weather-info {

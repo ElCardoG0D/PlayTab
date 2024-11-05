@@ -27,24 +27,24 @@ ion-header {
   }
 }
 
+// Estilo para las imágenes
 .img {
-  width: 100px; /* Ajusta el tamaño según lo que necesites */
-  height: 100px;
+  width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho disponible */
+  height: auto; /* Mantiene la proporción de la imagen */
   object-fit: cover; /* Mantiene la proporción sin deformar */
-  border-radius: 8px; /* Añade bordes redondeados si lo prefieres */
+  border-radius: 8px; /* Bordes redondeados */
   margin: 10px auto; /* Centra la imagen */
   display: block;
 }
 
-.colorFab{
+.colorFab {
   --background: linear-gradient(135deg, #ff6600, #c0b626);
 }
-
 
 // Font personalizado para escritura
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-// barra de busqueda
+// Barra de búsqueda
 ion-searchbar {
   margin-bottom: auto;
   --background: white; /* Color de fondo del campo de búsqueda */
@@ -57,7 +57,7 @@ ion-searchbar {
 .actividades-rapidas {
   margin-left: 15px;
   font-family: 'Oswald', sans-serif;
-  font-weight: 700;
+  font-weight: 700; /* Asegura que el texto esté en negrita */
 }
 
 // Colores de las tarjetas
@@ -110,5 +110,5 @@ ion-card {
   height: 80%;
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  font-weight: 700;
+  font-weight: 700; /* Asegura que el texto del título esté en negrita */
 }
