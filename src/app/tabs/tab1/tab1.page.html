@@ -37,16 +37,16 @@
   <!-- Actividades en formato de dos columnas -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let actividad of actividadesAleatorias; let i = index">
+      <ion-col size="6" *ngFor="let actividad of actividades; let i = index">
         <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
           <ion-card-header>
-            <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
             <div class="card-title-container">
               <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
             </div>
             <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
+            <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
             <p>{{ actividad.Nom_SubCategoria }}</p>
             <p>{{ actividad.Desc_Actividad }}</p>
             <p>Dirección: {{ actividad.Direccion_Actividad }}</p>

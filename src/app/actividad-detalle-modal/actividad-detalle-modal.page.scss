@@ -6,16 +6,16 @@ $gradient-end: #FF8C00;
 // Estilos generales
 :host {
   display: block;
-  --background: #f0f0f0; // Fondo general del modal
+  --background: #f0f0f0; 
 }
 
 // Estilos del encabezado con degradado
 ion-header {
-    background: linear-gradient(135deg, #FFA500, #FF8C00); // Fondo degradado en el header
-    color: white;
+    background: linear-gradient(135deg, #FFA500, #FF8C00); 
+    color: rgb(2, 2, 2);
   
     ion-toolbar {
-      --background: transparent; // Toolbar transparente para ver el degradado en el header
+      --background: transparent;
       color: white;
   
       ion-title {

@@ -32,14 +32,6 @@ ion-header {
 }
 
 
-.img {
-  width: 100px; /* Ajusta el tamaño según lo que necesites */
-  height: 100px;
-  object-fit: cover; /* Mantiene la proporción sin deformar */
-  border-radius: 8px; /* Añade bordes redondeados si lo prefieres */
-  margin: 10px auto; /* Centra la imagen */
-  display: block;
-}
 
 // textos
 .actividades-rapidas {
@@ -48,7 +40,14 @@ ion-header {
   font-weight: 700;
 }
 
-// colores card
+.img {
+  width: 100%; 
+  height: auto; /* Mantiene la proporción de la imagen */
+  object-fit: cover; /* Mantiene la proporción sin deformar */
+  border-radius: 8px; /* Bordes redondeados */
+  margin: 10px auto; /* Centra la imagen */
+  display: block;
+}
 // Colores de las tarjetas
 ion-card.col-card1 {
   background-color: #FF9999;
@@ -96,21 +95,14 @@ ion-card {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   text-align: center;
   font-family: 'Oswald', sans-serif;
-  font-weight: 700; /* Asegura que el texto esté en negrita */
+  font-weight: 700;
+  margin-bottom: 10px; /* Espacio entre el título y la imagen */
 }
 
-// Estilo para la imagen dentro de las tarjetas
-.img {
-  width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho disponible */
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: cover; /* Mantiene la proporción sin deformar */
-  border-radius: 8px; /* Bordes redondeados */
-  margin: 10px auto; /* Centra la imagen */
-  display: block;
-}
+
+
 
 .weather-info {
   display: flex;
