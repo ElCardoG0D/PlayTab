@@ -1,9 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="notifications-outline"></ion-icon>
-      </ion-button>
     </ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
@@ -12,34 +9,32 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header >
-    <ion-toolbar>
-      <ion-title>¡Crea tu actividad!</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
+  <div class="ion-no-border">
+    <ion-title>¡Crea tu actividad!</ion-title>
+  </div>
+
+  <!-- Datos de la actividad -->
+  <div class="section-title">Datos de la actividad</div>
+  
   <ion-item>
     <ion-label position="stacked">Nombre de la actividad</ion-label>
-    <ion-input type="text" [(ngModel)]="nomActividad" required></ion-input>
-    <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+    <ion-input type="text" [(ngModel)]="nomActividad" placeholder="Ej: Fútbol entre amigos" required></ion-input>
   </ion-item>
   
-  <!-- Descripción de la actividad -->
   <ion-item>
     <ion-label position="stacked">Descripción</ion-label>
-    <ion-input type="text" [(ngModel)]="descActividad" required></ion-input>
-    <ion-icon slot="end" name="person-circle-outline"></ion-icon>
+    <ion-input type="text" [(ngModel)]="descActividad" placeholder="Ej: Partido amistoso de fútbol" required></ion-input>
   </ion-item>
 
-  <!-- Dirección actividad -->
   <ion-item>
     <ion-label position="stacked">Dirección actividad</ion-label>
-    <ion-input type="text" [(ngModel)]="direccionActividad" placeholder="Si es un juego online poner N/A." required></ion-input>
+    <ion-input type="text" [(ngModel)]="direccionActividad" placeholder="Si es un juego online, poner N/A." required></ion-input>
   </ion-item>
 
-  <!-- Categoría -->
+  <!-- Categoría y Subcategoría -->
   <ion-item>
-    <ion-label>Categoría:</ion-label>
+    <ion-label position="stacked">Categoría</ion-label>
     <ion-select [(ngModel)]="categoriaSeleccionada" (ionChange)="cargarCategorias()" placeholder="Selecciona una categoría..." required>
       <ion-select-option *ngFor="let categoria of categoriaId" [value]="categoria.Id_Categoria">
         {{ categoria.Nom_Categoria }}
@@ -47,9 +42,8 @@
     </ion-select>
   </ion-item>
 
-  <!-- Subcategoría -->
   <ion-item>
-    <ion-label>Subcategoría:</ion-label>
+    <ion-label position="stacked">Subcategoría</ion-label>
     <ion-select [(ngModel)]="subcategoriaSeleccionada" placeholder="Selecciona una subcategoría..." required>
       <ion-select-option *ngFor="let subcategoria of subcategoriaId" [value]="subcategoria.Id_SubCategoria">
         {{ subcategoria.Nom_SubCategoria }}
@@ -59,7 +53,7 @@
 
   <!-- Jugadores -->
   <ion-item>
-    <ion-label position="stacked">Jugadores</ion-label>
+    <ion-label position="stacked">Cantidad de jugadores</ion-label>
     <ion-select [(ngModel)]="maxJugadores" placeholder="¿Cantidad de jugadores?" required>
       <ion-select-option *ngFor="let maxJugador of MaxjugadorId" [value]="maxJugador.Id_MaxJugador">
         {{ maxJugador.Cantidad_MaxJugador }}
@@ -67,22 +61,22 @@
     </ion-select>
   </ion-item>
 
-  <!-- Hora de inicio -->
+  <!-- Hora de inicio y fin -->
+  <div class="section-title">Tiempo límite de registro</div>
+  
   <ion-item>
-    <ion-label position="stacked">Tiempo límite de registro</ion-label>
     <ion-label position="stacked">Desde:</ion-label>
     <ion-input type="time" [(ngModel)]="horaActividad" required></ion-input>
+  </ion-item>
+
+  <ion-item>
     <ion-label position="stacked">Hasta:</ion-label>
     <ion-input type="time" [(ngModel)]="horaTerminoActividad" required></ion-input>
   </ion-item>
 
-  <!-- Botón Guardar -->
+  <!-- Botones de acción -->
   <ion-item lines="none">
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)="volver()">Volver</ion-button>
-    </ion-buttons>
-    <ion-buttons slot="end">
-      <ion-button color="primary" (click)="crearActividad()">Crear</ion-button>
-    </ion-buttons>
+    <ion-button expand="block" color="primary" (click)="crearActividad()">Crear</ion-button>
+    <ion-button expand="block" color="medium" (click)="volver()">Volver</ion-button>
   </ion-item>
 </ion-content>
