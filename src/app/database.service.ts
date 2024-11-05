@@ -11,23 +11,20 @@ export class DatabaseService {
 
   constructor(private http: HttpClient) { }
 
-  // 1. Métodos para las Regiones y Comunas.
-  // Método para obtener todas las regiones
+  // 1. Regiones y Comunas.
   getRegiones(): Observable<any> {
     return this.http.get(`${this.apiUrl}/regiones`); 
   }
 
-  // Método para obtener comunas filtradas por región
   getComunasPorRegion(regionId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/comunas/${regionId}`);
   }
 
-  // 2. Método para registrar un usuario
+  // 2. registrar un usuario
   registerUser(rut: string, nombre: string, correo: string, contraseña: string, celular: string, comuna: number, fechaNacimiento: string): Observable<any> {
     const url = `${this.apiUrl}/register`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     
-    // Crear el cuerpo de la solicitud
     const body = {
       Run_User: rut,
       Nom_User: nombre,
@@ -37,12 +34,10 @@ export class DatabaseService {
       FechaNac_User: fechaNacimiento,
       Id_Comuna: comuna
     };
-
-    // Hacer la solicitud POST al servidor
     return this.http.post(url, body, { headers });
   }
 
-  // Método para iniciar sesión (opcional si lo necesitas)
+  // Iniciar sesión (opcional si lo necesitas)
   loginUser(correo: string, contraseña: string): Observable<any> {
     const url = `${this.apiUrl}/login`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -55,23 +50,21 @@ export class DatabaseService {
     return this.http.post(url, body, { headers });
   }
 
-  // 5. Métodos para las Categorias y Subcategorias. *************************************
-  // Método para obtener todas las Categorias
+  // 5. Métodos para las Categorias y Subcategorias.
   getCategoria(): Observable<any> {
     return this.http.get(`${this.apiUrl}/categoria`); 
   }
 
-  // Método para obtener comunas filtradas por región
   getSubCategoria(categoriaId: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/subcategoria/${categoriaId}`);
   }
 
-  // Método para obtener comunas filtradas por región
+  // Obtener comunas filtradas por región
   getMaxJugador(): Observable<any> {
     return this.http.get(`${this.apiUrl}/cantidad`); 
   }
 
-  // 6.Método para registrar una Actividad
+  // 6. Método para registrar una Actividad
   registerActividad(
     Nom_Actividad: string,
     Desc_Actividad: string,
@@ -102,7 +95,7 @@ export class DatabaseService {
     return this.http.post(url, body, { headers });
   }
 
-  //7. Obtener actividades, este es para el tab 1
+  //7. Obtener actividades
   getActividades(Id_Comuna: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/actividades?Id_Comuna=${Id_Comuna}`);
   }

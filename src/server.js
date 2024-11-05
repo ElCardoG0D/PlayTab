@@ -25,7 +25,6 @@ db.connect((err) => {
 });
 
 // 1. Aquí se obtendrá las Regiones y Comunas disponibles para poder registrar al usuario.
-// Obtener todas las regiones.
 app.get('/regiones', (req, res) => {
   const query = 'SELECT * FROM REGION';
   db.query(query, (err, results) => { 
@@ -51,18 +50,15 @@ app.get('/comunas/:regionId', (req, res) => {
 });
 
 // 2. Aquí se realizará el INSERT del usuario. 
-// Ruta para registrar un usuario
 app.post('/register', (req, res) => {
   const { Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna } = req.body;
 
-  // Verificación de datos
   if (!Run_User || !Nom_User || !Correo_User || !Contra_User || !Celular_User || !FechaNac_User || !Id_Comuna) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
-  // SQL query para insertar el usuario
   const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`; // Id_Estado lo dejamos en 1 como estado inicial
+                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`;
 
   db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
@@ -91,12 +87,10 @@ app.post('/actividad', (req, res) => {
     Id_Anfitrion_Actividad,
   } = req.body;
 
-  // Verificación de datos
   if (!Nom_Actividad || !Desc_Actividad || !Direccion_Actividad || !Id_MaxJugador || !Fecha_INI_Actividad || !Fecha_TER_Actividad || !Id_Comuna || !Id_SubCategoria || !Id_Estado || !Id_Anfitrion_Actividad) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
-  // SQL query para insertar la actividad
   const query = `
     INSERT INTO ACTIVIDAD 
     (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad) 
@@ -156,8 +150,7 @@ app.post('/login', (req, res) => {
   });
 });
 
-// 3. Aquí se obtendrá las Categoria y subcategoria *************************************
-// Obtener todas las regiones.
+// 3. Aquí se obtendrá las Categoria y subcategoria 
 app.get('/categoria', (req, res) => {
   const query = 'SELECT * FROM CATEGORIA';
   db.query(query, (err, results) => { 
@@ -169,9 +162,8 @@ app.get('/categoria', (req, res) => {
   });
 });
 
-// Obtener las comunas por id de la Categoria. 
 app.get('/subcategoria/:categoriaId', (req, res) => {
-  const categoriaId = req.params.categoriaId; // Obtiene el id de la Categoria desde la URL
+  const categoriaId = req.params.categoriaId; 
   const query = 'SELECT * FROM SUBCATEGORIA WHERE Id_Categoria = ?';
   db.query(query, [categoriaId], (err, results) => {
     if (err) {
@@ -183,7 +175,6 @@ app.get('/subcategoria/:categoriaId', (req, res) => {
 });
 
 // 4. Aquí se obtendrá los jugadores máximos
-// Obtener todas las regiones.
 app.get('/cantidad', (req, res) => {
   const query = 'SELECT * FROM MAXJUGADOR';
   db.query(query, (err, results) => { 
@@ -208,7 +199,7 @@ app.get('/actividades', (req, res) => {
   });
 });
 
-// Función para insertar participante en la Actividad
+// insertar participante en la Actividad
 app.post('/participante', (req, res) => {
   const { Id_Actividad, Id_Asistencia, Id_User } = req.body;
 
