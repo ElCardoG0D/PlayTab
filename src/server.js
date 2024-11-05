@@ -12,7 +12,7 @@ app.use(express.json()); // Para analizar solicitudes con JSON
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'Apolo209830612.', // Cambia si tu contraseña es diferente
+  password: 'root', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -198,7 +198,7 @@ app.get('/cantidad', (req, res) => {
 // 5. Este es para obtener las actividades
 app.get('/actividades', (req, res) => {
   const { Id_Comuna } = req.query;
-  const query = 'SELECT a.Id_Actividad, a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a INNER JOIN maxjugador m ON a.Id_Maxjugador = m.Id_Maxjugador INNER JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria INNER JOIN CATEGORIA C ON s.Id_Categoria = C.Id_Categoria LEFT JOIN imagen i ON s.Id_SubCategoria = i.Id_SubCategoria WHERE a.Id_Comuna = ? AND Fecha_TER_Actividad>=now();';
+  const query = 'SELECT a.Id_Actividad, u.Nom_User, a.Nom_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url FROM ACTIVIDAD a Inner Join usuario u on a.Id_Anfitrion_Actividad = u.Id_User INNER JOIN maxjugador m ON a.Id_Maxjugador = m.Id_Maxjugador INNER JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria INNER JOIN CATEGORIA C ON s.Id_Categoria = C.Id_Categoria LEFT JOIN imagen i ON s.Id_SubCategoria = i.Id_SubCategoria WHERE a.Id_Comuna = ? AND Fecha_TER_Actividad>=now();';
   db.query(query, [Id_Comuna], (err, results) => {
     if (err) {
       console.error('Error al obtener actividades:', err);
