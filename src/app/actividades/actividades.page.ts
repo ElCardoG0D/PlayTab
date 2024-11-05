@@ -71,7 +71,7 @@ export class ActividadesPage implements OnInit {
     );
   }
 
-  // Método que permite mostrar una alerta
+  // permite mostrar una alerta
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
@@ -118,6 +118,15 @@ export class ActividadesPage implements OnInit {
     // Formatear las fechas en formato MySQL (YYYY-MM-DD HH:mm:ss)
     const fechaInicioString = fechaInicioAjustada.toISOString().slice(0, 19).replace('T', ' ');
     const fechaTerminoString = fechaTerminoAjustada.toISOString().slice(0, 19).replace('T', ' ');
+
+    if (fechaTerminoActividad <= fechaInicioActividad) {
+      this.presentAlert('Error', 'La hora de término debe ser posterior a la hora de inicio.');
+      return;
+    }
+    if (fechaTerminoActividad <= fechaActual) {
+      this.presentAlert('Error', 'La hora de término debe ser posterior a la hora actual.');
+      return;
+    }
   
     try {
       const usuario = this.localS.ObtenerUsuario('user');
