@@ -11,12 +11,17 @@ export class RecoverPwPage implements OnInit {
 
   rut: string = '';
   mailuser: string = '';
+  password: String = '';
   showPassword = false;
   AceptaCondiciones: boolean = false;
 
   constructor(private router: Router, private alertController: AlertController) { }
 
   ngOnInit() {
+  }
+
+  togglePassword() {
+    this.showPassword = !this.showPassword;
   }
 
   async presentAlert(message: string) {

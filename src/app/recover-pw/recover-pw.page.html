@@ -28,6 +28,22 @@
             <ion-icon slot="end" name="at-outline"></ion-icon>
           </ion-item>
 
+          <ion-item class="custom-input">
+            <ion-label >Contraseña:</ion-label>
+            <ion-input 
+              class="ion-text-right" 
+              [type]="showPassword ? 'text' : 'password'" 
+              [(ngModel)]="password" 
+              required>
+            </ion-input>
+            <ion-icon 
+              slot="end" 
+              name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" 
+              (click)="togglePassword()">
+            </ion-icon>
+          </ion-item>
+
+
           <ion-row class="ion-justify-content-center">
             <ion-col size="12" class="ion-text-center">
               <ion-button class="botonA2" shape="" expand="block" (click)="RecoverPW()"><strong>Enviar</strong></ion-button>

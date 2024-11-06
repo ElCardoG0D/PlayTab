@@ -221,6 +221,23 @@ app.post('/participante', (req, res) => {
   });
 });
 
+//Eliminar Usuario
+app.delete('/borrarUser/:Id_User', (req, res) => {
+  const Id_User = req.params.Id_User;
+  const deleteQuery = 'DELETE FROM USUARIO WHERE Id_User = ?';
+
+  db.query(deleteQuery, [Id_User], (err, result) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error al eliminar el usuario >:(');
+    } else if (result.affectedRows === 0) {
+      return res.status(404).send('Usuario no encontrado :(');
+    } else {
+      res.status(200).json({ message: 'Usuario eliminado con éxito :D' });
+    }
+  });
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {
