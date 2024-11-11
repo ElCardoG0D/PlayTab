@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`COMUNA` (
   CONSTRAINT `FK_Comuna_Region`
     FOREIGN KEY (`Id_Region`)
     REFERENCES `PlayTab`.`REGION` (`Id_Region`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`SUBCATEGORIA` (
   CONSTRAINT `FK_SubCategoria_Categoria`
     FOREIGN KEY (`Id_Categoria`)
     REFERENCES `PlayTab`.`CATEGORIA` (`Id_Categoria`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -83,12 +83,12 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`USUARIO` (
   CONSTRAINT `FK_Usuario_Comuna`
     FOREIGN KEY (`Id_Comuna`)
     REFERENCES `PlayTab`.`COMUNA` (`Id_Comuna`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Usuario_EstadoActividad`
     FOREIGN KEY (`Id_Estado`)
     REFERENCES `PlayTab`.`ESTADO_ACTIVIDAD` (`Id_Estado`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB, auto_increment=100;
 
@@ -109,27 +109,27 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`ACTIVIDAD` (
   CONSTRAINT `FK_Actividad_Comuna`
     FOREIGN KEY (`Id_Comuna`)
     REFERENCES `PlayTab`.`COMUNA` (`Id_Comuna`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_SubCategoria`
     FOREIGN KEY (`Id_SubCategoria`)
     REFERENCES `PlayTab`.`SUBCATEGORIA` (`Id_SubCategoria`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_MaxJugador`
     FOREIGN KEY (`Id_MaxJugador`)
     REFERENCES `PlayTab`.`MAXJUGADOR` (`Id_MaxJugador`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_Estado`
     FOREIGN KEY (`Id_Estado`)
     REFERENCES `PlayTab`.`ESTADO_ACTIVIDAD` (`Id_Estado`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_Anfitrion` 
     FOREIGN KEY (`Id_Anfitrion_Actividad`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB, auto_increment=1000;
 
@@ -150,10 +150,10 @@ CREATE TABLE FAVORITO (
     `Id_User` INT NOT NULL, 
     `Id_SubCategoria` INT NULL,
     FOREIGN KEY (`Id_User`) REFERENCES  `PlayTab`.`USUARIO`(`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
     FOREIGN KEY (`Id_SubCategoria`) REFERENCES  `PlayTab`.`ACTIVIDAD`(`Id_SubCategoria`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
 
@@ -165,17 +165,17 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`PARTICIPANTE` (
   CONSTRAINT `FK_Participante_Actividad`
     FOREIGN KEY (`Id_Actividad`)
     REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Participante_Usuario`
     FOREIGN KEY (`Id_User`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Participante_Asistencia`
     FOREIGN KEY (`Id_Asistencia`)
     REFERENCES `PlayTab`.`ASISTENCIA` (`Id_Asistencia`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -198,12 +198,12 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`CLASIFICACION` (
   CONSTRAINT `FK_Clasificacion_User`
     FOREIGN KEY (`Id_User`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Clasificacion_NomClasificacion`
     FOREIGN KEY (`Id_NomClasificacion`)
     REFERENCES `PlayTab`.`NOMBRE_CLASIFICACION` (`Id_NomClasificacion`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -224,12 +224,12 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`REPORTE` (
   CONSTRAINT `FK_Reporte_User`
     FOREIGN KEY (`Id_User`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Reporte_UserReportar`
     FOREIGN KEY (`Id_User_Reportar`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -242,17 +242,17 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`HISTORIAL` (
   CONSTRAINT `FK_Historial_Usuario`
     FOREIGN KEY (`Id_User`)
     REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Historial_Actividad`
     FOREIGN KEY (`Id_Actividad`)
     REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Historial_SubCategoria`
     FOREIGN KEY (`Id_SubCategoria`)
     REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_SubCategoria`)
-    ON DELETE NO ACTION
+    ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
@@ -325,6 +325,23 @@ END //
 
 DELIMITER ;
 
+-- Trigger para eliminar usuario.
+DELIMITER //
+
+CREATE TRIGGER EliminarUsuario
+AFTER DELETE ON USUARIO
+FOR EACH ROW
+BEGIN
+    -- Elimina los registros relacionados en la tabla actividad
+    DELETE FROM clasificacion WHERE Id_User = OLD.Id_User;
+    DELETE FROM reporte WHERE Id_User = OLD.Id_User;
+    DELETE FROM favorito WHERE Id_User = OLD.Id_User;
+    DELETE FROM participante WHERE Id_User = OLD.Id_User;
+    DELETE FROM ACTIVIDAD WHERE Id_Anfitrion_Actividad = OLD.Id_User;
+    DELETE FROM historial WHERE Id_User = OLD.Id_User;
+END //
+
+DELIMITER ;
 
 
 
@@ -434,7 +451,8 @@ insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.
 
 USE PLAYTAB;
 Select * from USUARIO;
-SELECT * FROM PARTICIPANTE;
+SELECT p.Id_Actividad, p.Id_User, i.Nom_Actividad FROM PARTICIPANTE p
+INNER JOIN ACTIVIDAD i on p.Id_Actividad=i.Id_Actividad;
 SELECT * FROM ACTIVIDAD;
 
 SELECT * FROM IMAGEN;
@@ -446,10 +464,14 @@ SELECT * FROM PARTICIPANTE;
 SELECT * FROM MAXJUGADOR;
 
 
-SELECT a.Id_Actividad, a.Nom_Actividad, a.Id_Comuna, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url 
-FROM ACTIVIDAD a 
+SELECT a.Id_Actividad, u.Nom_User as Nombre_Anfrition,a.Nom_Actividad, a.Id_Comuna, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url 
+FROM ACTIVIDAD a
+Inner Join usuario u on a.Id_Anfitrion_Actividad = u.Id_User
 INNER JOIN maxjugador m ON a.Id_Maxjugador = m.Id_Maxjugador 
 INNER JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria 
 INNER JOIN CATEGORIA C ON s.Id_Categoria = C.Id_Categoria 
 LEFT JOIN imagen i ON s.Id_SubCategoria = i.Id_SubCategoria 
 WHERE a.Id_Comuna = 200 and Fecha_TER_Actividad>=now();
+
+DELETE FROM USUARIO
+WHERE Id_User=102;
