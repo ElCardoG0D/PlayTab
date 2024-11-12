@@ -35,10 +35,6 @@
     border-top-right-radius: 15px;
 }
 
-.espacio {
-    margin-right: 5px;
-}
-
 .form {
     max-width: 350px; /* Aumenté el ancho máximo del formulario */
     margin: 0 auto;
@@ -64,41 +60,13 @@
         align-items: center; /* Centrar verticalmente */
     }
 
-    .A1 {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        ion-checkbox {
-            transform: scale(1.1); /* Ajusta el tamaño del checkbox */
-            font-size: 13px; /* Aumentar el tamaño del checkbox */
-        }
-
-        .save {
-            font-size: 13px; /* Tamaño más grande para "Recuérdame" */
-            color: white; 
-        }  
-    }
-
-    .botonA2 {
-        --background: white;    
-        --background-activated: #cdcdcd;  
-        --color: black;
-        --box-shadow: none;
-        text-transform: none;         
-        width: 100%; /* Ancho completo */
-        padding: 12px; /* Espacio alrededor del botón */
-        font-weight: bold; /* Cambié a bold para resaltar el texto */
-        font-size: 18px; /* Aumenté el tamaño de fuente del botón */
-        border-radius: 5px; /* Bordes redondeados */
-    }
-    .recuperar-bot{
-        margin-top: 10px !important;
-    }
-
     .singup {
         color: white;
     }
+}
+
+.recuperar-bot{
+    margin-top: 0px !important;
 }
 
 /* Estilos específicos para pantallas más pequeñas */
@@ -144,12 +112,35 @@
         .botonA2 {       
             min-width: 100%; 
             height: auto; /* Ajuste automático de altura */
-            padding: 10px; 
             font-size: 16px; 
         }
-
-        .recuperar {
-            font-size: 12px; /* Tamaño de fuente más pequeño para recuperar contraseña */
-        }
     }
+}
+
+
+//ajustes 12-11-2024
+.botones-log{
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem; 
+}
+.botones-log ion-button{
+    margin-top: 10px;
+    width: 100%;
+    --border-radius: 10px !important;
+    --background: orange ;
+    --color: white;
+    --padding-top: 15px;
+    --padding-bottom: 15px;
+}
+.bot-inis{
+    --background: #00cc66 !important;
+    font-weight: 700;
+}
+.bot-recs{
+    --background: #ff6666 !important;
+    font-weight: 700;
 }

@@ -41,23 +41,11 @@
         (click)="togglePassword()">
       </ion-icon>
     </ion-item>
-    <!-- Botón de inicio de sesión -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" class="ion-text-center">
-        <ion-button class="botonA2" expand="block" (click)="login()">
-          <strong>Iniciar sesión</strong>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    <!-- Botón de recuperacion -->
-    <ion-row class="ion-justify-content-center">
-      <ion-col size="12" class="ion-text-center">
-        <ion-button class="botonA2 recuperar-bot" expand="block" (click)="recover()">
-          <strong>Recuperar contraseña</strong>
-        </ion-button>
-      </ion-col>
-    </ion-row>
-    
+    <!-- botones login y recover -->
+    <div class="botones-log">
+      <ion-button class="bot-inis" (click)="login()">Iniciar sesión</ion-button>
+      <ion-button class="bot-recs" (click)="recover()">Recupera tu contraseña</ion-button>
+    </div>
     <!-- Mensaje para crear cuenta -->
     <ion-row class="ion-justify-content-center">
       <ion-col size="12" class="ion-text-center">
