@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
 import { AlertController, ModalController } from '@ionic/angular';
@@ -11,7 +11,7 @@ import { WeatherService } from '../../weather.service';
   templateUrl: './tab1.page.html',
   styleUrls: ['./tab1.page.scss'],
 })
-export class Tab1Page implements OnInit {
+export class Tab1Page implements OnInit, OnDestroy {
   weatherData: any;
   weatherIconUrl: string = '';
   actividades: any[] = []; // Almacenar las actividades
@@ -20,6 +20,7 @@ export class Tab1Page implements OnInit {
   colors = [
     'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
   ];
+  private intervalId: any;
 
   constructor(
     private localS: LocalStorageService,
@@ -35,6 +36,16 @@ export class Tab1Page implements OnInit {
     console.log('Usuario:', user);
     this.cargarActividades();
     this.getLocationAndWeather();
+
+    this.intervalId = setInterval(() => {
+      this.cargarActividades();
+    }, 30000); // 30 segundos
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);
+    }
   }
 
   cargarActividades() {
@@ -129,5 +140,11 @@ export class Tab1Page implements OnInit {
       console.error('Geolocalización no es soportada en este navegador.');
       this.presentAlert('Error', 'Geolocalización no es soportada.');
     }
+  }
+
+  handleRefresh(event: any) {
+    this.cargarActividades();
+    this.getLocationAndWeather();
+    event.target.complete(); // Detiene el refresco
   }
 }

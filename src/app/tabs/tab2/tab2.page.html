@@ -1,7 +1,6 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-    </ion-buttons>
+    <ion-buttons slot="start"></ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
     </div>
@@ -9,19 +8,25 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
+  <!-- Refresher -->
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza hacia abajo para refrescar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando actividades...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <!-- Barra de búsqueda -->
   <ion-toolbar>
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
-  <!-- Actividades en formato de una columna, ajustablee en ion-col size="12/6" -->
   <ion-grid>
     <ion-row>
       <ion-col size="12" *ngFor="let actividad of actividades; let i = index">
         <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)" class="card-container">
-          <!-- Fondo de la imagen con desenfoque -->
           <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
-          <!-- Contenido de la tarjeta encima del fondo -->
           <ion-card-header>
             <div class="card-title-container">
               <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
@@ -38,6 +43,7 @@
       </ion-col>
     </ion-row>
   </ion-grid>
+
   <!-- Botón flotante para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button expand="block" class="colorFab" (click)="enviarPagAct()">
@@ -45,4 +51,3 @@
     </ion-fab-button>
   </ion-fab>    
 </ion-content>
-

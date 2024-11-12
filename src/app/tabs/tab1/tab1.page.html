@@ -10,6 +10,14 @@
 
 <ion-content [fullscreen]="true">
 
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza hacia abajo para refrescar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando actividades...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <h1 class="actividades-rapidas">Considera el clima para tus actividades</h1>
   <ion-card *ngIf="weatherData" class="weather-card">
     <ion-card-header>
