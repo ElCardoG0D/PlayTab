@@ -40,14 +40,6 @@ ion-header {
   font-weight: 700;
 }
 
-.img {
-  width: 100%; 
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: cover; /* Mantiene la proporción sin deformar */
-  border-radius: 8px; /* Bordes redondeados */
-  margin: 10px auto; /* Centra la imagen */
-  display: block;
-}
 // Colores de las tarjetas
 ion-card.col-card1 {
   background-color: #FF9999;
@@ -99,6 +91,18 @@ ion-card {
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   margin-bottom: 10px; /* Espacio entre el título y la imagen */
+}
+//mas ajustes a la card
+//para color de letras
+.card-background{
+  color: white !important;
+}
+.tit-card-cont{
+  color: white;
+}
+.card-background{
+  background-size: cover;
+  filter: blur(8px);
 }
 
 

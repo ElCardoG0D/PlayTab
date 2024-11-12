@@ -37,16 +37,15 @@
   <!-- Actividades en formato de dos columnas -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let actividad of actividades; let i = index">
-        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
+      <ion-col size="12" *ngFor="let actividad of actividades; let i = index">
+        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)" class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'">
           <ion-card-header>
             <div class="card-title-container">
-              <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+              <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
             </div>
             <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
-            <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
             <p>{{ actividad.Nom_SubCategoria }}</p>
             <p>{{ actividad.Desc_Actividad }}</p>
             <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
