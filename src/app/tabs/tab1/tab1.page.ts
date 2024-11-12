@@ -31,7 +31,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     private weatherService: WeatherService
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     const user = this.localS.ObtenerUsuario('user');
     console.log('Usuario:', user);
     this.cargarActividades();
@@ -42,6 +42,9 @@ export class Tab1Page implements OnInit, OnDestroy {
     }, 30000); // 30 segundos
   }
 
+  ngOnInit() {
+  }
+
   ngOnDestroy() {
     if (this.intervalId) {
       clearInterval(this.intervalId);
@@ -50,19 +53,14 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   cargarActividades() {
     const user = this.localS.ObtenerUsuario('user');
-    const idComuna = user?.Id_Comuna;
-
-    if (idComuna) {
+    if (user && user.Id_Comuna) {
+      const idComuna = user.Id_Comuna;
+  
       this.dbService.getActividades(idComuna).subscribe(
         (data) => {
           this.actividades = data;
-
-          // Obtener 6 actividades aleatorias
           this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
-
-          // Generar colores aleatorios para cada actividad
           this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
-
           console.log('Actividades aleatorias:', this.actividadesAleatorias);
           console.log('Colores asignados:', this.coloresActividades);
         },
@@ -72,10 +70,11 @@ export class Tab1Page implements OnInit, OnDestroy {
         }
       );
     } else {
-      console.error('No se encontró el Id_Comuna del usuario.');
+      console.error('No se encontró el Id_Comuna del usuario o el usuario no está autenticado.');
       this.presentAlert('Error', 'No se pudo cargar el Id_Comuna del usuario.');
     }
   }
+  
 
   // Método para mostrar una alerta
   async presentAlert(header: string, message: string) {

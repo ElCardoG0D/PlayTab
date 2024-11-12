@@ -10,7 +10,7 @@ import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/activid
   templateUrl: './tab2.page.html', 
   styleUrls: ['./tab2.page.scss'], 
 })
-export class Tab2Page implements OnInit, OnDestroy {
+export class Tab2Page implements OnInit {
   actividades: any[] = [];
   coloresActividades: string[] = [];
   colors = [
@@ -26,20 +26,13 @@ export class Tab2Page implements OnInit, OnDestroy {
     private modalController: ModalController
   ) {}
 
-  ngOnInit() {
+  ionViewWillEnter() {
     const user = this.localS.ObtenerUsuario('user');
-    console.log('Usuario:', user);
-    this.cargarActividades();
-
-    this.intervalId = setInterval(() => {
-      this.cargarActividades();
-    }, 30000); // 30 segundos
+    this.cargarActividades(); 
   }
 
-  ngOnDestroy() {
-    if (this.intervalId) {
-      clearInterval(this.intervalId);
-    }
+  ngOnInit() {
+
   }
 
   cargarActividades() {
