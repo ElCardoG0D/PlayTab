@@ -4,7 +4,9 @@
 // configuraciones toolbar logo y botones
 ion-header {
   .toolbar {
-    --background: linear-gradient(135deg, #ff6600, #c0b626);
+    --background: #f46b45;  /* fallback for old browsers */
+    --background: -webkit-linear-gradient(to top, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    --background: linear-gradient(to top, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -30,8 +32,6 @@ ion-header {
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)); 
   }
 }
-
-
 
 // textos
 .actividades-rapidas {

@@ -8,79 +8,79 @@
         </div>
       </ion-col>
     </ion-row>
-
+    
     <!-- Segunda mitad, va todo el login -->
     <ion-row class="cont-login ion-justify-content-center">
       <ion-col size="12">
         <ion-list lines="none" class="form">
-
+          
           <!-- Correo -->
           <ion-item class="custom-input">
             <ion-label >Correo:</ion-label>
             <ion-input 
-              class="ion-text-right" 
-              type="email" 
-              [(ngModel)]="mailuser" 
-              required>
-            </ion-input>
-            <ion-icon slot="end" name="at-outline"></ion-icon>
-          </ion-item>
-
-          <!-- Contraseña -->
-          <ion-item class="custom-input">
-            <ion-label >Contraseña:</ion-label>
-            <ion-input 
-              class="ion-text-right" 
-              [type]="showPassword ? 'text' : 'password'" 
-              [(ngModel)]="password" 
-              required>
-            </ion-input>
-            <ion-icon 
-              slot="end" 
-              name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" 
-              (click)="togglePassword()">
-            </ion-icon>
-          </ion-item>
-
-          <!-- Opciones adicionales -->
-          <ion-row class="A1 ion-align-items-center">
-            <ion-col size="12" class="ion-text-right">
-              <a class="save" (click)="recover()"><strong>Recuperar Contraseña</strong></a>
-            </ion-col>
-          </ion-row>
-
-          <!-- Botón de inicio de sesión -->
-          <ion-row class="ion-justify-content-center">
-            <ion-col size="12" class="ion-text-center">
-              <ion-button class="botonA2" expand="block" (click)="login()">
-                <strong>Iniciar sesión</strong>
-              </ion-button>
-            </ion-col>
-          </ion-row>
-
-          <!-- Mensaje para crear cuenta -->
-          <ion-row class="ion-justify-content-center">
-            <ion-col size="12" class="ion-text-center">
-              <p class="Text1">
-                ¿No tienes tu cuenta PlayTab? 
-              </p>
-              <p>
-                <a class="singup" (click)="signup()"><strong>Crea una cuenta</strong></a>
-              </p>
-            </ion-col>
-          </ion-row>
-        </ion-list>
+            class="ion-text-right" 
+            type="email" 
+            [(ngModel)]="mailuser" 
+            required>
+          </ion-input>
+          <ion-icon slot="end" name="at-outline"></ion-icon>
+        </ion-item>
+        
+        <!-- Contraseña -->
+        <ion-item class="custom-input">
+          <ion-label >Contraseña:</ion-label>
+          <ion-input 
+          class="ion-text-right" 
+          [type]="showPassword ? 'text' : 'password'" 
+          [(ngModel)]="password" 
+          required>
+        </ion-input>
+        <ion-icon 
+        slot="end" 
+        name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" 
+        (click)="togglePassword()">
+      </ion-icon>
+    </ion-item>
+    <!-- Botón de inicio de sesión -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <ion-button class="botonA2" expand="block" (click)="login()">
+          <strong>Iniciar sesión</strong>
+        </ion-button>
       </ion-col>
     </ion-row>
-  </ion-grid>
+    <!-- Botón de recuperacion -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <ion-button class="botonA2 recuperar-bot" expand="block" (click)="recover()">
+          <strong>Recuperar contraseña</strong>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    
+    <!-- Mensaje para crear cuenta -->
+    <ion-row class="ion-justify-content-center">
+      <ion-col size="12" class="ion-text-center">
+        <p class="Text1">
+          ¿No tienes tu cuenta PlayTab? 
+        </p>
+        <p>
+          <a class="singup" (click)="signup()"><strong>Crea una cuenta</strong></a>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-list>
+</ion-col>
+</ion-row>
+</ion-grid>
 
-  <!-- Alerta para mostrar mensajes de error -->
-  <ion-alert
-    [isOpen]="isAlertOpen"
-    header="Error"
-    [message]="alertMessage"
-    [buttons]="['OK']"
-    (didDismiss)="setAlertOpen(false)">
-  </ion-alert>
+<!-- Alerta para mostrar mensajes de error -->
+<ion-alert
+[isOpen]="isAlertOpen"
+header="Error"
+[message]="alertMessage"
+[buttons]="['OK']"
+(didDismiss)="setAlertOpen(false)">
+</ion-alert>
 
 </ion-content>
