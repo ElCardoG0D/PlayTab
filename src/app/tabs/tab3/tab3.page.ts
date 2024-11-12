@@ -19,17 +19,21 @@ export class Tab3Page implements OnInit {
 
   constructor(private router:Router, private localS : LocalStorageService, private dataBase: DatabaseService, private alertController: AlertController) { }
 
-  ngOnInit() {
+  ionViewWillEnter() {
     const usuario = this.localS.ObtenerUsuario('user');
-      if (usuario) {
-        this.nombreUser = usuario.Nom_User;
-        this.correoUser = usuario.Correo_User;
-        this.telefonoUser = usuario.Celular_User;
-        this.regionUser = usuario.Nombre_Region;
-        this.comunaUser = usuario.Nombre_Comuna;
-      } else {
-        console.warn('No se encontró información del usuario en el LocalStorage.');
-      }
+    if (usuario) {
+      this.nombreUser = usuario.Nom_User;
+      this.correoUser = usuario.Correo_User;
+      this.telefonoUser = usuario.Celular_User;
+      this.regionUser = usuario.Nombre_Region;
+      this.comunaUser = usuario.Nombre_Comuna;
+    } else {
+      console.warn('No se encontró información del usuario en el LocalStorage.');
+    }
+  }
+  
+
+  ngOnInit() {
   }
 
   async presentAlert(header: string, message: string) {
@@ -62,6 +66,7 @@ export class Tab3Page implements OnInit {
   }
 
   logOut(){
+    this.localS.ElimnarUsuario('user');
     this.localS.LimpiarUsuario();
     localStorage.removeItem('isAuthenticated');
     this.router.navigate(['./login']);
