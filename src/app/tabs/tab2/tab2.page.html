@@ -14,19 +14,21 @@
     <ion-searchbar></ion-searchbar>
   </ion-toolbar>
 
-  <!-- Actividades en formato de dos tarjetas por fila -->
+  <!-- Actividades en formato de una columna, ajustablee en ion-col size="12/6" -->
   <ion-grid>
     <ion-row>
-      <ion-col size="6" *ngFor="let actividad of actividades; let i = index">
-        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)">
+      <ion-col size="12" *ngFor="let actividad of actividades; let i = index">
+        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)" class="card-container">
+          <!-- Fondo de la imagen con desenfoque -->
+          <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
+          <!-- Contenido de la tarjeta encima del fondo -->
           <ion-card-header>
             <div class="card-title-container">
-              <ion-card-title>{{ actividad.Nom_Actividad }}</ion-card-title>
+              <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
             </div>
-            <ion-card-subtitle>{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+            <ion-card-subtitle class="date-cont">{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
           </ion-card-header>
-          <ion-card-content>
-            <img class="img" [src]="actividad.Url || 'assets/portrait/nocover.jpg'" alt="{{ actividad.Nom_Actividad }}" />
+          <ion-card-content class="card-contenid">
             <p>{{ actividad.Nom_SubCategoria }}</p>
             <p>{{ actividad.Desc_Actividad }}</p>
             <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
@@ -36,7 +38,6 @@
       </ion-col>
     </ion-row>
   </ion-grid>
-
   <!-- Botón flotante para registrar actividad -->
   <ion-fab slot="fixed" vertical="bottom" horizontal="end" class="BotonFlotante">
     <ion-fab-button expand="block" class="colorFab" (click)="enviarPagAct()">

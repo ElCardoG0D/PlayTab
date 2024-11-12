@@ -27,16 +27,6 @@ ion-header {
   }
 }
 
-// Estilo para las imágenes
-.img {
-  width: 100%; /* Asegúrate de que la imagen ocupe todo el ancho disponible */
-  height: auto; /* Mantiene la proporción de la imagen */
-  object-fit: cover; /* Mantiene la proporción sin deformar */
-  border-radius: 8px; /* Bordes redondeados */
-  margin: 10px auto; /* Centra la imagen */
-  display: block;
-}
-
 .colorFab {
   --background: linear-gradient(135deg, #ff6600, #c0b626);
 }
@@ -64,51 +54,74 @@ ion-searchbar {
 ion-card.col-card1 {
   background-color: #FF9999;
   color: black;
-  box-shadow: 0px 0px 10px red;
-  border: 2px solid #FF9999;
 }
-
 ion-card.col-card2 {
   background-color: #99CCFF;
   color: black;
-  box-shadow: 0px 0px 10px blue;
-  border: 2px solid #99CCFF;
 }
-
 ion-card.col-card3 {
   background-color: #77dd77;
   color: black;
-  box-shadow: 0px 0px 10px green;
-  border: 2px solid #77dd77;
 }
-
 ion-card.col-card4 {
   background-color: #ffcc99;
   color: black;
-  box-shadow: 0px 0px 10px orange;
-  border: 2px solid #ffcc99;
 }
-
 ion-card.col-card5 {
   background-color: #d1c4e9;
   color: black;
-  box-shadow: 0px 0px 10px purple;
-  border: 2px solid #d1c4e9;
 }
 
 // Diseño de la card
 ion-card {
-  margin-top: 30px;
+  margin-top: 15px;
   padding: 10px;
+  border-radius: 10px;
 }
 
-// Contenedor título de la card
+//Ajustes para el color de la fuente dentro de las cards y demás ajustes para tamaño etc.
+.tit-card-cont{
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+}
+.date-cont{
+  color: white;
+  font-size: 15px;
+}
+.card-contenid{
+  color: white;
+}
+
+//ajuste posicionamiento titulo card
 .card-title-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100%;
   text-align: center;
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700; /* Asegura que el texto del título esté en negrita */
+  margin-bottom: 15px;
+}
+
+
+
+//Fondo borroso y posicionamiento del contenido
+/* Fondo de la tarjeta con imagen borrosa */
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(1px); /* Aplica el desenfoque solo al fondo */
+  z-index: 1;
+}
+/* Asegura que el contenido esté encima del fondo borroso */
+ion-card-header,
+ion-card-content {
+  z-index: 2; /* Coloca el contenido sobre el fondo borroso */
+  border-radius: 5px;
 }

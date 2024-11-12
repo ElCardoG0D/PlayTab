@@ -40,7 +40,7 @@ ion-header {
   font-weight: 700;
 }
 
-// Colores de las tarjetas -- esto esta a punto de irse
+// Colores de las tarjetas 
 ion-card.col-card1 {
   background-color: #FF9999;
   color: black;
@@ -65,8 +65,9 @@ ion-card.col-card5 {
 
 // Diseño de la card
 ion-card {
-  margin-top: 30px;
+  margin-top: 10px;
   padding: 10px;
+  border-radius: 15px;
 }
 
 //Ajustes para el color de la fuente dentro de las cards y demás ajustes para tamaño etc.

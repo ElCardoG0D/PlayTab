@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
-import { AlertController, ModalController } from '@ionic/angular'; // Importa ModalController
+import { AlertController, ModalController } from '@ionic/angular';
 import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
 import { Router } from '@angular/router';
 import { WeatherService } from '../../weather.service';
+
 @Component({
   selector: 'app-tab1',
   templateUrl: './tab1.page.html',
@@ -12,7 +13,7 @@ import { WeatherService } from '../../weather.service';
 })
 export class Tab1Page implements OnInit {
   weatherData: any;
-  weatherIconUrl: string='';
+  weatherIconUrl: string = '';
   actividades: any[] = []; // Almacenar las actividades
   coloresActividades: string[] = []; // Array para almacenar los colores
   actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
@@ -32,30 +33,26 @@ export class Tab1Page implements OnInit {
   ngOnInit() {
     const user = this.localS.ObtenerUsuario('user');
     console.log('Usuario:', user);
-    this.cargarActividades(); 
+    this.cargarActividades();
     this.getLocationAndWeather();
   }
 
   cargarActividades() {
-    // Obtener el usuario completo desde Local Storage
     const user = this.localS.ObtenerUsuario('user');
-    
-    // Extraer Id_Comuna del usuario
     const idComuna = user?.Id_Comuna;
-    
+
     if (idComuna) {
-      // Llamar al servicio con el Id_Comuna directamente
       this.dbService.getActividades(idComuna).subscribe(
         (data) => {
           this.actividades = data;
-  
+
           // Obtener 6 actividades aleatorias
           this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
-          
+
           // Generar colores aleatorios para cada actividad
           this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
-          
-          console.log('Actividades aleatorias:', this.actividadesAleatorias); 
+
+          console.log('Actividades aleatorias:', this.actividadesAleatorias);
           console.log('Colores asignados:', this.coloresActividades);
         },
         (error) => {
@@ -85,24 +82,28 @@ export class Tab1Page implements OnInit {
     return this.colors[randomIndex];
   }
 
-  // Actividades aleatorias 
+  // Actividades aleatorias
   getRandomActivities(actividades: any[], count: number): any[] {
-    const shuffled = actividades.sort(() => 0.5 - Math.random()); 
-    return shuffled.slice(0, count); 
+    // Hacer una copia del array para no modificar el original
+    const shuffled = [...actividades].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
   }
-   // Método para abrir el modal al hacer clic en una tarjeta
-   async onCardClick(actividad: any) {
+
+  // Método para abrir el modal al hacer clic en una tarjeta
+  async onCardClick(actividad: any) {
     console.log('Actividad clickeada:', actividad);
-    
+
     const modal = await this.modalController.create({
-      component: ActividadDetalleModalPage, // Especifica el componente del modal
+      component: ActividadDetalleModalPage,
       componentProps: {
-        actividad: actividad // Pasar los detalles de la actividad al modal
+        actividad: actividad
       }
     });
-    
+
     return await modal.present();
   }
+
+  // Método para obtener la ubicación y el clima
   getLocationAndWeather() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
@@ -110,13 +111,12 @@ export class Tab1Page implements OnInit {
         const lon = position.coords.longitude;
 
         this.weatherService.getWeatherByLocation(lat, lon).subscribe(data => {
-          this.weatherData = data; // Guardar datos del clima
+          this.weatherData = data;
           console.log('Datos del clima:', this.weatherData);
 
-          // Obtener el código del icono y construir la URL
-          const weatherIconCode = this.weatherData.weather[0].icon; // Obtener el código del ícono
-          this.weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`; // Construir la URL del ícono
-          console.log('URL del ícono del clima:', this.weatherIconUrl); // Verificar la URL en la consola
+          const weatherIconCode = this.weatherData.weather[0].icon;
+          this.weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`;
+          console.log('URL del ícono del clima:', this.weatherIconUrl);
         }, error => {
           console.error('Error al obtener el clima:', error);
           this.presentAlert('Error', 'No se pudo obtener el clima.');
@@ -130,6 +130,4 @@ export class Tab1Page implements OnInit {
       this.presentAlert('Error', 'Geolocalización no es soportada.');
     }
   }
-  
-  
 }

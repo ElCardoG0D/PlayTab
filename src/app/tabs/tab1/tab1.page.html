@@ -34,13 +34,15 @@
 
   <h1 class="actividades-rapidas">Actividades Rápidas</h1>
   
-  <!-- Actividades en formato de dos columnas -->
+  <!-- Actividades en formato de una columna, ajustablee en ion-col size="12/6" -->
   <ion-grid>
     <ion-row>
-      <ion-col size="12" *ngFor="let actividad of actividades; let i = index">
+      <!-- Mostrar solo 6 actividades aleatorias -->
+      <ion-col size="12" *ngFor="let actividad of actividadesAleatorias; let i = index">
         <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)" class="card-container">
           <!-- Fondo de la imagen con desenfoque -->
           <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
+  
           <!-- Contenido de la tarjeta encima del fondo -->
           <ion-card-header>
             <div class="card-title-container">
@@ -48,6 +50,7 @@
             </div>
             <ion-card-subtitle class="date-cont">{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
           </ion-card-header>
+  
           <ion-card-content class="card-contenid">
             <p>{{ actividad.Nom_SubCategoria }}</p>
             <p>{{ actividad.Desc_Actividad }}</p>
