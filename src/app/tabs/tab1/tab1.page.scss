@@ -40,40 +40,27 @@ ion-header {
   font-weight: 700;
 }
 
-// Colores de las tarjetas
+// Colores de las tarjetas -- esto esta a punto de irse
 ion-card.col-card1 {
   background-color: #FF9999;
   color: black;
-  box-shadow: 0px 0px 10px red;
-  border: 2px solid #FF9999;
 }
-
 ion-card.col-card2 {
   background-color: #99CCFF;
   color: black;
-  box-shadow: 0px 0px 10px blue;
-  border: 2px solid #99CCFF;
 }
-
 ion-card.col-card3 {
   background-color: #77dd77;
   color: black;
-  box-shadow: 0px 0px 10px green;
-  border: 2px solid #77dd77;
 }
-
 ion-card.col-card4 {
   background-color: #ffcc99;
   color: black;
-  box-shadow: 0px 0px 10px orange;
-  border: 2px solid #ffcc99;
 }
-
 ion-card.col-card5 {
   background-color: #d1c4e9;
   color: black;
-  box-shadow: 0px 0px 10px purple;
-  border: 2px solid #d1c4e9;
+
 }
 
 // Diseño de la card
@@ -82,42 +69,65 @@ ion-card {
   padding: 10px;
 }
 
-// Contenedor título de la card
+//Ajustes para el color de la fuente dentro de las cards y demás ajustes para tamaño etc.
+.tit-card-cont{
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+}
+.date-cont{
+  color: white;
+  font-size: 15px;
+}
+.card-contenid{
+  color: white;
+}
+
+//ajuste posicionamiento titulo card
 .card-title-container {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  font-family: 'Oswald', sans-serif;
-  font-weight: 700;
-  margin-bottom: 10px; /* Espacio entre el título y la imagen */
+  margin-bottom: 15px;
 }
-//mas ajustes a la card
-//para color de letras
-.card-background{
-  color: white !important;
-}
-.tit-card-cont{
-  color: white;
-}
-.card-background{
+
+
+
+//Fondo borroso y posicionamiento del contenido
+/* Fondo de la tarjeta con imagen borrosa */
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background-size: cover;
-  filter: blur(8px);
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(1px); /* Aplica el desenfoque solo al fondo */
+  z-index: 1;
+}
+/* Asegura que el contenido esté encima del fondo borroso */
+ion-card-header,
+ion-card-content {
+  z-index: 2; /* Coloca el contenido sobre el fondo borroso */
+  border-radius: 5px;
 }
 
 
 
 
+//Configuraciones para el tiempo mostrado tab1
 .weather-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 .weather-details {
   flex: 1;
 }
-
 .weather-icon {
   width: 110px; 
   height: auto;
