@@ -11,9 +11,9 @@
 <ion-content [fullscreen]="true">
 
   <h1 class="actividades-rapidas">Considera el clima para tus actividades</h1>
-  <ion-card *ngIf="weatherData">
+  <ion-card *ngIf="weatherData" class="weather-card">
     <ion-card-header>
-      <ion-card-title>{{ weatherData.name }}</ion-card-title>
+      <ion-card-title class="tit-card-weather">{{ weatherData.name }}</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="weather-info">
