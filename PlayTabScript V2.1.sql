@@ -280,7 +280,7 @@ END //
 
 DELIMITER ;
 
--- Trigger para que se inscriba en las horas establecidad y no se inscriba repetidas veces.
+-- Trigger para que se inscriba participantes
 DELIMITER //
 
 CREATE PROCEDURE InscribirParticipanteSimple(
@@ -288,39 +288,9 @@ CREATE PROCEDURE InscribirParticipanteSimple(
     IN p_Id_User INT
 )
 BEGIN
-    DECLARE max_jugadores INT;
-    DECLARE jugadores_inscritos INT;
-    DECLARE fecha_inicio DATETIME;
-    DECLARE fecha_fin DATETIME;
-
-    -- Obtener la cantidad máxima de jugadores para la actividad
-    SELECT m.Cantidad_MaxJugador INTO max_jugadores
-    FROM `PlayTab`.`ACTIVIDAD` a
-    JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
-    WHERE a.Id_Actividad = p_Id_Actividad;
-
-    -- Contar los jugadores ya inscritos en la actividad
-    SELECT COUNT(*) INTO jugadores_inscritos
-    FROM `PlayTab`.`PARTICIPANTE`
-    WHERE Id_Actividad = p_Id_Actividad;
-
-    -- Obtener la fecha de inicio y fin de la actividad
-    SELECT Fecha_INI_Actividad, Fecha_TER_Actividad INTO fecha_inicio, fecha_fin
-    FROM `PlayTab`.`ACTIVIDAD`
-    WHERE Id_Actividad = p_Id_Actividad;
-
-    -- Validaciones: Verificar horario y cupo máximo
-    IF NOW() NOT BETWEEN fecha_inicio AND fecha_fin THEN
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'La inscripción no está permitida fuera del horario de la actividad.';
-    ELSEIF jugadores_inscritos >= max_jugadores THEN
-        SIGNAL SQLSTATE '45000' 
-        SET MESSAGE_TEXT = 'No se puede inscribir más jugadores, se alcanzó el máximo permitido.';
-    ELSE
-        -- Insertar el participante en la actividad
-        INSERT INTO `PlayTab`.`PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
-        VALUES (p_Id_Actividad, p_Id_User, 1); -- 1: Asistencia predeterminada
-    END IF;
+    -- Insertar el participante en la actividad sin validaciones
+    INSERT INTO `PlayTab`.`PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
+    VALUES (p_Id_Actividad, p_Id_User, 1); -- 1: Asistencia predeterminada
 END //
 
 DELIMITER ;
@@ -413,14 +383,14 @@ VALUES
 ('98765432-1', 'Ana Gómez', 'ana.gomez@gmail.com', 'def67890','+56933334444', '1985-10-25', '2024-09-21', 200, 15, 15), 
 ('23456789-0', 'Luis Martínez', 'luis.martinez@gmail.com', 'ghi23456','+56955556666', '1992-07-30', '2024-09-21', 100, 15, 20), 
 ('34567890-2', 'Marta López', 'marta.lopez@gmail.com', 'jkl78901','+56977778888', '1995-01-20', '2024-09-21', 300, 15, 25), 
-('45678901-3', 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30);
-
+('45678901-3', 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30),
+('45678901-K', 'Kevin', 'a@gmail.com', '1111','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
 -- Inserción en ACTIVIDAD
 INSERT INTO `PlayTab`.`ACTIVIDAD` 
 (`Nom_Actividad`, `Desc_Actividad`, `Direccion_Actividad`,`Id_MaxJugador`, `Fecha_INI_Actividad`, `Fecha_TER_Actividad`, `Id_Comuna`, `Id_SubCategoria`, `Id_Estado`, `Id_Anfitrion_Actividad`) VALUES
-('Torneo de Fútbol', 'Competencia de fútbol amateur', 'Dirección de torneo',110, '2024-09-30 10:00:00', '2024-09-30 12:00:00', 100, 20001, 15, 100), -- Juan Pérez
-('Partido de League of Legends', 'Encuentro amistoso de League of Legends', 'Dirección de partido',20, '2024-10-01 16:00:00', '2024-10-01 18:00:00', 200, 10002, 15, 101), -- Ana Gómez
-('Caminata por el Lago', 'Caminata grupal alrededor del lago', 'Dirección de caminata',60, '2024-10-02 09:00:00', '2024-10-02 11:00:00', 300, 20007, 15, 102); -- Luis Martínez
+('Torneo de Fútbol', 'Competencia de fútbol amateur', 'Dirección de torneo',110, '2024-09-30 10:00:00', '2024-11-12 12:00:00', 100, 20001, 15, 100), -- Juan Pérez
+('Partido de League of Legends', 'Encuentro amistoso de League of Legends', 'Dirección de partido',20, '2024-11-12 16:00:00', '2024-10-01 20:00:00', 200, 10002, 15, 101), -- Ana Gómez
+('Caminata por el Lago', 'Caminata grupal alrededor del lago', 'Dirección de caminata',60, '2024-11-12 10:20:00', '2024-10-02 11:00:00', 300, 20007, 15, 102); -- Luis Martínez
 
 -- Inserción en Favorito
 INSERT INTO `PlayTab`.`FAVORITO` (`Id_User`, `Id_SubCategoria`) VALUES
@@ -475,3 +445,16 @@ WHERE a.Id_Comuna = 200 and Fecha_TER_Actividad>=now();
 
 DELETE FROM USUARIO
 WHERE Id_User=102;
+
+Use PlayTab;
+Select * from USUARIO;
+Select * from Historial;
+Select * from Actividad;
+select * from participante;
+
+SELECT COUNT(*) FROM `PlayTab`.`PARTICIPANTE` WHERE Id_Actividad = 1003;
+    
+SELECT m.Cantidad_MaxJugador
+    FROM `PlayTab`.`ACTIVIDAD` a
+    JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
+    WHERE a.Id_Actividad = 1003;
