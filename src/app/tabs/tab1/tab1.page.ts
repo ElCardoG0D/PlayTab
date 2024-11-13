@@ -39,7 +39,7 @@ export class Tab1Page implements OnInit, OnDestroy {
 
     this.intervalId = setInterval(() => {
       this.cargarActividades();
-    }, 30000); // 30 segundos
+    }, 100000); // 1 minuto
   }
 
   ngOnInit() {

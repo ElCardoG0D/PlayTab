@@ -100,6 +100,11 @@ export class DatabaseService {
     return this.http.get(`${this.apiUrl}/actividades?Id_Comuna=${Id_Comuna}`);
   }
 
+  //7.1 Jugadores actuales en sesión.
+  getJugadores(Id_Actividad: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/jugdoresInscritos?Id_Actividad=${Id_Actividad}`);
+  }
+
   //8. Método para registrar al participante
   registerParticipante(idActividad: number, idUser: number, idAsistencia: number = 800): Observable<any> {
     const url = `${this.apiUrl}/participante`;

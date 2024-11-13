@@ -199,6 +199,18 @@ app.get('/actividades', (req, res) => {
   });
 });
 
+app.get('/jugdoresInscritos', (req, res) => {
+  const { Id_Actividad } = req.query;
+  const query = 'SELECT COUNT(Id_Actividad) FROM `PlayTab`.`PARTICIPANTE` WHERE Id_Actividad = ?;';
+  db.query(query, [Id_Actividad], (err, results) => {
+    if (err) {
+      console.error('Error:', err);
+      return res.status(500).json({ error: 'Error al obtener los jugadores inscritos' });
+    }
+    res.json(results);
+  });
+});
+
 // insertar participante en la Actividad
 app.post('/participante', (req, res) => {
   const { Id_Actividad, Id_Asistencia, Id_User } = req.body;
