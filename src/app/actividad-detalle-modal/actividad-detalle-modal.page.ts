@@ -20,7 +20,7 @@ export class ActividadDetalleModalPage implements OnInit {
   ) { }
   
   ngOnInit() {
-    console.log('Actividad recibida:', this.actividad); // Verificar los datos recibidos
+    console.log('Actividad recibida:', this.actividad);
     this.databaseService.getJugadores(this.actividad.Id_Actividad).subscribe(
       (response) => {
         this.jugadoresInscritos = response[0]['COUNT(Id_Actividad)'];
@@ -36,7 +36,7 @@ export class ActividadDetalleModalPage implements OnInit {
     if (this.jugadoresInscritos !== undefined && this.actividad?.Cantidad_MaxJugador !== undefined) {
       if (this.jugadoresInscritos >= this.actividad.Cantidad_MaxJugador) {
         this.presentAlert('Cupo completo', 'No puedes inscribirte porque el cupo de la actividad ya está lleno.');
-        return; // Termina la ejecución si el cupo está lleno
+        return;
       }
     }
   
@@ -47,7 +47,7 @@ export class ActividadDetalleModalPage implements OnInit {
       (response) => {
         console.log('Inscripción exitosa:', response);
         this.presentAlert('¡Muy Bien!', 'Te haz inscrito a la actividad.');
-        this.volver(); // Cerrar modal
+        this.volver();
       },
       (error) => {
         console.error('Error al inscribirse:', error);
@@ -57,12 +57,10 @@ export class ActividadDetalleModalPage implements OnInit {
   }
   
   
-  // Método para cerrar el modal
   volver() {
-    this.modalController.dismiss(); // Cierra el modal
+    this.modalController.dismiss(); 
   }
 
-  // Método que permite mostrar una alerta
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
       header: header,
