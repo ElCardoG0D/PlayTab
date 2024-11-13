@@ -33,13 +33,20 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
     const user = this.localS.ObtenerUsuario('user');
-    console.log('Usuario:', user);
+    if (!user) {
+      return;
+    }
+
     this.cargarActividades();
     this.getLocationAndWeather();
-
+    
     this.intervalId = setInterval(() => {
-      this.cargarActividades();
-    }, 100000); // 1 minuto
+      if (this.localS.ObtenerUsuario('user')) {
+        this.cargarActividades();
+      } else {
+        clearInterval(this.intervalId); 
+      }
+    }, 100000);
   }
 
   ngOnInit() {
