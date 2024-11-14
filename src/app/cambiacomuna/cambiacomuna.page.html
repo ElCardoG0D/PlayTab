@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Registro</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondo">
+  <ion-grid class="singup-container">
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-title><strong>¿Te moviste de comuna?</strong></ion-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="cont-singup ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-list lines="none" class="form">
+
+          <!-- Campo para seleccionar la región -->
+          <ion-item>
+            <ion-label>Region:</ion-label>
+            <ion-select [(ngModel)]="region" (ionChange)="onRegionChange()" placeholder = 'Nueva región' required>
+              <ion-select-option *ngFor="let region of regionId" [value]="region.Id_Region">{{ region.Nombre_Region }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Campo para seleccionar la comuna -->
+          <ion-item>
+            <ion-label>Comuna:</ion-label>
+            <ion-select [(ngModel)]="comuna" placeholder = 'Nueva comuna' required>
+              <ion-select-option *ngFor="let comuna of comunaId" [value]="comuna.Id_Comuna">{{ comuna.Nombre_Comuna }}</ion-select-option>
+            </ion-select>                      
+          </ion-item>
+
+          <!-- Botón para crear la cuenta -->
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" expand="block" (click)="cambiarComuna()"><strong>Guardar Cambios</strong></ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

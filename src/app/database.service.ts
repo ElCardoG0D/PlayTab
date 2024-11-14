@@ -122,6 +122,19 @@ export class DatabaseService {
   //9. Método para eliminar usuario
   deleteUsuario(Id_User: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/borrarUser/${Id_User}`);
-  }  
+  }
+  
+  //10.Método par cambiar la comuna del usuario.
+  cambiarComuna(idComuna: number, idUser: number): Observable<any> {
+    const url = `${this.apiUrl}/cambiaComuna`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  
+    const body = {
+      Id_Comuna: idComuna,
+      Id_User: idUser,
+    };
+  
+    return this.http.put(url, body, { headers });
+  }
 
 }

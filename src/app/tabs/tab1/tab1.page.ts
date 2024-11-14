@@ -73,12 +73,10 @@ export class Tab1Page implements OnInit, OnDestroy {
         },
         (error) => {
           console.error('Error al obtener actividades:', error);
-          this.presentAlert('Error', 'No se pudieron cargar las actividades.');
         }
       );
     } else {
       console.error('No se encontró el Id_Comuna del usuario o el usuario no está autenticado.');
-      this.presentAlert('Error', 'No se pudo cargar el Id_Comuna del usuario.');
     }
   }
   

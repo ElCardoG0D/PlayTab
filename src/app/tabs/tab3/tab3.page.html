@@ -12,6 +12,14 @@
   </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza hacia abajo para refrescar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando actividades...">
+    </ion-refresher-content>
+  </ion-refresher>
     <!-- Perfil -->
     <ion-card class="profile-card ion-text-center">
       <ion-card-header>
@@ -44,6 +52,8 @@
         <ion-item>
             <ion-icon name="globe-outline" slot="start"></ion-icon>
             <ion-label>{{regionUser}}>{{comunaUser}}</ion-label>
+            <a (click)="cambiarComuna()"><ion-icon name="pencil-outline" slot="end"></ion-icon></a>
+            
         </ion-item>
     </ion-list>
 

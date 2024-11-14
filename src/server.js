@@ -250,6 +250,28 @@ app.delete('/borrarUser/:Id_User', (req, res) => {
   });
 });
 
+// Cambiar la comuna
+app.put('/cambiaComuna', (req, res) => {
+  const { Id_Comuna, Id_User } = req.body;
+
+  if (!Id_Comuna || !Id_User) {
+    return res.status(400).json({ error: 'Faltan datos requeridos' });
+  }
+
+  const query = `
+    UPDATE USUARIO 
+    SET Id_Comuna= ? 
+    WHERE Id_User = ?;
+  `;
+
+  db.query(query, [Id_Comuna, Id_User], (err, result) => {
+    if (err) {
+      console.error('Error al actualizar la comuna:', err);
+      return res.status(500).json({ error: 'Error al actualizar la comuna' });
+    }
+    res.status(201).json({ message: 'Comuna actualizada exitosamente' });
+  });
+});
 
 // Iniciar el servidor
 app.listen(port, () => {

@@ -9,7 +9,7 @@ import { AlertController } from '@ionic/angular'; // Importa AlertController
   styleUrls: ['./register.page.scss'],
 })
 export class RegisterPage {
-  nombre: string = '';  // Inicializa como cadena vacía
+  nombre: string = ''; 
   rut: string = '';
   mailuser: string = '';
   celular: string = '';
@@ -19,7 +19,7 @@ export class RegisterPage {
   comunaId: any[] = []; 
   region: number = 0; 
   comuna: number = 0; 
-  fechaNacimiento: string = ''; // Agregado para la fecha de nacimiento
+  fechaNacimiento: string = '';
   showCalendar: boolean = false;
   AceptaCondiciones: boolean = false;
   showPassword: boolean = false;
@@ -42,7 +42,7 @@ export class RegisterPage {
   
     this.dbService.getComunasPorRegion(this.region).subscribe((data) => {
       this.comunaId = data;
-      console.log('Datos de comunas recibidos:', data); // Verifica qué campos estás recibiendo
+      console.log('Datos de comunas recibidos:', data);
     },
     (error) => {
       console.error('Error al obtener comunas:', error);
