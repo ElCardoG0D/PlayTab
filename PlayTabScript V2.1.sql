@@ -79,6 +79,7 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`USUARIO` (
   `Id_Comuna` INT NOT NULL,
   `Id_Estado` INT NOT NULL,
   `Id_Clasificacion` INT,
+  `token` VARCHAR(255) NULL,
   PRIMARY KEY (`Id_User`),
   CONSTRAINT `FK_Usuario_Comuna`
     FOREIGN KEY (`Id_Comuna`)
@@ -448,7 +449,6 @@ WHERE Id_User=102;
 
 Use PlayTab;
 Select * from USUARIO;
-Select * from Historial;
 Select * from Actividad;
 select * from participante;
 
@@ -458,3 +458,30 @@ SELECT m.Cantidad_MaxJugador
     FROM `PlayTab`.`ACTIVIDAD` a
     JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
     WHERE a.Id_Actividad = 1003;
+
+-- Select solo para el historial de las partidas donde haya o esté presente el jugador.
+SELECT a.Nom_Actividad, a.Id_Anfitrion_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Id_SubCategoria, i.url
+FROM Participante p
+JOIN ACTIVIDAD a ON p.Id_User=a.Id_Anfitrion_Actividad
+JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
+WHERE Id_Anfitrion_Actividad=102;
+
+-- Select solo para las partidas actuales donde esté inscrito el jugador
+SELECT a.Nom_Actividad, a.Id_Anfitrion_Actividad, a.Desc_actividad, a.Direccion_Actividad, a.Fecha_TER_Actividad, a.Id_SubCategoria, i.url
+FROM Participante p
+JOIN ACTIVIDAD a ON p.Id_User=a.Id_Anfitrion_Actividad
+JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
+WHERE Id_Anfitrion_Actividad=102 and Fecha_TER_Actividad>=now();
+
+-- delete para borrar una actividad credada
+DELETE FROM ACTIVIDAD
+WHERE Id_Anfitrion_Actividad=102 AND Id_Actividad=1002;
+
+-- delete para borrar un Participante.
+DELETE FROM PARTICIPANTE
+WHERE Id_User=102;
+
+-- Actualizar la comuna del usuario
+UPDATE USUARIO 
+SET Id_Comuna= 100 
+WHERE Id_User = 106;
