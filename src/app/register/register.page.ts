@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { DatabaseService } from '../database.service'; // Importa tu servicio
+import { DatabaseService } from '../database.service'; 
 import { Router } from '@angular/router';
-import { AlertController } from '@ionic/angular'; // Importa AlertController
+import { AlertController } from '@ionic/angular'; 
 
 @Component({
   selector: 'app-register',
@@ -26,7 +26,7 @@ export class RegisterPage {
 
   constructor(
     private router : Router,
-    private dbService: DatabaseService, // Inyecta el servicio
+    private dbService: DatabaseService, 
     private alertController: AlertController
   ) {}
 

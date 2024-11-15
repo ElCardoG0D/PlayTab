@@ -1,5 +1,7 @@
 const express = require('express');
 const mysql = require('mysql2');
+const crypto = require('crypto');
+const nodemailer = require('nodemailer');
 const cors = require('cors'); 
 const app = express();
 const port = 3000;
@@ -23,6 +25,76 @@ db.connect((err) => {
     return;  }
   console.log('Connected to MySQL database');
 });
+
+// Comprobación y adición de la columna 'token' para recuperación de contraseña *******************
+const verificarColumnaToken = () => {
+  db.query(`SHOW COLUMNS FROM USUARIO LIKE 'token'`, (err, result) => {
+    if (err) console.error(err);
+    if (result.length === 0) {
+      db.query(`ALTER TABLE USUARIO ADD COLUMN token VARCHAR(255)`, (alterErr) => {
+        if (alterErr) console.error('Error al añadir la columna token:', alterErr);
+        else console.log('Columna token añadida a la tabla USUARIO');
+      });
+    }
+  });
+};
+verificarColumnaToken();
+
+// Rutas y funciones para la recuperación de contraseña **************************************
+app.post('/recover-password', (req, res) => {
+  const { RUT, correo } = req.body;
+
+  if (!RUT || !correo) return res.status(400).json({ error: 'RUT y correo son requeridos' });
+
+  const query = 'SELECT * FROM USUARIO WHERE Run_User = ? AND Correo_User = ?';
+  db.query(query, [RUT, correo], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Error en el servidor' });
+    if (results.length === 0) return res.status(404).json({ error: 'Usuario no encontrado' });
+
+    const token = crypto.randomBytes(20).toString('hex');
+    const updateTokenQuery = 'UPDATE USUARIO SET token = ? WHERE Run_User = ?';
+    db.query(updateTokenQuery, [token, RUT], (updateErr) => {
+      if (updateErr) return res.status(500).json({ error: 'Error en el servidor' });
+
+      const transporter = nodemailer.createTransport({
+        service: 'Gmail',
+        auth: { user: 'playtab.app2024@gmail.com', pass: 'bgzp cihw gjca qoml' }
+      });
+
+      const resetUrl = `http://localhost:8100/reset-password/${token}`;
+      const mailOptions = {
+        from: 'playtab.app2024@gmail.com',
+        to: correo,
+        subject: 'Recuperación de contraseña',
+        text: `Haz clic en el siguiente enlace para restablecer tu contraseña: ${resetUrl}`,
+        html: `<p>Haz clic en el siguiente enlace para restablecer tu contraseña:</p><a href="${resetUrl}">${resetUrl}</a>`
+      };
+
+      transporter.sendMail(mailOptions, (error) => {
+        if (error) return res.status(500).json({ error: 'Error enviando el correo' });
+        res.status(200).json({ message: 'Código de recuperación enviado' });
+      });
+    });
+  });
+});
+
+app.post('/reset-password', (req, res) => {
+  const { token, newPassword } = req.body;
+  if (!token || !newPassword) return res.status(400).json({ error: 'Token y nueva contraseña son requeridos' });
+
+  const query = 'SELECT * FROM USUARIO WHERE token = ?';
+  db.query(query, [token], (err, results) => {
+    if (err) return res.status(500).json({ error: 'Error en el servidor' });
+    if (results.length === 0) return res.status(404).json({ error: 'Token inválido o expirado' });
+
+    const updatePasswordQuery = 'UPDATE USUARIO SET Contra_User = ?, token = NULL WHERE token = ?';
+    db.query(updatePasswordQuery, [newPassword, token], (updateErr) => {
+      if (updateErr) return res.status(500).json({ error: 'Error al actualizar la contraseña' });
+      res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+    });
+  });
+});
+// HASTA AQUÍ EL TEMA DE RECUPERAR CONTRASEÑA ******************************************
 
 // 1. Aquí se obtendrá las Regiones y Comunas disponibles para poder registrar al usuario.
 app.get('/regiones', (req, res) => {
