@@ -1,87 +1,91 @@
 <ion-header class="ion-no-border">
-    <ion-toolbar class="toolbar">
-      <ion-buttons slot="start">
-        <ion-button>
-          <ion-icon name="file-tray-stacked-outline"></ion-icon>
-        </ion-button>
-      </ion-buttons>
-      <div class="toolbar-logo-container">
-        <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
-      </div>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="time-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <div class="toolbar-logo-container">
+      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+    </div>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
 
-  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
-    <ion-refresher-content
-      pullingText="Desliza hacia abajo para refrescar"
-      refreshingSpinner="crescent"
-      refreshingText="Actualizando actividades...">
-    </ion-refresher-content>
-  </ion-refresher>
-    <!-- Perfil -->
-    <ion-card class="profile-card ion-text-center">
-      <ion-card-header>
-        <ion-avatar class="avatar-centered">
-          <img src="../../assets/icon/perfil.png" alt="Foto de perfil" />
-        </ion-avatar>
-      </ion-card-header>
-      <ion-card-content>
-        <ion-card-title>{{nombreUser}}</ion-card-title>
-      </ion-card-content>
-    </ion-card>
-    <!-- Perfil -->
+<ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+  <ion-refresher-content
+    pullingText="Desliza hacia abajo para refrescar"
+    refreshingSpinner="crescent"
+    refreshingText="Actualizando actividades...">
+  </ion-refresher-content>
+</ion-refresher>
+  <!-- Perfil -->
+  <ion-card class="profile-card ion-text-center">
+    <ion-card-header>
+      <ion-avatar class="avatar-centered">
+        <img src="../../assets/icon/perfil.png" alt="Foto de perfil" />
+      </ion-avatar>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-card-title>{{nombreUser}}</ion-card-title>
+    </ion-card-content>
+  </ion-card>
+  <!-- Perfil -->
 
-    <!-- Sección Sobre Mí -->
-    <ion-list>
-        <ion-list-header>
-        <ion-label class="Abt-me">Sobre Mí</ion-label>
-        </ion-list-header>
+  <!-- Sección Sobre Mí -->
+  <ion-list>
+      <ion-list-header>
+      <ion-label class="Abt-me">Sobre Mí</ion-label>
+      </ion-list-header>
 
-        <ion-item>
-        <ion-icon name="mail-outline" slot="start"></ion-icon>
-        <ion-label>{{correoUser}}</ion-label>
-        </ion-item>
+      <ion-item>
+      <ion-icon name="mail-outline" slot="start"></ion-icon>
+      <ion-label>{{correoUser}}</ion-label>
+      </ion-item>
 
-        <ion-item>
-        <ion-icon name="call-outline" slot="start"></ion-icon>
-        <ion-label>{{telefonoUser}}</ion-label>
-        </ion-item>
+      <ion-item>
+      <ion-icon name="call-outline" slot="start"></ion-icon>
+      <ion-label>{{telefonoUser}}</ion-label>
+      </ion-item>
 
-        <ion-item>
-            <ion-icon name="globe-outline" slot="start"></ion-icon>
-            <ion-label>{{regionUser}}>{{comunaUser}}</ion-label>
-            <a (click)="cambiarComuna()"><ion-icon name="pencil-outline" slot="end"></ion-icon></a>
-            
-        </ion-item>
-    </ion-list>
+      <ion-item>
+          <ion-icon name="globe-outline" slot="start"></ion-icon>
+          <ion-label>{{regionUser}}>{{comunaUser}}</ion-label>
+          <a (click)="cambiarComuna()"><ion-icon name="pencil-outline" slot="end"></ion-icon></a>
+          
+      </ion-item>
+  </ion-list>
 
-    <!-- Sección Configuraciones -->
-    <ion-list>
-        <ion-list-header>
-        <ion-label  class="Abt-me">Configuraciones</ion-label>
-        </ion-list-header>
+  <!-- Sección Configuraciones -->
+  <ion-list>
+      <ion-list-header>
+      <ion-label  class="Abt-me">Configuraciones</ion-label>
+      </ion-list-header>
 
-        <ion-item>
-        <ion-icon name="notifications-outline" slot="start"></ion-icon>
-        <ion-label>Modo Silencioso</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
-        </ion-item>
+      <ion-item>
+      <ion-icon name="notifications-outline" slot="start"></ion-icon>
+      <ion-label>Modo Silencioso</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+      </ion-item>
 
-        <ion-item>
-        <ion-icon name="moon-outline" slot="start"></ion-icon>
-        <ion-label>Modo Oscuro</ion-label>
-        <ion-toggle slot="end"></ion-toggle>
-        </ion-item>
-    </ion-list>
-    <div class="container-cerr">
-        <ion-button shape="round" (click)="logOut()">Cerrar sesión</ion-button>
-        <ion-button shape="round" (click)="deleteAccount()">Borra Perfil</ion-button>
-    </div>
-    <div class="container-cerr">
-      <ion-text color="medium">
-      <small>Privacidad y Política</small>
-      </ion-text>
-    </div>
+      <ion-item>
+      <ion-icon name="moon-outline" slot="start"></ion-icon>
+      <ion-label>Modo Oscuro</ion-label>
+      <ion-toggle slot="end"></ion-toggle>
+      </ion-item>
+  </ion-list>
+  <div class="container-cerr">
+      <ion-button shape="round" (click)="deleteAccount()">Borra Perfil</ion-button>
+  </div>
+  <div class="container-cerr">
+    <ion-text color="medium">
+    <small>Privacidad y Política</small>
+    </ion-text>
+  </div>
 </ion-content>
