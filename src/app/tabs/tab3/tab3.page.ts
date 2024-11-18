@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
 import { AlertController } from '@ionic/angular';
-import { response } from 'express';
 
 @Component({
   selector: 'app-tab3',
@@ -71,6 +70,10 @@ export class Tab3Page implements OnInit {
 
   cambiarComuna(){
     this.router.navigate(['./cambiacomuna']);
+  }
+
+  IrHistorial(){
+    this.router.navigate(['./historial']);
   }
 
   logOut(){

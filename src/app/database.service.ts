@@ -137,4 +137,9 @@ export class DatabaseService {
     return this.http.put(url, body, { headers });
   }
 
+   //11. Obtener actividades
+   getHistorial(Id_User: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/historial?Id_User=${Id_User}`);
+  }
+
 }

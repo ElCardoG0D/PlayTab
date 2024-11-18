@@ -345,6 +345,25 @@ app.put('/cambiaComuna', (req, res) => {
   });
 });
 
+//Ver el historial de actividades
+app.get('/historial', (req, res) => {
+  const { Id_User } = req.query;
+  const query = `SELECT DISTINCT a.Nom_Actividad, u.Nom_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
+                  FROM Participante p
+                  JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Actividad
+                  JOIN USUARIO u ON a.Id_Anfitrion_Actividad = u.Id_User
+                  LEFT JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria
+                  LEFT JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
+                  WHERE p.Id_User = ?;`
+  db.query(query, [Id_User], (err, results) => {
+    if (err) {
+      console.error('Error al obtener el historial:', err);
+      return res.status(500).json({ error: 'Error al obtener el historial' });
+    }
+    res.json(results);
+  });
+});
+
 // Iniciar el servidor
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

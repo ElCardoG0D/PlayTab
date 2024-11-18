@@ -434,18 +434,14 @@ Where Id_Actividad=1003;
 SELECT * FROM PARTICIPANTE;
 SELECT * FROM MAXJUGADOR;
 
-
-SELECT a.Id_Actividad, u.Nom_User as Nombre_Anfrition,a.Nom_Actividad, a.Id_Comuna, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Desc_Actividad, a.Direccion_Actividad, m.Cantidad_MaxJugador, s.Nom_SubCategoria, C.Nom_Categoria, i.Url 
-FROM ACTIVIDAD a
-Inner Join usuario u on a.Id_Anfitrion_Actividad = u.Id_User
-INNER JOIN maxjugador m ON a.Id_Maxjugador = m.Id_Maxjugador 
-INNER JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria 
-INNER JOIN CATEGORIA C ON s.Id_Categoria = C.Id_Categoria 
-LEFT JOIN imagen i ON s.Id_SubCategoria = i.Id_SubCategoria 
-WHERE a.Id_Comuna = 200 and Fecha_TER_Actividad>=now();
-
 DELETE FROM USUARIO
 WHERE Id_User=102;
+
+select * from actividad
+where Nom_Actividad=?;
+
+SELECT * FROM actividad WHERE Nom_Actividad LIKE 'Lago';
+
 
 Use PlayTab;
 Select * from USUARIO;
@@ -459,19 +455,14 @@ SELECT m.Cantidad_MaxJugador
     JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
     WHERE a.Id_Actividad = 1003;
 
+USE PLAYTAB;
 -- Select solo para el historial de las partidas donde haya o esté presente el jugador.
-SELECT a.Nom_Actividad, a.Id_Anfitrion_Actividad, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, a.Id_SubCategoria, i.url
+SELECT DISTINCT a.Nom_Actividad, p.Id_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
 FROM Participante p
-JOIN ACTIVIDAD a ON p.Id_User=a.Id_Anfitrion_Actividad
+JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Anfitrion_Actividad
+JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria
 JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
-WHERE Id_Anfitrion_Actividad=102;
-
--- Select solo para las partidas actuales donde esté inscrito el jugador
-SELECT a.Nom_Actividad, a.Id_Anfitrion_Actividad, a.Desc_actividad, a.Direccion_Actividad, a.Fecha_TER_Actividad, a.Id_SubCategoria, i.url
-FROM Participante p
-JOIN ACTIVIDAD a ON p.Id_User=a.Id_Anfitrion_Actividad
-JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
-WHERE Id_Anfitrion_Actividad=102 and Fecha_TER_Actividad>=now();
+WHERE p.Id_User = 106;
 
 -- delete para borrar una actividad credada
 DELETE FROM ACTIVIDAD
