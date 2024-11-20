@@ -106,7 +106,7 @@ export class DatabaseService {
   }
 
   //8. Método para registrar al participante
-  registerParticipante(idActividad: number, idUser: number, idAsistencia: number = 800): Observable<any> {
+  registerParticipante(idActividad: number, idUser: number, idAsistencia: number = 900): Observable<any> {
     const url = `${this.apiUrl}/participante`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   

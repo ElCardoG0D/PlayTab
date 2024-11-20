@@ -21,20 +21,20 @@
 
           <!-- Nombre de usuario -->
           <ion-item>
-            <ion-input label="Nombre:" type="text" [(ngModel)]="nombre" required></ion-input>
+            <ion-input label="Nombre:" type="text" maxlength="50" [(ngModel)]="nombre" required></ion-input>
             <ion-icon slot="end" name="person-circle-outline"></ion-icon>
           </ion-item>
           
           <!-- RUT del usuario -->
           <ion-item>
-            <ion-input label="RUT:" placeholder="sin puntos y con -" type="text" [(ngModel)]="rut" required></ion-input>
+            <ion-input label="RUT:" placeholder="sin puntos y con -" type="text" maxlength="10" [(ngModel)]="rut" required></ion-input>
             <ion-icon slot="end" name="finger-print-outline"></ion-icon>
           </ion-item>
 
           <!-- Campo para la fecha de nacimiento -->
           <ion-item>
             <ion-label slot="start">Fecha de Nacimiento:</ion-label>
-            <ion-input display-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" [(ngModel)]="fechaNacimiento" required></ion-input> <!-- Cambié a ionBlur para abrir el calendario -->
+            <ion-input display-format="YYYY-MM-DD" placeholder="YYYY-MM-DD" maxlength="10" [(ngModel)]="fechaNacimiento" required></ion-input> <!-- Cambié a ionBlur para abrir el calendario -->
             <ion-icon slot="end" name="calendar-outline"></ion-icon>
           </ion-item>   
 
@@ -46,7 +46,7 @@
 
           <!-- Celular del usuario -->
           <ion-item>
-            <ion-input label="Celular:" type="tel" placeholder="+569" [(ngModel)]="celular" required></ion-input>
+            <ion-input label="Celular:" type="tel" placeholder="+569" maxlength="12" [(ngModel)]="celular" required></ion-input>
             <ion-icon slot="end" name="call-outline"></ion-icon>
           </ion-item>
 
@@ -69,13 +69,13 @@
           
           <!-- Contraseña del usuario -->
           <ion-item>
-            <ion-input label="Contraseña:" type="password" [(ngModel)]="password" required></ion-input>
+            <ion-input label="Contraseña:" type="password" maxlength="8" [(ngModel)]="password" required></ion-input>
             <ion-icon slot="end" name="key-outline"></ion-icon>
           </ion-item>
 
           <!-- Confirmación de contraseña -->
           <ion-item>
-            <ion-input label="Confirmar Contraseña:" [type]="showPassword ? 'text' : 'password'" [(ngModel)]="ConfirmPassword" required></ion-input>
+            <ion-input label="Confirmar Contraseña:" [type]="showPassword ? 'text' : 'password'" maxlength="8" [(ngModel)]="ConfirmPassword" required></ion-input>
             <ion-icon slot="end" name="{{showPassword ? 'eye-off-outline' : 'eye-outline'}}" (click)="togglePassword()"></ion-icon>
           </ion-item>
           
@@ -83,9 +83,8 @@
           <ion-row class="A1 ion-align-items-center">
             <ion-col size="12">
               <p>
-                He leído y acepto los
+                Juro solemnemente que soy mayor de 18 años
                 <ion-checkbox [(ngModel)]="AceptaCondiciones" required></ion-checkbox>
-                <strong><a class="acuerdo" href="#">términos y condiciones</a></strong>
               </p>
             </ion-col>
           </ion-row>

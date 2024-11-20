@@ -13,61 +13,61 @@ USE `PlayTab` ;
 SET FOREIGN_KEY_CHECKS = 0;
 
 -- Tabla REGION
-CREATE TABLE IF NOT EXISTS `PlayTab`.`REGION` (
+CREATE TABLE IF NOT EXISTS REGION (
   `Id_Region` INT NOT NULL UNIQUE,
   `Nombre_Region` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`Id_Region`)
 ) ENGINE = InnoDB;
 
 -- Tabla COMUNA
-CREATE TABLE IF NOT EXISTS `PlayTab`.`COMUNA` (
+CREATE TABLE IF NOT EXISTS COMUNA (
   `Id_Comuna` INT NOT NULL UNIQUE,
   `Nombre_Comuna` VARCHAR(45) NOT NULL,
   `Id_Region` INT NOT NULL,
   PRIMARY KEY (`Id_Comuna`),
   CONSTRAINT `FK_Comuna_Region`
     FOREIGN KEY (`Id_Region`)
-    REFERENCES `PlayTab`.`REGION` (`Id_Region`)
+    REFERENCES `REGION` (`Id_Region`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Tabla CATEGORIA
-CREATE TABLE IF NOT EXISTS `PlayTab`.`CATEGORIA` (
+CREATE TABLE IF NOT EXISTS CATEGORIA (
   `Id_Categoria` INT NOT NULL UNIQUE,
   `Nom_Categoria` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`Id_Categoria`)
 ) ENGINE = InnoDB;
 
 -- Tabla SUBCATEGORIA
-CREATE TABLE IF NOT EXISTS `PlayTab`.`SUBCATEGORIA` (
+CREATE TABLE IF NOT EXISTS SUBCATEGORIA (
   `Id_SubCategoria` INT NOT NULL UNIQUE,
   `Nom_SubCategoria` VARCHAR(50) NOT NULL,
   `Id_Categoria` INT NOT NULL,
   PRIMARY KEY (`Id_SubCategoria`),
   CONSTRAINT `FK_SubCategoria_Categoria`
     FOREIGN KEY (`Id_Categoria`)
-    REFERENCES `PlayTab`.`CATEGORIA` (`Id_Categoria`)
+    REFERENCES `CATEGORIA` (`Id_Categoria`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Tabla ESTADO_ACTIVIDAD
-CREATE TABLE IF NOT EXISTS `PlayTab`.`ESTADO_ACTIVIDAD` (
+CREATE TABLE IF NOT EXISTS ESTADO_ACTIVIDAD (
   `Id_Estado` INT NOT NULL UNIQUE,
   `Tipo_Estado` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`Id_Estado`)
 ) ENGINE = InnoDB;
 
 -- Tabla MAXJUGADOR
-CREATE TABLE IF NOT EXISTS `PlayTab`.`MAXJUGADOR` (
+CREATE TABLE IF NOT EXISTS MAXJUGADOR (
   `Id_MaxJugador` INT NOT NULL UNIQUE,
   `Cantidad_MaxJugador` INT NOT NULL,
   PRIMARY KEY (`Id_MaxJugador`)
 ) ENGINE = InnoDB;
 
 -- Tabla USUARIO
-CREATE TABLE IF NOT EXISTS `PlayTab`.`USUARIO` (
+CREATE TABLE IF NOT EXISTS USUARIO (
   `Id_User` INT auto_increment NOT NULL UNIQUE,
   `Run_User` VARCHAR(10) NOT NULL UNIQUE,
   `Nom_User` VARCHAR(50) NOT NULL,
@@ -83,18 +83,18 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`USUARIO` (
   PRIMARY KEY (`Id_User`),
   CONSTRAINT `FK_Usuario_Comuna`
     FOREIGN KEY (`Id_Comuna`)
-    REFERENCES `PlayTab`.`COMUNA` (`Id_Comuna`)
+    REFERENCES `COMUNA` (`Id_Comuna`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Usuario_EstadoActividad`
     FOREIGN KEY (`Id_Estado`)
-    REFERENCES `PlayTab`.`ESTADO_ACTIVIDAD` (`Id_Estado`)
+    REFERENCES `ESTADO_ACTIVIDAD` (`Id_Estado`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB, auto_increment=100;
 
 -- Tabla ACTIVIDAD
-CREATE TABLE IF NOT EXISTS `PlayTab`.`ACTIVIDAD` (
+CREATE TABLE IF NOT EXISTS ACTIVIDAD (
   `Id_Actividad` INT auto_increment NOT NULL UNIQUE,
   `Nom_Actividad` VARCHAR(45) NOT NULL,
   `Desc_actividad` VARCHAR(100),
@@ -109,87 +109,88 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`ACTIVIDAD` (
   PRIMARY KEY (`Id_Actividad`),
   CONSTRAINT `FK_Actividad_Comuna`
     FOREIGN KEY (`Id_Comuna`)
-    REFERENCES `PlayTab`.`COMUNA` (`Id_Comuna`)
+    REFERENCES `COMUNA` (`Id_Comuna`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_SubCategoria`
     FOREIGN KEY (`Id_SubCategoria`)
-    REFERENCES `PlayTab`.`SUBCATEGORIA` (`Id_SubCategoria`)
+    REFERENCES `SUBCATEGORIA` (`Id_SubCategoria`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_MaxJugador`
     FOREIGN KEY (`Id_MaxJugador`)
-    REFERENCES `PlayTab`.`MAXJUGADOR` (`Id_MaxJugador`)
+    REFERENCES `MAXJUGADOR` (`Id_MaxJugador`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_Estado`
     FOREIGN KEY (`Id_Estado`)
-    REFERENCES `PlayTab`.`ESTADO_ACTIVIDAD` (`Id_Estado`)
+    REFERENCES `ESTADO_ACTIVIDAD` (`Id_Estado`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Actividad_Anfitrion` 
     FOREIGN KEY (`Id_Anfitrion_Actividad`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB, auto_increment=1000;
 
-CREATE TABLE IF NOT EXISTS `PlayTab`.`IMAGEN` (
+CREATE TABLE IF NOT EXISTS IMAGEN (
     `Id_Imagen` INT AUTO_INCREMENT NOT NULL UNIQUE,
     `Id_SubCategoria` INT NOT NULL,
     `Url` VARCHAR(255) NOT NULL,
     PRIMARY KEY (`Id_Imagen`),
     CONSTRAINT `FK_Imagen_SubCategoria`
         FOREIGN KEY (`Id_SubCategoria`)
-        REFERENCES `PlayTab`.`SUBCATEGORIA` (`Id_SubCategoria`)
+        REFERENCES `SUBCATEGORIA` (`Id_SubCategoria`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION
 ) ENGINE = InnoDB, AUTO_INCREMENT=1;
 
 CREATE TABLE FAVORITO (
-    `Id_Favorito` INT auto_increment PRIMARY KEY NOT NULL UNIQUE,
-    `Id_User` INT NOT NULL, 
+    `Id_Favorito` INT auto_increment PRIMARY KEY NOT NULL,
+    `Id_User` INT NOT NULL UNIQUE, 
     `Id_SubCategoria` INT NULL,
-    FOREIGN KEY (`Id_User`) REFERENCES  `PlayTab`.`USUARIO`(`Id_User`)
+    FOREIGN KEY (`Id_User`) REFERENCES  `USUARIO`(`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
-    FOREIGN KEY (`Id_SubCategoria`) REFERENCES  `PlayTab`.`ACTIVIDAD`(`Id_SubCategoria`)
+    FOREIGN KEY (`Id_SubCategoria`) REFERENCES `ACTIVIDAD`(`Id_SubCategoria`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 );
 
-CREATE TABLE IF NOT EXISTS `PlayTab`.`PARTICIPANTE` (
+
+CREATE TABLE IF NOT EXISTS PARTICIPANTE (
   `Id_Actividad` INT NOT NULL,
   `Id_User` INT NOT NULL,
   `Id_Asistencia` INT NOT NULL,
   PRIMARY KEY (`Id_Actividad`, `Id_User`), -- Llave primaria compuesta
   CONSTRAINT `FK_Participante_Actividad`
     FOREIGN KEY (`Id_Actividad`)
-    REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
+    REFERENCES `ACTIVIDAD` (`Id_Actividad`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Participante_Usuario`
     FOREIGN KEY (`Id_User`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Participante_Asistencia`
     FOREIGN KEY (`Id_Asistencia`)
-    REFERENCES `PlayTab`.`ASISTENCIA` (`Id_Asistencia`)
+    REFERENCES `ASISTENCIA` (`Id_Asistencia`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 
 -- Tabla ASISTENCIA
-CREATE TABLE IF NOT EXISTS `PlayTab`.`ASISTENCIA` (
+CREATE TABLE IF NOT EXISTS ASISTENCIA (
   `Id_Asistencia` INT NOT NULL UNIQUE,
   `Tipo_Asistencia` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Id_Asistencia`)
 ) ENGINE = InnoDB;
 
 -- Tabla CLASIFICACION
-CREATE TABLE IF NOT EXISTS `PlayTab`.`CLASIFICACION` (
+CREATE TABLE IF NOT EXISTS CLASIFICACION (
   `Id_Clasificacion` INT auto_increment NOT NULL UNIQUE,
   `Comentario_clasificacion` VARCHAR(100),
   `Id_User` INT NOT NULL,
@@ -198,25 +199,25 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`CLASIFICACION` (
   PRIMARY KEY (`Id_Clasificacion`),
   CONSTRAINT `FK_Clasificacion_User`
     FOREIGN KEY (`Id_User`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Clasificacion_NomClasificacion`
     FOREIGN KEY (`Id_NomClasificacion`)
-    REFERENCES `PlayTab`.`NOMBRE_CLASIFICACION` (`Id_NomClasificacion`)
+    REFERENCES `NOMBRE_CLASIFICACION` (`Id_NomClasificacion`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Tabla NOMBRE_CLASIFICACION
-CREATE TABLE IF NOT EXISTS `PlayTab`.`NOMBRE_CLASIFICACION` (
+CREATE TABLE IF NOT EXISTS NOMBRE_CLASIFICACION (
   `Id_NomClasificacion` INT NOT NULL UNIQUE,
   `Nombre_Clasificacion` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Id_NomClasificacion`)
 ) ENGINE = InnoDB;
 
 -- Tabla REPORTE
-CREATE TABLE IF NOT EXISTS `PlayTab`.`REPORTE` (
+CREATE TABLE IF NOT EXISTS REPORTE (
   `Id_Reporte` INT auto_increment NOT NULL UNIQUE,
   `Razon_Reporte` VARCHAR(300) NOT NULL,
   `Id_User` INT NOT NULL,
@@ -224,35 +225,35 @@ CREATE TABLE IF NOT EXISTS `PlayTab`.`REPORTE` (
   PRIMARY KEY (`Id_Reporte`),
   CONSTRAINT `FK_Reporte_User`
     FOREIGN KEY (`Id_User`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Reporte_UserReportar`
     FOREIGN KEY (`Id_User_Reportar`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
 
 -- Tabla HISTORIAL
-CREATE TABLE IF NOT EXISTS `PlayTab`.`HISTORIAL` (
+CREATE TABLE IF NOT EXISTS HISTORIAL (
   `Id_User` INT NOT NULL,
   `Id_Actividad` INT NOT NULL,
   `Id_SubCategoria` INT NOT NULL,
   PRIMARY KEY (`Id_User`, `Id_Actividad`, `Id_SubCategoria`),
   CONSTRAINT `FK_Historial_Usuario`
     FOREIGN KEY (`Id_User`)
-    REFERENCES `PlayTab`.`USUARIO` (`Id_User`)
+    REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Historial_Actividad`
     FOREIGN KEY (`Id_Actividad`)
-    REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_Actividad`)
+    REFERENCES `ACTIVIDAD` (`Id_Actividad`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_Historial_SubCategoria`
     FOREIGN KEY (`Id_SubCategoria`)
-    REFERENCES `PlayTab`.`ACTIVIDAD` (`Id_SubCategoria`)
+    REFERENCES `ACTIVIDAD` (`Id_SubCategoria`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
 ) ENGINE = InnoDB;
@@ -266,10 +267,10 @@ DELIMITER //
 
 -- Trigger para que el anfitrion no se repita por actividad
 CREATE TRIGGER AddAnfitrionToParticipante
-AFTER INSERT ON `PlayTab`.`ACTIVIDAD`
+AFTER INSERT ON `ACTIVIDAD`
 FOR EACH ROW
 BEGIN
-    INSERT INTO `PlayTab`.`PARTICIPANTE` (
+    INSERT INTO `PARTICIPANTE` (
         `Id_Actividad`, `Id_User`, `Id_Asistencia`
     ) 
     VALUES (
@@ -290,7 +291,7 @@ CREATE PROCEDURE InscribirParticipanteSimple(
 )
 BEGIN
     -- Insertar el participante en la actividad sin validaciones
-    INSERT INTO `PlayTab`.`PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
+    INSERT INTO `PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
     VALUES (p_Id_Actividad, p_Id_User, 1); -- 1: Asistencia predeterminada
 END //
 
@@ -317,12 +318,12 @@ DELIMITER ;
 
 
 -- Inserción en REGION
-INSERT INTO `PlayTab`.`REGION` (`Id_Region`,`Nombre_Region`) VALUES 
+INSERT INTO REGION (`Id_Region`,`Nombre_Region`) VALUES 
 (10, 'Los Lagos'), 
 (20, 'Los Rios');
 
 -- Inserción en COMUNA
-INSERT INTO `PlayTab`.`COMUNA` (`Id_Comuna`, `Nombre_Comuna`, `Id_Region`) VALUES 
+INSERT INTO COMUNA (`Id_Comuna`, `Nombre_Comuna`, `Id_Region`) VALUES 
 (100, 'Puerto Montt', 10), 
 (200, 'Puerto Varas', 10),
 (300, 'Osorno', 10), 
@@ -332,12 +333,12 @@ INSERT INTO `PlayTab`.`COMUNA` (`Id_Comuna`, `Nombre_Comuna`, `Id_Region`) VALUE
 (700, 'Frutillar', 10);
 
 -- Inserción en CATEGORIA
-INSERT INTO `PlayTab`.`CATEGORIA` (`Id_Categoria`,`Nom_Categoria`) VALUES
+INSERT INTO CATEGORIA (`Id_Categoria`,`Nom_Categoria`) VALUES
 (1000,'Juegos'),
 (2000,'Deportes');
 
 -- Inserción en NOMBRE_CLASIFICACION
-INSERT INTO `PlayTab`.`NOMBRE_CLASIFICACION` (`Id_NomClasificacion`, `Nombre_Clasificacion`) VALUES 
+INSERT INTO NOMBRE_CLASIFICACION (`Id_NomClasificacion`, `Nombre_Clasificacion`) VALUES 
 (5, 'Muy Malo'), 
 (10, 'Malo'),
 (15, 'Regular'), 
@@ -345,7 +346,7 @@ INSERT INTO `PlayTab`.`NOMBRE_CLASIFICACION` (`Id_NomClasificacion`, `Nombre_Cla
 (25, 'Muy Bueno');
 
 -- Inserción en MAXJUGADOR
-INSERT INTO `PlayTab`.`MAXJUGADOR` (`Id_MaxJugador`, `Cantidad_MaxJugador`) VALUES 
+INSERT INTO MAXJUGADOR (`Id_MaxJugador`, `Cantidad_MaxJugador`) VALUES 
 (10, '3'), 
 (20, '4'),
 (30, '5'), 
@@ -359,24 +360,24 @@ INSERT INTO `PlayTab`.`MAXJUGADOR` (`Id_MaxJugador`, `Cantidad_MaxJugador`) VALU
 (110, '24'); 
 
 -- Inserción en SUBCATEGORIA
-INSERT INTO `PlayTab`.`SUBCATEGORIA` (`Id_SubCategoria`,`Nom_SubCategoria`,`Id_Categoria`) VALUES
+INSERT INTO SUBCATEGORIA (`Id_SubCategoria`,`Nom_SubCategoria`,`Id_Categoria`) VALUES
 (10001,'Fortnite',1000),(10002,'League of Legends',1000),(10003,'Valorant',1000),(10004,'Apex Legends',1000),
 (10005,'Counter-Strike: Global Offensive',1000),(10006,'Rocket League',1000),(10007,'Among Us',1000),
 (20001,'Fútbol',2000),(20002,'Baloncesto',2000),(20003,'Voleibol',2000),(20004,'Béisbol',2000),
 (20005,'Rugby',2000),(20006,'ciclismo',2000),(20007,'trekking',2000);
 
 -- Inserción en ESTADO_ACTIVIDAD
-INSERT INTO `PlayTab`.`ESTADO_ACTIVIDAD` (`Id_Estado`, `Tipo_Estado`) VALUES 
+INSERT INTO ESTADO_ACTIVIDAD (`Id_Estado`, `Tipo_Estado`) VALUES 
 (15, 'Activo'), 
 (30, 'Realizada');
 
 -- Inserción en ASISTENCIA
-INSERT INTO `PlayTab`.`ASISTENCIA` (`Id_Asistencia`, `Tipo_Asistencia`) VALUES 
+INSERT INTO ASISTENCIA (`Id_Asistencia`, `Tipo_Asistencia`) VALUES 
 (800, 'Presente'), 
 (900, 'Ausente');
 
 -- Inserción en USUARIO
-INSERT INTO `PlayTab`.`USUARIO` 
+INSERT INTO USUARIO 
 (`Run_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
 VALUES
 ('12345678-K', 'Richard Pérez', 'Richard.perez@gmail.com', 'abc12349','+56911113333', '1992-05-15', '2024-10-21', 100, 15, 10), 
@@ -386,20 +387,21 @@ VALUES
 ('34567890-2', 'Marta López', 'marta.lopez@gmail.com', 'jkl78901','+56977778888', '1995-01-20', '2024-09-21', 300, 15, 25), 
 ('45678901-3', 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30),
 ('45678901-K', 'Kevin', 'a@gmail.com', '1111','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
+
 -- Inserción en ACTIVIDAD
-INSERT INTO `PlayTab`.`ACTIVIDAD` 
+INSERT INTO ACTIVIDAD
 (`Nom_Actividad`, `Desc_Actividad`, `Direccion_Actividad`,`Id_MaxJugador`, `Fecha_INI_Actividad`, `Fecha_TER_Actividad`, `Id_Comuna`, `Id_SubCategoria`, `Id_Estado`, `Id_Anfitrion_Actividad`) VALUES
 ('Torneo de Fútbol', 'Competencia de fútbol amateur', 'Dirección de torneo',110, '2024-09-30 10:00:00', '2024-11-12 12:00:00', 100, 20001, 15, 100), -- Juan Pérez
 ('Partido de League of Legends', 'Encuentro amistoso de League of Legends', 'Dirección de partido',20, '2024-11-12 16:00:00', '2024-10-01 20:00:00', 200, 10002, 15, 101), -- Ana Gómez
 ('Caminata por el Lago', 'Caminata grupal alrededor del lago', 'Dirección de caminata',60, '2024-11-12 10:20:00', '2024-10-02 11:00:00', 300, 20007, 15, 102); -- Luis Martínez
 
 -- Inserción en Favorito
-INSERT INTO `PlayTab`.`FAVORITO` (`Id_User`, `Id_SubCategoria`) VALUES
-(100, 20001),  -- Juan Pérez marcó el Torneo de Fútbol como favorito
-(101, 10002),  -- Ana Gómez marcó el Partido de League of Legends como favorito
-(100, 20007);  -- Juan Pérez también marcó la Caminata por el Lago como favorito
+INSERT INTO FAVORITO (`Id_User`, `Id_SubCategoria`) VALUES
+(100, 20001),  
+(101, 10002); 
 
-INSERT INTO `PlayTab`.`CLASIFICACION` (`Comentario_clasificacion`,`Id_User`,`Id_User_Clasificar`, `Id_NomClasificacion`) VALUES
+
+INSERT INTO CLASIFICACION (`Comentario_clasificacion`,`Id_User`,`Id_User_Clasificar`, `Id_NomClasificacion`) VALUES
 ('¡Gran torneo! Muy divertido.',100,102, 25),  -- Juan Pérez clasifica el Torneo de Fútbol como Muy Bueno
 ('Me encantó el partido.',101,103, 20),         -- Ana Gómez clasifica el Partido de League of Legends como Bueno
 ('Una buena experiencia.',102,104, 15); 
@@ -425,22 +427,6 @@ Select * from USUARIO;
 SELECT p.Id_Actividad, p.Id_User, i.Nom_Actividad FROM PARTICIPANTE p
 INNER JOIN ACTIVIDAD i on p.Id_Actividad=i.Id_Actividad;
 SELECT * FROM ACTIVIDAD;
-
-SELECT * FROM IMAGEN;
-
-SELECT * FROM PARTICIPANTE
-Where Id_Actividad=1003;
-
-SELECT * FROM PARTICIPANTE;
-SELECT * FROM MAXJUGADOR;
-
-DELETE FROM USUARIO
-WHERE Id_User=102;
-
-select * from actividad
-where Nom_Actividad=?;
-
-SELECT * FROM actividad WHERE Nom_Actividad LIKE 'Lago';
 
 
 Use PlayTab;
@@ -476,3 +462,14 @@ WHERE Id_User=102;
 UPDATE USUARIO 
 SET Id_Comuna= 100 
 WHERE Id_User = 106;
+
+USE PLAYTAB;
+SELECT * FROM FAVORITO;
+
+INSERT INTO FAVORITO (`Id_User`, `Id_SubCategoria`)
+VALUES (101, 20001);
+
+UPDATE FAVORITO 
+SET Id_SubCategoria=20001
+WHERE Id_User= 100;
+
