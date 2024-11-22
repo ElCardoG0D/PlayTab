@@ -69,6 +69,11 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
+    path: 'adminview',
+    loadChildren: () => import('./adminview/adminview.module').then( m => m.AdminviewPageModule),
+    canActivate:[authGuard]
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },

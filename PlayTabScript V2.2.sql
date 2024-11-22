@@ -70,6 +70,7 @@ CREATE TABLE IF NOT EXISTS MAXJUGADOR (
 CREATE TABLE IF NOT EXISTS USUARIO (
   `Id_User` INT auto_increment NOT NULL UNIQUE,
   `Run_User` VARCHAR(10) NOT NULL UNIQUE,
+  `Tipo_User` INT NOT NULL,
   `Nom_User` VARCHAR(50) NOT NULL,
   `Correo_User` VARCHAR(70) NOT NULL,
   `Contra_User` VARCHAR(8) NOT NULL,
@@ -378,15 +379,15 @@ INSERT INTO ASISTENCIA (`Id_Asistencia`, `Tipo_Asistencia`) VALUES
 
 -- Inserción en USUARIO
 INSERT INTO USUARIO 
-(`Run_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
+(`Run_User`, `Tipo_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
 VALUES
-('12345678-K', 'Richard Pérez', 'Richard.perez@gmail.com', 'abc12349','+56911113333', '1992-05-15', '2024-10-21', 100, 15, 10), 
-('12345678-9', 'Juan Pérez', 'juan.perez@gmail.com', 'abc12345','+56911112222', '1990-05-15', '2024-09-21', 100, 15, 10), 
-('98765432-1', 'Ana Gómez', 'ana.gomez@gmail.com', 'def67890','+56933334444', '1985-10-25', '2024-09-21', 200, 15, 15), 
-('23456789-0', 'Luis Martínez', 'luis.martinez@gmail.com', 'ghi23456','+56955556666', '1992-07-30', '2024-09-21', 100, 15, 20), 
-('34567890-2', 'Marta López', 'marta.lopez@gmail.com', 'jkl78901','+56977778888', '1995-01-20', '2024-09-21', 300, 15, 25), 
-('45678901-3', 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30),
-('45678901-K', 'Kevin', 'a@gmail.com', '1111','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
+('12345678-K', 101, 'Richard Pérez', 'Richard.perez@gmail.com', 'abc12349','+56911113333', '1992-05-15', '2024-10-21', 100, 15, 10), 
+('12345678-9', 101, 'Juan Pérez', 'juan.perez@gmail.com', 'abc12345','+56911112222', '1990-05-15', '2024-09-21', 100, 15, 10), 
+('98765432-1', 101, 'Ana Gómez', 'ana.gomez@gmail.com', 'def67890','+56933334444', '1985-10-25', '2024-09-21', 200, 15, 15), 
+('23456789-0', 101, 'Luis Martínez', 'luis.martinez@gmail.com', 'ghi23456','+56955556666', '1992-07-30', '2024-09-21', 100, 15, 20), 
+('34567890-2', 101, 'Marta López', 'marta.lopez@gmail.com', 'jkl78901','+56977778888', '1995-01-20', '2024-09-21', 300, 15, 25), 
+('45678901-3', 101, 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30),
+('21202969-6', 102, 'KevinAdmin', 'kev.vivanco@duocuc.cl', '1111','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
 
 -- Inserción en ACTIVIDAD
 INSERT INTO ACTIVIDAD
@@ -421,6 +422,7 @@ insert into  imagen(Id_SubCategoria,Url) values(10005,"assets/portrait/csgo.png"
 insert into  imagen(Id_SubCategoria,Url) values(10004,"assets/portrait/apexlegends.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10003,"assets/portrait/valorant.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.jpg");
+
 
 USE PLAYTAB;
 Select * from USUARIO;
