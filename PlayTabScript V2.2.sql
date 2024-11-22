@@ -381,7 +381,7 @@ INSERT INTO ASISTENCIA (`Id_Asistencia`, `Tipo_Asistencia`) VALUES
 INSERT INTO USUARIO 
 (`Run_User`, `Tipo_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
 VALUES
-('21202969-6', 102, 'Admin', 'playtab.app2024@gmail.com', '$2a$10$X4vhg5cJ8Y1iRJbn7kp3te3H2QhX95NYxXILAvbWBovF4yGj2XK.','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
+('21202969-6', 102, 'Admin', 'playtab.app2024@gmail.com', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
 
 -- insert imagenes aactividades
 insert into imagen(Id_SubCategoria,Url) values(10002,"assets/portrait/lol.jpg");
@@ -398,7 +398,6 @@ insert into  imagen(Id_SubCategoria,Url) values(10005,"assets/portrait/csgo.png"
 insert into  imagen(Id_SubCategoria,Url) values(10004,"assets/portrait/apexlegends.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10003,"assets/portrait/valorant.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.jpg");
-
 
 USE PLAYTAB;
 Select * from USUARIO;

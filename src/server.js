@@ -5,10 +5,11 @@ const nodemailer = require('nodemailer');
 const cors = require('cors'); 
 const app = express();
 const port = 3000;
+const bcrypt = require('bcryptjs');
 
-// Middleware
-app.use(cors()); // Habilita CORS para aceptar solicitudes desde el frontend
-app.use(express.json()); // Para analizar solicitudes con JSON
+
+app.use(cors()); 
+app.use(express.json());
 
 // Configuración de la base de datos
 const db = mysql.createConnection({
@@ -78,20 +79,36 @@ app.post('/recover-password', (req, res) => {
   });
 });
 
-app.post('/reset-password', (req, res) => {
+app.post('/reset-password', async (req, res) => {
   const { token, newPassword } = req.body;
-  if (!token || !newPassword) return res.status(400).json({ error: 'Token y nueva contraseña son requeridos' });
+
+  if (!token || !newPassword) {
+    return res.status(400).json({ error: 'Token y nueva contraseña son requeridos' });
+  }
 
   const query = 'SELECT * FROM USUARIO WHERE token = ?';
-  db.query(query, [token], (err, results) => {
-    if (err) return res.status(500).json({ error: 'Error en el servidor' });
-    if (results.length === 0) return res.status(404).json({ error: 'Token inválido o expirado' });
+  db.query(query, [token], async (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: 'Error en el servidor' });
+    }
+    if (results.length === 0) {
+      return res.status(404).json({ error: 'Token inválido o expirado' });
+    }
 
-    const updatePasswordQuery = 'UPDATE USUARIO SET Contra_User = ?, token = NULL WHERE token = ?';
-    db.query(updatePasswordQuery, [newPassword, token], (updateErr) => {
-      if (updateErr) return res.status(500).json({ error: 'Error al actualizar la contraseña' });
-      res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
-    });
+    try {
+      const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+      const updatePasswordQuery = 'UPDATE USUARIO SET Contra_User = ?, token = NULL WHERE token = ?';
+      db.query(updatePasswordQuery, [hashedPassword, token], (updateErr) => {
+        if (updateErr) {
+          return res.status(500).json({ error: 'Error al actualizar la contraseña' });
+        }
+        res.status(200).json({ message: 'Contraseña actualizada exitosamente' });
+      });
+    } catch (encryptionErr) {
+      console.error('Error al encriptar la contraseña:', encryptionErr);
+      res.status(500).json({ error: 'Error al procesar la nueva contraseña' });
+    }
   });
 });
 // HASTA AQUÍ EL TEMA DE RECUPERAR CONTRASEÑA ******************************************
@@ -122,17 +139,19 @@ app.get('/comunas/:regionId', (req, res) => {
 });
 
 // 2. Aquí se realizará el INSERT del usuario. 
-app.post('/register', (req, res) => {
+app.post('/register', async (req, res) => {
   const { Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna } = req.body;
 
   if (!Run_User || !Nom_User || !Correo_User || !Contra_User || !Celular_User || !FechaNac_User || !Id_Comuna) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
+  const hashedPassword = await bcrypt.hash(Contra_User, 10);
+  
   const query = `INSERT INTO USUARIO (Run_User ,Tipo_User , Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
                  VALUES (?, 101, ?, ?, ?, ?, ?, NOW(), ?, 15)`;
 
-  db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
+  db.query(query, [Run_User, Nom_User, Correo_User, hashedPassword, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
       console.error('Error inserting user:', err);
       if (err.code === 'ER_DUP_ENTRY') {
@@ -202,23 +221,36 @@ app.post('/login', (req, res) => {
   const query = `
   SELECT 
     Id_User, Tipo_User, Nom_User, Correo_User, Celular_User, 
-    COMUNA.Id_Comuna, COMUNA.Nombre_Comuna, 
+    Contra_User, COMUNA.Id_Comuna, COMUNA.Nombre_Comuna, 
     REGION.Id_Region, REGION.Nombre_Region 
   FROM USUARIO 
   INNER JOIN COMUNA ON USUARIO.Id_Comuna = COMUNA.Id_Comuna 
   INNER JOIN REGION ON COMUNA.Id_Region = REGION.Id_Region 
-  WHERE Correo_User = ? AND Contra_User = ?`;
-  db.query(query, [Correo_User, Contra_User], (err, result) => {
+  WHERE Correo_User = ?`;
+
+  db.query(query, [Correo_User], async (err, result) => {
     if (err) {
       console.error('Error during login:', err);
       return res.status(500).json({ error: 'Error en el servidor' });
     }
 
-    if (result.length > 0) {
-      res.status(200).json({ message: 'Login exitoso', user: result[0] });
-    } else {
-      res.status(401).json({ error: 'Credenciales inválidas' });
+    if (result.length === 0) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
     }
+
+    const user = result[0];
+
+    // Verifica la contraseña con bcrypt
+    const isPasswordValid = await bcrypt.compare(Contra_User, user.Contra_User);
+
+    if (!isPasswordValid) {
+      return res.status(401).json({ error: 'Credenciales inválidas' });
+    }
+
+    // Si la contraseña es válida, elimina la contraseña del objeto y responde
+    delete user.Contra_User; // Elimina la contraseña encriptada antes de enviar la respuesta
+
+    res.status(200).json({ message: 'Login exitoso', user });
   });
 });
 
