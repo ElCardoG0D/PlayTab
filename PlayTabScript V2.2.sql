@@ -73,7 +73,7 @@ CREATE TABLE IF NOT EXISTS USUARIO (
   `Tipo_User` INT NOT NULL,
   `Nom_User` VARCHAR(50) NOT NULL,
   `Correo_User` VARCHAR(70) NOT NULL,
-  `Contra_User` VARCHAR(8) NOT NULL,
+  `Contra_User` VARCHAR(64) NOT NULL,
   `Celular_User` VARCHAR(12) NOT NULL,
   `FechaNac_User` DATE NOT NULL,
   `FechaCreacion_User` DATE NOT NULL,
@@ -381,31 +381,7 @@ INSERT INTO ASISTENCIA (`Id_Asistencia`, `Tipo_Asistencia`) VALUES
 INSERT INTO USUARIO 
 (`Run_User`, `Tipo_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
 VALUES
-('12345678-K', 101, 'Richard Pérez', 'Richard.perez@gmail.com', 'abc12349','+56911113333', '1992-05-15', '2024-10-21', 100, 15, 10), 
-('12345678-9', 101, 'Juan Pérez', 'juan.perez@gmail.com', 'abc12345','+56911112222', '1990-05-15', '2024-09-21', 100, 15, 10), 
-('98765432-1', 101, 'Ana Gómez', 'ana.gomez@gmail.com', 'def67890','+56933334444', '1985-10-25', '2024-09-21', 200, 15, 15), 
-('23456789-0', 101, 'Luis Martínez', 'luis.martinez@gmail.com', 'ghi23456','+56955556666', '1992-07-30', '2024-09-21', 100, 15, 20), 
-('34567890-2', 101, 'Marta López', 'marta.lopez@gmail.com', 'jkl78901','+56977778888', '1995-01-20', '2024-09-21', 300, 15, 25), 
-('45678901-3', 101, 'Carlos Fernández', 'carlos.fernandez@gmail.com', 'mno34567','+56999991010', '1988-12-12', '2024-09-21', 100, 15, 30),
-('21202969-6', 102, 'KevinAdmin', 'kev.vivanco@duocuc.cl', '1111','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
-
--- Inserción en ACTIVIDAD
-INSERT INTO ACTIVIDAD
-(`Nom_Actividad`, `Desc_Actividad`, `Direccion_Actividad`,`Id_MaxJugador`, `Fecha_INI_Actividad`, `Fecha_TER_Actividad`, `Id_Comuna`, `Id_SubCategoria`, `Id_Estado`, `Id_Anfitrion_Actividad`) VALUES
-('Torneo de Fútbol', 'Competencia de fútbol amateur', 'Dirección de torneo',110, '2024-09-30 10:00:00', '2024-11-12 12:00:00', 100, 20001, 15, 100), -- Juan Pérez
-('Partido de League of Legends', 'Encuentro amistoso de League of Legends', 'Dirección de partido',20, '2024-11-12 16:00:00', '2024-10-01 20:00:00', 200, 10002, 15, 101), -- Ana Gómez
-('Caminata por el Lago', 'Caminata grupal alrededor del lago', 'Dirección de caminata',60, '2024-11-12 10:20:00', '2024-10-02 11:00:00', 300, 20007, 15, 102); -- Luis Martínez
-
--- Inserción en Favorito
-INSERT INTO FAVORITO (`Id_User`, `Id_SubCategoria`) VALUES
-(100, 20001),  
-(101, 10002); 
-
-
-INSERT INTO CLASIFICACION (`Comentario_clasificacion`,`Id_User`,`Id_User_Clasificar`, `Id_NomClasificacion`) VALUES
-('¡Gran torneo! Muy divertido.',100,102, 25),  -- Juan Pérez clasifica el Torneo de Fútbol como Muy Bueno
-('Me encantó el partido.',101,103, 20),         -- Ana Gómez clasifica el Partido de League of Legends como Bueno
-('Una buena experiencia.',102,104, 15); 
+('21202969-6', 102, 'Admin', 'playtab.app2024@gmail.com', '$2a$10$X4vhg5cJ8Y1iRJbn7kp3te3H2QhX95NYxXILAvbWBovF4yGj2XK.','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
 
 -- insert imagenes aactividades
 insert into imagen(Id_SubCategoria,Url) values(10002,"assets/portrait/lol.jpg");

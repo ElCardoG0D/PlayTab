@@ -129,8 +129,8 @@ app.post('/register', (req, res) => {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
-  const query = `INSERT INTO USUARIO (Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
-                 VALUES (?, ?, ?, ?, ?, ?, NOW(), ?, 15)`;
+  const query = `INSERT INTO USUARIO (Run_User ,Tipo_User , Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, FechaCreacion_User, Id_Comuna, Id_Estado) 
+                 VALUES (?, 101, ?, ?, ?, ?, ?, NOW(), ?, 15)`;
 
   db.query(query, [Run_User, Nom_User, Correo_User, Contra_User, Celular_User, FechaNac_User, Id_Comuna], (err, result) => {
     if (err) {
