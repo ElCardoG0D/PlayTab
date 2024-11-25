@@ -176,16 +176,17 @@ app.post('/actividad', (req, res) => {
     Id_SubCategoria,
     Id_Estado,
     Id_Anfitrion_Actividad,
+    Celular_User,
   } = req.body;
 
-  if (!Nom_Actividad || !Desc_Actividad || !Direccion_Actividad || !Id_MaxJugador || !Fecha_INI_Actividad || !Fecha_TER_Actividad || !Id_Comuna || !Id_SubCategoria || !Id_Estado || !Id_Anfitrion_Actividad) {
+  if (!Nom_Actividad || !Desc_Actividad || !Direccion_Actividad || !Id_MaxJugador || !Fecha_INI_Actividad || !Fecha_TER_Actividad || !Id_Comuna || !Id_SubCategoria || !Id_Estado || !Id_Anfitrion_Actividad ||!Celular_User) {
     return res.status(400).json({ error: 'Faltan datos requeridos' });
   }
 
   const query = `
     INSERT INTO ACTIVIDAD 
-    (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad) 
-    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+    (Nom_Actividad, Desc_Actividad, Direccion_Actividad, Id_MaxJugador, Fecha_INI_Actividad, Fecha_TER_Actividad, Id_Comuna, Id_SubCategoria, Id_Estado, Id_Anfitrion_Actividad, Celular_User) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
   `;
   db.query(query, [
     Nom_Actividad,
@@ -198,6 +199,7 @@ app.post('/actividad', (req, res) => {
     Id_SubCategoria,
     Id_Estado,
     Id_Anfitrion_Actividad,
+    Celular_User,
   ], (err, result) => {
     if (err) {
       console.error('Error inserting actividad:', err);

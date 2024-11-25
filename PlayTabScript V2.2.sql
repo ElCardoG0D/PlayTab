@@ -102,6 +102,7 @@ CREATE TABLE IF NOT EXISTS ACTIVIDAD (
   `Direccion_Actividad` VARCHAR(60),
   `Id_MaxJugador` int NOT NULL,
   `Id_Anfitrion_Actividad` INT NOT NULL,
+  `Celular_User` VARCHAR(12) NOT NULL,
   `Id_Comuna` INT NOT NULL,
   `Fecha_INI_Actividad` DATETIME NOT NULL,
   `Fecha_TER_Actividad` DATETIME NOT NULL,

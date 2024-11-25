@@ -18,6 +18,7 @@ export class ActividadesPage implements OnInit {
 
   Id_Comuna: number = 0;
   Id_Anfitrion: number = 0;
+  Celular_User: string = '';
 
   categoriaId: any[] = [];
   subcategoriaId: any[] = [];
@@ -133,6 +134,7 @@ export class ActividadesPage implements OnInit {
       if (usuario) {
         this.Id_Comuna = usuario.Id_Comuna;
         this.Id_Anfitrion = usuario.Id_User;
+        this.Celular_User= usuario.Celular_User;
         console.log('Id_Comuna asignada:', this.Id_Comuna);
         console.log('Id_Anfitrion asignada:', this.Id_Anfitrion);
       } else {
@@ -149,7 +151,8 @@ export class ActividadesPage implements OnInit {
         fechaTerminoString,
         this.Id_Comuna,
         this.subcategoriaSeleccionada,
-        this.Id_Anfitrion
+        this.Id_Anfitrion,
+        this.Celular_User,
       ).toPromise();
   
       this.presentAlert('¡Felicidades!', 'Actividad registrada con éxito.');
@@ -164,6 +167,7 @@ export class ActividadesPage implements OnInit {
       this.Id_Comuna = 0;
       this.subcategoriaSeleccionada = 0;
       this.Id_Anfitrion = 0;
+      this.Celular_User = '';
       this.router.navigate(['./tabs/tab2']);
   
     } catch (error) {

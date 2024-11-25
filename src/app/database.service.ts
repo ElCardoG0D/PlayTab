@@ -74,7 +74,8 @@ export class DatabaseService {
     Fecha_TER_Actividad: string,
     Id_Comuna: number,
     Id_SubCategoria: number,
-    Id_Anfitrion_Actividad: number
+    Id_Anfitrion_Actividad: number,
+    Celular_User: string
   ): Observable<any> {
     const url = `${this.apiUrl}/actividad`;
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
@@ -89,7 +90,8 @@ export class DatabaseService {
       Id_Comuna,
       Id_SubCategoria,
       Id_Estado: 15, 
-      Id_Anfitrion_Actividad
+      Id_Anfitrion_Actividad,
+      Celular_User
     };
   
     return this.http.post(url, body, { headers });
