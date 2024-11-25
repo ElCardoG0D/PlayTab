@@ -31,7 +31,8 @@
           <ion-label >Contraseña:</ion-label>
           <ion-input 
           class="ion-text-right" 
-          [type]="showPassword ? 'text' : 'password'" 
+          [type]="showPassword ? 'text' : 'password'"
+          maxlength="8" 
           [(ngModel)]="password" 
           required>
         </ion-input>
