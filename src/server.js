@@ -15,7 +15,7 @@ app.use(express.json());
 const db = mysql.createConnection({
   host: 'localhost',
   user: 'root',
-  password: 'root', // Cambia si tu contraseña es diferente
+  password: '1111', // Cambia si tu contraseña es diferente
   database: 'PlayTab'
 });
 
@@ -397,6 +397,33 @@ app.get('/historial', (req, res) => {
     res.json(results);
   });
 });
+
+// Obtener actividades y datos especificos de la actividad de los usuarios inscritos
+app.get('/actividad_activa', (req, res) => {
+  const { Id_User } = req.query;
+  const query = 'SELECT a.Id_Actividad, a.Nom_Actividad,i.Url,a.Fecha_TER_actividad, s.Nom_SubCategoria from participante p inner join Actividad a on p.Id_actividad=a.Id_actividad  inner join imagen i on a.Id_SubCategoria=i.Id_SubCategoria inner join subcategoria s on a.Id_subcategoria=s.Id_subcategoria where Id_user=?';
+  db.query(query, [Id_User], (err, results) => {
+    if (err) {
+      console.error('Error al obtener actividades:', err);
+      return res.status(500).json({ error: 'Error al obtener actividades' });
+    }
+    res.json(results);
+  });
+});
+// Eliminar usuario de actividad
+app.delete('/eliminar_usuario_actividad', (req, res) => {
+  const { Id_User, Id_Actividad } = req.query;
+
+  const query = 'DELETE FROM participante WHERE Id_user = ? AND Id_actividad = ?';
+  db.query(query, [Id_User, Id_Actividad], (err, results) => {
+    if (err) {
+      console.error('Error al eliminar usuario de actividad:', err);
+      return res.status(500).json({ error: 'Error al eliminar usuario de la actividad' });
+    }
+    res.status(200).json({ message: 'Usuario eliminado de la actividad' });
+  });
+});
+
 
 // Iniciar el servidor
 app.listen(port, () => {

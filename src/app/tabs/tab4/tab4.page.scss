@@ -1,0 +1,86 @@
+// configuraciones toolbar logo y botones
+ion-header {
+  .toolbar {
+    --background: #f46b45;  /* fallback for old browsers */
+    --background: -webkit-linear-gradient(to top, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
+    --background: linear-gradient(to top, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px; 
+    position: relative;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3); 
+  }
+  
+  ion-buttons {
+    ion-icon {
+      font-size: 30px; 
+      color: #fff; 
+      margin-left: -10px;
+    }
+  }
+
+  .logoW {
+    max-width: 90px; 
+    height: auto;
+    margin: 0 auto;
+    filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.2)); 
+  }
+}
+
+//configuraciones de la card
+//Ajustes para el color de la fuente dentro de las cards y demás ajustes para tamaño etc.
+.tit-card-cont{
+  color: white;
+  font-family: 'Oswald', sans-serif;
+  font-weight: 700;
+  font-size: 25px;
+}
+.date-cont{
+  color: white;
+  font-size: 15px;
+}
+.card-contenid{
+  color: white;
+}
+
+//ajuste posicionamiento titulo card
+.card-title-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 15px;
+}
+//Fondo borroso y posicionamiento del contenido
+/* Fondo de la tarjeta con imagen borrosa */
+.card-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  filter: blur(3px); /* Aplica el desenfoque solo al fondo */
+  z-index: 1;
+}
+/* Asegura que el contenido esté encima del fondo borroso */
+ion-card-header,
+ion-card-content {
+  z-index: 2; /* Coloca el contenido sobre el fondo borroso */
+  border-radius: 5px;
+}
+
+
+//configuraciones adicionales para las card, estas son relacionadas solamente con este tab en especifico
+.butt-salir{
+  padding: 10px;
+  border-radius: 10px;
+  background-color: red;
+  margin-top: 15px;
+  --margin-left: auto !important;
+}

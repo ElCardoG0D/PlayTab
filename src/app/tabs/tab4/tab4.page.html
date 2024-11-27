@@ -1,0 +1,41 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+    </ion-buttons>
+    <div class="toolbar-logo-container">
+      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="true">
+
+   <!-- Actividades en formato de una columna, ajustablee en ion-col size="12/6" -->
+   <ion-grid>
+    <ion-row>
+      <!-- Mostrar solo 6 actividades aleatorias -->
+      <ion-col size="12" *ngFor="let actividad of actividades; let i = index">
+        <ion-card class="card-container">
+          <!-- Fondo de la imagen con desenfoque -->
+          <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
+          <!-- Contenido de la tarjeta encima del fondo -->
+          <ion-card-header>
+            <div class="card-title-container">
+              <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
+            </div>
+            <ion-card-subtitle class="date-cont">{{ actividad.Nom_SubCategoria }}, {{ actividad.Fecha_TER_actividad }}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content class="card-contenid">
+            <p>Código: {{ actividad.Id_Actividad }}</p>
+            <button (click)="eliminarUsuarioDeActividad(actividad.Id_Actividad)" class="butt-salir">
+              Salir de la actividad
+            </button>   
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  
+</ion-content>
