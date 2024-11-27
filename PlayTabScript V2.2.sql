@@ -399,19 +399,19 @@ insert into  imagen(Id_SubCategoria,Url) values(10005,"assets/portrait/csgo.png"
 insert into  imagen(Id_SubCategoria,Url) values(10004,"assets/portrait/apexlegends.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10003,"assets/portrait/valorant.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.jpg");
-
+-- select * from imagen
 USE PLAYTAB;
 Select * from USUARIO;
 SELECT p.Id_Actividad, p.Id_User, i.Nom_Actividad FROM PARTICIPANTE p
 INNER JOIN ACTIVIDAD i on p.Id_Actividad=i.Id_Actividad;
 SELECT * FROM ACTIVIDAD;
-
+select * from subcategoria;
 
 Use PlayTab;
 Select * from USUARIO;
 Select * from Actividad;
 select * from participante;
-
+-- SELECT * from participante where Id_user=103;
 SELECT COUNT(*) FROM `PlayTab`.`PARTICIPANTE` WHERE Id_Actividad = 1003;
     
 SELECT m.Cantidad_MaxJugador
