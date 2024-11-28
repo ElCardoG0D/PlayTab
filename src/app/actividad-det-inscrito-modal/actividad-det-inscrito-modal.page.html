@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-title color="black">Detalles de Actividad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Sección de encabezado de la actividad -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="black">{{ actividad.Nom_Actividad }}</ion-card-title>
+    </ion-card-header>
+    
+    <ion-card-content>
+      <p><strong>Anfitrión :</strong> {{ actividad.Nom_User }}</p>
+      <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
+      <p><strong>Dirección:</strong> {{ actividad.Direccion_Actividad }}</p>
+      <p><strong>Subcategoría:</strong> {{ actividad.Nom_SubCategoria }}</p>
+      <p><strong>Jugadores Actuales: </strong>{{ jugadoresInscritos }} de {{ actividad.Cantidad_MaxJugador }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Sección de horario de la actividad -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="black">Lapso Para anular la inscripción</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Fecha:</strong> {{ actividad.Fecha_TER_Actividad | date:'mediumDate' }}</p>
+      <p><strong>Cierre de inscripciones:</strong> {{ actividad.Fecha_TER_Actividad | date:'shortTime' }}</p>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Botón de acción al final -->
+  
+  <div class="ion-text-center ion-padding">
+    
+  </div>
+  <div class="ion-text-center ion-padding">
+    <ion-button color="danger" expand="block" class="butt-salir" (click)="eliminarUsuarioDeActividad(actividad.Id_Actividad)">Salir de la actividad</ion-button>
+    <ion-button color="secondary" expand="block" (click)="volver()">Volver</ion-button>
+  </div>
+</ion-content>
