@@ -1,5 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button default-href="#"></ion-back-button>
+    </ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
     </div>
@@ -22,10 +25,16 @@
             <p>Fecha de la actividad: {{ actividad.Fecha_TER_Actividad | date:'yyyy-MM-dd' }}</p>
           </ion-card-content>
           <ion-card-content class="card-contenid">
-            <p>Tipo de actividad: {{ actividad.Nom_SubCategoria }}</p>
+            <p>Anfitrion de la actividad: {{ actividad.Nom_User }}</p>
           </ion-card-content>
           <ion-card-content class="card-contenid">
-            <p>Anfitrion de la actividad: {{ actividad.Nom_User }}</p>
+            <p>Detalles: {{ actividad.Desc_actividad }}</p>
+          </ion-card-content>
+          <ion-card-content class="card-contenid">
+            <p>Ubicación: {{ actividad.Direccion_Actividad }}</p>
+          </ion-card-content>
+          <ion-card-content class="card-contenid">
+            <p>Número del anfitrion: {{ actividad.Celular_User }}</p>
           </ion-card-content>
         </ion-card>
       </ion-col>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/database.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
 import { ActividadDetInscritoModalPage } from 'src/app/actividad-det-inscrito-modal/actividad-det-inscrito-modal.page';
 
 @Component({
@@ -14,7 +15,8 @@ export class Tab4Page implements OnInit {
   Id_User: string = '';
   constructor(private dbService: DatabaseService, 
               private localS: LocalStorageService,
-              private modalController: ModalController) { 
+              private modalController: ModalController,
+              private router:Router) { 
 
   } 
   
@@ -63,6 +65,10 @@ export class Tab4Page implements OnInit {
     } else {
       console.warn('No se encontró información del usuario en el LocalStorage.');
     }
+  }
+
+  IrHistorial(){
+    this.router.navigate(['./historial']);
   }
 
   handleRefresh(event: any) {

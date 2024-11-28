@@ -1,22 +1,10 @@
 <ion-header class="ion-no-border">
   <!-- Actividades donde me inscribí -->
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-      <ion-button>
-        <ion-icon name="create-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-    <!-- Logo -->
     <ion-buttons slot="start"></ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
     </div>
-    <!-- Actividades que yo cree -->
-    <ion-buttons slot="end">
-      <ion-button>
-        <ion-icon name="people-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -31,9 +19,9 @@
   </ion-refresher>
 
   <!-- Barra de búsqueda -->
-  <ion-toolbar>
+  <!--<ion-toolbar>
     <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
+  </ion-toolbar> -->
 
   <ion-grid>
     <ion-row>
@@ -44,7 +32,7 @@
             <div class="card-title-container">
               <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
             </div>
-            <ion-card-subtitle class="date-cont">{{ actividad.Fecha_INI_Actividad | date:'short' }}</ion-card-subtitle>
+            <ion-card-subtitle class="date-cont">{{ actividad.Fecha_TER_Actividad | date:'short' }}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content class="card-contenid">
             <p>{{ actividad.Nom_SubCategoria }}</p>

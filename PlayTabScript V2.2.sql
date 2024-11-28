@@ -380,33 +380,10 @@ insert into  imagen(Id_SubCategoria,Url) values(10003,"assets/portrait/valorant.
 insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.jpg");
 
 
-USE PLAYTAB;
-Select * from USUARIO;
-SELECT p.Id_Actividad, p.Id_User, i.Nom_Actividad FROM PARTICIPANTE p
-INNER JOIN ACTIVIDAD i on p.Id_Actividad=i.Id_Actividad;
-SELECT * FROM ACTIVIDAD;
-
-
 Use PlayTab;
 Select * from USUARIO;
 Select * from Actividad;
 select * from participante;
-
-SELECT COUNT(*) FROM `PlayTab`.`PARTICIPANTE` WHERE Id_Actividad = 1003;
-    
-SELECT m.Cantidad_MaxJugador
-    FROM `PlayTab`.`ACTIVIDAD` a
-    JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
-    WHERE a.Id_Actividad = 1003;
-
-USE PLAYTAB;
--- Select solo para el historial de las partidas donde haya o esté presente el jugador.
-SELECT DISTINCT a.Nom_Actividad, p.Id_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
-FROM Participante p
-JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Anfitrion_Actividad
-JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria
-JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
-WHERE p.Id_User = 106;
 
 -- delete para borrar una actividad credada
 DELETE FROM ACTIVIDAD
@@ -427,21 +404,3 @@ VALUES (101, 20001);
 UPDATE FAVORITO 
 SET Id_SubCategoria=20001
 WHERE Id_User= 100;
-
-SELECT a.Id_Actividad, a.Nom_Actividad,i.Url,a.Fecha_TER_actividad, s.Nom_SubCategoria 
-from participante p 
-inner join Actividad a on p.Id_actividad=a.Id_actividad  
-inner join imagen i on a.Id_SubCategoria=i.Id_SubCategoria 
-inner join subcategoria s on a.Id_subcategoria=s.Id_subcategoria 
-where Id_user=101;
-
-SELECT DISTINCT a.Nom_Actividad, u.Nom_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, p.Tipo_Participante,s.Nom_SubCategoria, i.url
-                  FROM PARTICIPANTE p
-                  JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Actividad
-                  JOIN USUARIO u ON a.Id_Anfitrion_Actividad = u.Id_User
-                  LEFT JOIN SUBCATEGORIA s ON s.Id_SubCategoria = a.Id_SubCategoria
-                  LEFT JOIN IMAGEN i ON a.Id_SubCategoria = i.Id_SubCategoria
-                  WHERE p.Id_User = 101 AND  p.Tipo_Participante=100 and Fecha_INI_Actividad<=now() and Fecha_TER_Actividad>=now();
-                  
-select * from actividad;
-select * from participante;

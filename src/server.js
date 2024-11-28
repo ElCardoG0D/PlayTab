@@ -388,7 +388,7 @@ app.put('/cambiaComuna', (req, res) => {
 //Ver el historial de actividades
 app.get('/historial', (req, res) => {
   const { Id_User } = req.query;
-  const query = `SELECT DISTINCT a.Nom_Actividad, u.Nom_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
+  const query = `SELECT DISTINCT u.Nom_User, a.Nom_Actividad, a.Desc_actividad, a.Direccion_Actividad, a.Celular_User, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
                   FROM Participante p
                   JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Actividad
                   JOIN USUARIO u ON a.Id_Anfitrion_Actividad = u.Id_User
