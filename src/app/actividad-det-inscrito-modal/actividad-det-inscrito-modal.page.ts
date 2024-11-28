@@ -4,6 +4,7 @@ import { DatabaseService } from '../database.service';
 import { AlertController } from '@ionic/angular';
 import { LocalStorageService } from '../services/local-storage.service';
 
+declare const google: any;
 
 @Component({
   selector: 'app-actividad-det-inscrito-modal',
@@ -36,6 +37,35 @@ export class ActividadDetInscritoModalPage implements OnInit {
         console.error('Error al obtener jugadores inscritos:', error);
       }
     );
+  }
+
+  ngAfterViewInit() {
+    // Inicializar el mapa después de que la vista esté cargada
+    if (this.actividad?.Direccion_Actividad) {
+      this.loadMap(this.actividad.Direccion_Actividad);
+    }
+  }
+
+  loadMap(address: string) {
+    const geocoder = new google.maps.Geocoder();
+
+    geocoder.geocode({ address }, (results: any, status: string) => {
+      if (status === 'OK' && results[0]) {
+        const map = new google.maps.Map(document.getElementById('map') as HTMLElement, {
+          zoom: 15,
+          center: results[0].geometry.location,
+        });
+
+        // Coloca un marcador en el mapa
+        new google.maps.Marker({
+          position: results[0].geometry.location,
+          map,
+          title: address,
+        });
+      } else {
+        console.error('Error al cargar la ubicación:', status);
+      }
+    });
   }
 
   eliminarUsuarioDeActividad(Id_Actividad: number) {

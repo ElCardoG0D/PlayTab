@@ -14,7 +14,16 @@
     <ion-card-content>
       <p><strong>Anfitrión :</strong> {{ actividad.Nom_User }}</p>
       <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
-      <p><strong>Dirección:</strong> {{ actividad.Direccion_Actividad }}</p>
+      <p>
+        <strong>Dirección:</strong> 
+        <a 
+          href="https://www.google.com/maps/search/?api=1&query={{ actividad.Direccion_Actividad }}" 
+          target="_blank" 
+          style="text-decoration: none; color: inherit; font-weight: bold;"
+        >
+          {{ actividad.Direccion_Actividad }}
+        </a>
+      </p>      
       <p><strong>Subcategoría:</strong> {{ actividad.Nom_SubCategoria }}</p>
       <p><strong>Jugadores Actuales: </strong>{{ jugadoresInscritos }} de {{ actividad.Cantidad_MaxJugador }}</p>
     </ion-card-content>
@@ -31,10 +40,10 @@
     </ion-card-content>
   </ion-card>
 
+  <div *ngIf="actividad?.Direccion_Actividad" id="map" style="width: 100%; height: 300px; margin-top: 20px;"></div>
+
   <!-- Botón de acción al final -->
-  
   <div class="ion-text-center ion-padding">
-    
   </div>
   <div class="ion-text-center ion-padding">
     <ion-button color="danger" expand="block" class="butt-salir" (click)="eliminarUsuarioDeActividad(actividad.Id_Actividad)">Salir de la actividad</ion-button>

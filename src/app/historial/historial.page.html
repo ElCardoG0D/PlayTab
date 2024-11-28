@@ -1,7 +1,7 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
     <ion-buttons slot="start">
-      <ion-back-button default-href="#"></ion-back-button>
+      <ion-back-button></ion-back-button>
     </ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
@@ -31,7 +31,16 @@
             <p>Detalles: {{ actividad.Desc_actividad }}</p>
           </ion-card-content>
           <ion-card-content class="card-contenid">
-            <p>Ubicación: {{ actividad.Direccion_Actividad }}</p>
+            <p>
+              Ubicación: 
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query={{ actividad.Direccion_Actividad }}" 
+                target="_blank" 
+                style="text-decoration: none; color: inherit; font-weight: bold;"
+              >
+                {{ actividad.Direccion_Actividad }}
+              </a>
+            </p>
           </ion-card-content>
           <ion-card-content class="card-contenid">
             <p>Número del anfitrion: {{ actividad.Celular_User }}</p>
