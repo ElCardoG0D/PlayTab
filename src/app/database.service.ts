@@ -154,5 +154,9 @@ export class DatabaseService {
       params: { Id_User: String(Id_User), Id_Actividad: String(Id_Actividad) },
     });
   }
+
+  getGoogleMapsKey(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/api/maps-key`);
+  }  
   
 }

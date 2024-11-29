@@ -385,7 +385,7 @@ Select * from USUARIO;
 Select * from Actividad;
 select * from participante;
 
--- delete para borrar una actividad credada
+-- delete para borrar una actividad credad
 DELETE FROM ACTIVIDAD
 WHERE Id_Anfitrion_Actividad=102 AND Id_Actividad=1002;
 

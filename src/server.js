@@ -113,6 +113,11 @@ app.post('/reset-password', async (req, res) => {
 });
 // HASTA AQUÍ EL TEMA DE RECUPERAR CONTRASEÑA ******************************************
 
+app.get('/api/maps-key', (req, res) => {
+  const apiKey = 'AIzaSyBI63avQmJjhUVvzJNNkejOOfiJml_zUcE'; // Tu API Key
+  res.json({ apiKey });
+});
+
 // 1. Aquí se obtendrá las Regiones y Comunas disponibles para poder registrar al usuario.
 app.get('/regiones', (req, res) => {
   const query = 'SELECT * FROM REGION';

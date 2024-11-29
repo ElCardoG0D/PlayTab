@@ -40,10 +40,32 @@ export class ActividadDetInscritoModalPage implements OnInit {
   }
 
   ngAfterViewInit() {
-    // Inicializar el mapa después de que la vista esté cargada
-    if (this.actividad?.Direccion_Actividad) {
-      this.loadMap(this.actividad.Direccion_Actividad);
-    }
+    // Cargar el script de Google Maps antes de inicializar el mapa
+    this.loadGoogleMapsScript().then(() => {
+      if (this.actividad?.Direccion_Actividad) {
+        this.loadMap(this.actividad.Direccion_Actividad);
+      }
+    }).catch((error) => {
+      console.error('Error al cargar Google Maps:', error);
+    });
+  }
+
+  private loadGoogleMapsScript(): Promise<void> {
+    return new Promise((resolve, reject) => {
+      this.databaseService.getGoogleMapsKey().subscribe({
+        next: (data) => {
+          const apiKey = data.apiKey;
+          const script = document.createElement('script');
+          script.src = `https://maps.googleapis.com/maps/api/js?key=${apiKey}`;
+          script.async = true;
+          script.defer = true;
+          script.onload = () => resolve();
+          script.onerror = () => reject('Error loading Google Maps script.');
+          document.head.appendChild(script);
+        },
+        error: (err) => reject(err),
+      });
+    });
   }
 
   loadMap(address: string) {
