@@ -15,15 +15,19 @@
       <p><strong>Anfitrión :</strong> {{ actividad.Nom_User }}</p>
       <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
       <p>
-        <strong>Dirección:</strong> 
+        <strong>Dirección:</strong>
         <a 
+          *ngIf="actividad.Direccion_Actividad !== 'N/A'" 
           href="https://www.google.com/maps/search/?api=1&query={{ actividad.Direccion_Actividad }}" 
           target="_blank" 
           style="text-decoration: none; color: inherit; font-weight: bold;"
         >
           {{ actividad.Direccion_Actividad }}
         </a>
-      </p>           
+        <span *ngIf="actividad.Direccion_Actividad === 'N/A'">
+          N/A
+        </span>
+      </p>          
       <p><strong>Categoría:</strong> {{ actividad.Nom_Categoria }}</p>
       <p><strong>Subcategoría:</strong> {{ actividad.Nom_SubCategoria }}</p>
       <p><strong>Jugadores Actuales: </strong>{{ jugadoresInscritos }} de {{ actividad.Cantidad_MaxJugador }}</p>
@@ -42,7 +46,12 @@
     </ion-card-content>
   </ion-card>
 
-  <div *ngIf="actividad?.Direccion_Actividad" id="map" style="width: 100%; height: 300px; margin-top: 20px;"></div>
+  <div 
+  *ngIf="actividad.Direccion_Actividad !== 'N/A'" 
+  id="map" 
+  style="width: 100%; height: 300px; margin-top: 20px;"
+  >
+  </div>
 
 
   <!-- Botón de acción al final -->
