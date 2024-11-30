@@ -12,7 +12,6 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule),
-    canActivate:[authGuard]
   },
   {
     path: 'tab1',
@@ -42,12 +41,10 @@ const routes: Routes = [
   {
     path: 'recover-pw',
     loadChildren: () => import('./recover-pw/recover-pw.module').then( m => m.RecoverPwPageModule),
-    canActivate:[authGuard]
   },
   {
     path: 'register',
     loadChildren: () => import('./register/register.module').then( m => m.RegisterPageModule),
-    canActivate:[authGuard]
   },
   {
     path: 'actividades',

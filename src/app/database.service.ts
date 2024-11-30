@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DatabaseService {
   
-  private apiUrl = 'http://localhost:3000'; // URL de tu servidor Node.js
+  private apiUrl = 'https://backendplaytab-production.up.railway.app'; // URL de tu servidor Node.js
   
   constructor(private http: HttpClient) { }
   
