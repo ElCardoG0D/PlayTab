@@ -21,7 +21,8 @@ export const authGuard: CanActivateFn = (route, state) => {
         state.url.startsWith('/actividades') ||
         state.url.startsWith('/actividad-detalle-modal') ||
         state.url.startsWith('/cambiacomuna') ||
-        state.url.startsWith('/historial')
+        state.url.startsWith('/historial') ||
+        state.url.startsWith('/actividad-det-inscrito-modal')
       ) {
         router.navigate(['/adminview']);
         return false; 
@@ -44,7 +45,8 @@ export const authGuard: CanActivateFn = (route, state) => {
       state.url.startsWith('/actividad-detalle-modal') ||
       state.url.startsWith('/cambiacomuna') ||
       state.url.startsWith('/historial') ||
-      state.url.startsWith('/adminview')
+      state.url.startsWith('/adminview') ||
+      state.url.startsWith('/actividad-det-inscrito-modal')
     ) {
       router.navigate(['/login']);
       return false;

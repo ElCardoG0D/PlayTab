@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { DatabaseService } from 'src/app/database.service';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
+import { ModalController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ActividadDetInscritoModalPage } from 'src/app/actividad-det-inscrito-modal/actividad-det-inscrito-modal.page';
 
 @Component({
   selector: 'app-tab4',
@@ -10,11 +13,19 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 export class Tab4Page implements OnInit {
   actividades: any[] = []; 
   Id_User: string = '';
-  constructor(private dbService: DatabaseService, private localS: LocalStorageService) { } 
+  constructor(private dbService: DatabaseService, 
+              private localS: LocalStorageService,
+              private modalController: ModalController,
+              private router:Router) { 
 
-  ngOnInit() {
+  } 
+  
+  ionViewWillEnter() {
     this.cargarActividades();
     this.cargarDatosUsuario();
+  }
+
+  ngOnInit() {
   }
 
   cargarActividades() {
@@ -35,23 +46,16 @@ export class Tab4Page implements OnInit {
       console.error('No se encontró el Id_User del usuario o el usuario no está autenticado.');
     }
   }
-  eliminarUsuarioDeActividad(Id_Actividad: number) {
-    const user = this.localS.ObtenerUsuario('user'); // Obtener el usuario desde localStorage
-    if (user && user.Id_User) {
-      const idUser = user.Id_User;
 
-      this.dbService.eliminarUsuarioDeActividad(idUser, Id_Actividad).subscribe(
-        (response) => {
-          console.log('Usuario eliminado de la actividad con éxito:', response);
-          this.actividades = this.actividades.filter(actividad => actividad.Id_Actividad !== Id_Actividad);
-        },
-        (error) => {
-          console.error('Error al eliminar al usuario de la actividad:', error);
-        }
-      );
-    } else {
-      console.error('No se encontró el Id_User del usuario o el usuario no está autenticado.');
-    }
+  async onCardClick(actividad: any) {
+    console.log('Actividad clickeada:', actividad);
+        
+    const modal = await this.modalController.create({
+      component: ActividadDetInscritoModalPage,
+      componentProps: { actividad }
+    });
+        
+    return await modal.present();
   }
 
   cargarDatosUsuario() {
@@ -61,5 +65,14 @@ export class Tab4Page implements OnInit {
     } else {
       console.warn('No se encontró información del usuario en el LocalStorage.');
     }
+  }
+
+  IrHistorial(){
+    this.router.navigate(['./historial']);
+  }
+
+  handleRefresh(event: any) {
+    this.cargarActividades();
+    event.target.complete();
   }
 }

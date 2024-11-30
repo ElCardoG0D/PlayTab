@@ -79,9 +79,15 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
+    path: 'actividad-det-inscrito-modal',
+    loadChildren: () => import('./actividad-det-inscrito-modal/actividad-det-inscrito-modal.module').then( m => m.ActividadDetInscritoModalPageModule),
+    canActivate:[authGuard]
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },
+
 ];
 
 @NgModule({

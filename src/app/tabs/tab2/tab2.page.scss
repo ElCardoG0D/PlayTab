@@ -33,70 +33,49 @@ ion-header {
   --background: linear-gradient(135deg, #ff6600, #c0b626);
 }
 
-// Font personalizado para escritura
+
 @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
 
-// Barra de búsqueda
+
 ion-searchbar {
   margin-bottom: auto;
-  --background: white; /* Color de fondo del campo de búsqueda */
-  --border-radius: 5px; /* Bordes redondeados */
-  --color: black; /* Color del texto */
-  --placeholder-color: #cf551c; /* Color del texto del placeholder */
+  --background: white; 
+  --border-radius: 5px; 
+  --color: black;
+  --placeholder-color: #cf551c; 
 }
 
-// Textos
+
 .actividades-rapidas {
   margin-left: 15px;
   font-family: 'Oswald', sans-serif;
-  font-weight: 700; /* Asegura que el texto esté en negrita */
+  font-weight: 700; 
 }
 
-// Colores de las tarjetas
-ion-card.col-card1 {
-  background-color: #FF9999;
-  color: black;
-}
-ion-card.col-card2 {
-  background-color: #99CCFF;
-  color: black;
-}
-ion-card.col-card3 {
-  background-color: #77dd77;
-  color: black;
-}
-ion-card.col-card4 {
-  background-color: #ffcc99;
-  color: black;
-}
-ion-card.col-card5 {
-  background-color: #d1c4e9;
-  color: black;
-}
-
-// Diseño de la card
 ion-card {
   margin-top: 15px;
   padding: 10px;
   border-radius: 10px;
 }
 
-//Ajustes para el color de la fuente dentro de las cards y demás ajustes para tamaño etc.
 .tit-card-cont{
   color: white;
   font-family: 'Oswald', sans-serif;
   font-weight: 700;
   font-size: 25px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 1);
 }
 .date-cont{
   color: white;
   font-size: 15px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 .card-contenid{
   color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
-//ajuste posicionamiento titulo card
+
 .card-title-container {
   display: flex;
   justify-content: center;
@@ -106,9 +85,6 @@ ion-card {
 }
 
 
-
-//Fondo borroso y posicionamiento del contenido
-/* Fondo de la tarjeta con imagen borrosa */
 .card-background {
   position: absolute;
   top: 0;
@@ -118,12 +94,12 @@ ion-card {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  filter: blur(1px); /* Aplica el desenfoque solo al fondo */
+  filter: blur(1px); 
   z-index: 1;
 }
-/* Asegura que el contenido esté encima del fondo borroso */
+
 ion-card-header,
 ion-card-content {
-  z-index: 2; /* Coloca el contenido sobre el fondo borroso */
+  z-index: 2; 
   border-radius: 5px;
 }

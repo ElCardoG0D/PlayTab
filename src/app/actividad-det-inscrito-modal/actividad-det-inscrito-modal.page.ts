@@ -2,25 +2,30 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import { DatabaseService } from '../database.service';
 import { AlertController } from '@ionic/angular';
+import { LocalStorageService } from '../services/local-storage.service';
 
 declare const google: any;
 
 @Component({
-  selector: 'app-actividad-detalle-modal',
-  templateUrl: './actividad-detalle-modal.page.html',
-  styleUrls: ['./actividad-detalle-modal.page.scss'],
+  selector: 'app-actividad-det-inscrito-modal',
+  templateUrl: './actividad-det-inscrito-modal.page.html',
+  styleUrls: ['./actividad-det-inscrito-modal.page.scss'],
 })
-export class ActividadDetalleModalPage implements OnInit {
+export class ActividadDetInscritoModalPage implements OnInit {
 
   @Input() actividad: any;
   jugadoresInscritos: number | undefined; 
 
+  actividades: any[] = []; 
+  Id_User: string = '';
+
   constructor(
     private modalController: ModalController,
     private databaseService: DatabaseService,
-    private alertController: AlertController 
+    private alertController: AlertController,
+    private localS : LocalStorageService
   ) { }
-  
+
   ngOnInit() {
     console.log('Actividad recibida:', this.actividad);
     this.databaseService.getJugadores(this.actividad.Id_Actividad).subscribe(
@@ -85,31 +90,26 @@ export class ActividadDetalleModalPage implements OnInit {
     });
   }
 
-  inscribir() {
-    if (this.jugadoresInscritos !== undefined && this.actividad?.Cantidad_MaxJugador !== undefined) {
-      if (this.jugadoresInscritos >= this.actividad.Cantidad_MaxJugador) {
-        this.presentAlert('Cupo completo', 'No puedes inscribirte porque el cupo de la actividad ya está lleno.');
-        return;
-      }
+  eliminarUsuarioDeActividad(Id_Actividad: number) {
+    const user = this.localS.ObtenerUsuario('user');
+    if (user && user.Id_User) {
+      const idUser = user.Id_User;
+
+      this.databaseService.eliminarUsuarioDeActividad(idUser, Id_Actividad).subscribe(
+        (response) => {
+          this.presentAlert('Eliminado', 'Te haz desuscrito de la actividad.');
+          this.volver();
+          this.actividades = this.actividades.filter(actividad => actividad.Id_Actividad !== Id_Actividad);
+        },
+        (error) => {
+          console.error('Error al eliminar al usuario de la actividad:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró el Id_User del usuario o el usuario no está autenticado.');
     }
-  
-    const user = JSON.parse(localStorage.getItem('user') || '{}');
-    const idUser = user.Id_User;
-  
-    this.databaseService.registerParticipante(this.actividad.Id_Actividad, idUser).subscribe(
-      (response) => {
-        console.log('Inscripción exitosa:', response);
-        this.presentAlert('¡Muy Bien!', 'Te haz inscrito a la actividad.');
-        this.volver();
-      },
-      (error) => {
-        console.error('Error al inscribirse:', error);
-        this.presentAlert('¡Ups!', 'Al parecer ya estás inscrito.');
-      }
-    );
   }
-  
-  
+
   volver() {
     this.modalController.dismiss(); 
   }
@@ -122,4 +122,5 @@ export class ActividadDetalleModalPage implements OnInit {
     });
     await alert.present();
   }
+
 }

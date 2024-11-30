@@ -27,8 +27,7 @@
         <span *ngIf="actividad.Direccion_Actividad === 'N/A'">
           N/A
         </span>
-      </p>          
-      <p><strong>Categoría:</strong> {{ actividad.Nom_Categoria }}</p>
+      </p>             
       <p><strong>Subcategoría:</strong> {{ actividad.Nom_SubCategoria }}</p>
       <p><strong>Jugadores Actuales: </strong>{{ jugadoresInscritos }} de {{ actividad.Cantidad_MaxJugador }}</p>
     </ion-card-content>
@@ -37,12 +36,11 @@
   <!-- Sección de horario de la actividad -->
   <ion-card>
     <ion-card-header>
-      <ion-card-title color="black">Lapso de inscripción</ion-card-title>
+      <ion-card-title color="black">Lapso Para anular la inscripción</ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <p><strong>Fecha:</strong> {{ actividad.Fecha_TER_Actividad | date:'mediumDate' }}</p>
-      <p><strong>Hora de Inicio:</strong> {{ actividad.Fecha_INI_Actividad | date:'shortTime' }}</p>
-      <p><strong>Hora de Término:</strong> {{ actividad.Fecha_TER_Actividad | date:'shortTime' }}</p>
+      <p><strong>Cierre de inscripciones:</strong> {{ actividad.Fecha_TER_Actividad | date:'shortTime' }}</p>
     </ion-card-content>
   </ion-card>
 
@@ -53,10 +51,9 @@
   >
   </div>
 
-
   <!-- Botón de acción al final -->
   <div class="ion-text-center ion-padding">
+    <ion-button color="danger" expand="block" class="butt-salir" (click)="eliminarUsuarioDeActividad(actividad.Id_Actividad)">Salir de la actividad</ion-button>
     <ion-button color="secondary" expand="block" (click)="volver()">Volver</ion-button>
-    <ion-button color="success" expand="block" (click)="inscribir()">Unirse</ion-button>
   </div>
 </ion-content>

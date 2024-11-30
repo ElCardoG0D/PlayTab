@@ -61,6 +61,12 @@ export class ActividadesPage implements OnInit {
   cargarCategorias() {
     console.log('Categoría seleccionada:', this.categoriaSeleccionada);
 
+    if (this.categoriaSeleccionada === 1000) {
+      this.direccionActividad = 'N/A'; 
+    } else {
+      this.direccionActividad = '';
+    }
+
     this.dbService.getSubCategoria(this.categoriaSeleccionada).subscribe(
       (data) => {
         this.subcategoriaId = data;

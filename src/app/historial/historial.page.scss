@@ -57,13 +57,16 @@ ion-button {
     font-family: 'Oswald', sans-serif;
     font-weight: 700;
     font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
   .date-cont{
     color: white;
     font-size: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
   .card-contenid{
     color: white;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
   }
   
   .card-title-container {
@@ -72,6 +75,8 @@ ion-button {
     align-items: center;
     text-align: center;
     margin-bottom: 15px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
+
   }
   
   .card-background {
@@ -91,4 +96,8 @@ ion-button {
   ion-card-content {
     z-index: 2; 
     border-radius: 5px;
+  }
+
+  .card-background {
+    filter: blur(3px); /* Aplica el desenfoque solo al fondo */
   }

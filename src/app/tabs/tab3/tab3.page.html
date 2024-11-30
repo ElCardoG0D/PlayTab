@@ -1,18 +1,8 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-      <ion-button (click)="IrHistorial()">
-        <ion-icon name="time-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
     <div class="toolbar-logo-container">
       <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
     </div>
-    <ion-buttons slot="end">
-      <ion-button (click)="logOut()">
-        <ion-icon name="log-out-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -63,7 +53,7 @@
   </ion-list>
 
   <!-- Sección Configuraciones -->
-  <ion-list>
+  <!--<ion-list>
       <ion-list-header>
       <ion-label  class="Abt-me">Configuraciones</ion-label>
       </ion-list-header>
@@ -79,13 +69,11 @@
       <ion-label>Modo Oscuro</ion-label>
       <ion-toggle slot="end"></ion-toggle>
       </ion-item>
-  </ion-list>
+  </ion-list>-->
+  
   <div class="container-cerr">
+      <ion-button shape="round" (click)="logOut()">Cerrar Sesión</ion-button>
       <ion-button shape="round" (click)="deleteAccount()">Borra Perfil</ion-button>
   </div>
-  <div class="container-cerr">
-    <ion-text color="medium">
-    <small>Privacidad y Política</small>
-    </ion-text>
-  </div>
+
 </ion-content>

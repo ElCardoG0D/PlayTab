@@ -17,7 +17,7 @@ CREATE TABLE IF NOT EXISTS REGION (
   `Id_Region` INT NOT NULL UNIQUE,
   `Nombre_Region` VARCHAR(60) NOT NULL,
   PRIMARY KEY (`Id_Region`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla COMUNA
 CREATE TABLE IF NOT EXISTS COMUNA (
@@ -30,14 +30,14 @@ CREATE TABLE IF NOT EXISTS COMUNA (
     REFERENCES `REGION` (`Id_Region`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+);
 
 -- Tabla CATEGORIA
 CREATE TABLE IF NOT EXISTS CATEGORIA (
   `Id_Categoria` INT NOT NULL UNIQUE,
   `Nom_Categoria` VARCHAR(30) NOT NULL,
   PRIMARY KEY (`Id_Categoria`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla SUBCATEGORIA
 CREATE TABLE IF NOT EXISTS SUBCATEGORIA (
@@ -50,21 +50,21 @@ CREATE TABLE IF NOT EXISTS SUBCATEGORIA (
     REFERENCES `CATEGORIA` (`Id_Categoria`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+);
 
 -- Tabla ESTADO_ACTIVIDAD
 CREATE TABLE IF NOT EXISTS ESTADO_ACTIVIDAD (
   `Id_Estado` INT NOT NULL UNIQUE,
   `Tipo_Estado` VARCHAR(15) NOT NULL,
   PRIMARY KEY (`Id_Estado`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla MAXJUGADOR
 CREATE TABLE IF NOT EXISTS MAXJUGADOR (
   `Id_MaxJugador` INT NOT NULL UNIQUE,
   `Cantidad_MaxJugador` INT NOT NULL,
   PRIMARY KEY (`Id_MaxJugador`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla USUARIO
 CREATE TABLE IF NOT EXISTS USUARIO (
@@ -92,7 +92,7 @@ CREATE TABLE IF NOT EXISTS USUARIO (
     REFERENCES `ESTADO_ACTIVIDAD` (`Id_Estado`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB, auto_increment=100;
+) auto_increment=100;
 
 -- Tabla ACTIVIDAD
 CREATE TABLE IF NOT EXISTS ACTIVIDAD (
@@ -134,7 +134,7 @@ CREATE TABLE IF NOT EXISTS ACTIVIDAD (
     REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB, auto_increment=1000;
+) auto_increment=1000;
 
 CREATE TABLE IF NOT EXISTS IMAGEN (
     `Id_Imagen` INT AUTO_INCREMENT NOT NULL UNIQUE,
@@ -146,7 +146,7 @@ CREATE TABLE IF NOT EXISTS IMAGEN (
         REFERENCES `SUBCATEGORIA` (`Id_SubCategoria`)
         ON DELETE CASCADE
         ON UPDATE NO ACTION
-) ENGINE = InnoDB, AUTO_INCREMENT=1;
+) AUTO_INCREMENT=1;
 
 CREATE TABLE FAVORITO (
     `Id_Favorito` INT auto_increment PRIMARY KEY NOT NULL,
@@ -164,6 +164,7 @@ CREATE TABLE FAVORITO (
 CREATE TABLE IF NOT EXISTS PARTICIPANTE (
   `Id_Actividad` INT NOT NULL,
   `Id_User` INT NOT NULL,
+  `Tipo_Participante` INT NOT NULL,
   `Id_Asistencia` INT NOT NULL,
   PRIMARY KEY (`Id_Actividad`, `Id_User`), -- Llave primaria compuesta
   CONSTRAINT `FK_Participante_Actividad`
@@ -181,7 +182,7 @@ CREATE TABLE IF NOT EXISTS PARTICIPANTE (
     REFERENCES `ASISTENCIA` (`Id_Asistencia`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+);
 
 
 -- Tabla ASISTENCIA
@@ -189,7 +190,7 @@ CREATE TABLE IF NOT EXISTS ASISTENCIA (
   `Id_Asistencia` INT NOT NULL UNIQUE,
   `Tipo_Asistencia` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Id_Asistencia`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla CLASIFICACION
 CREATE TABLE IF NOT EXISTS CLASIFICACION (
@@ -209,14 +210,14 @@ CREATE TABLE IF NOT EXISTS CLASIFICACION (
     REFERENCES `NOMBRE_CLASIFICACION` (`Id_NomClasificacion`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+);
 
 -- Tabla NOMBRE_CLASIFICACION
 CREATE TABLE IF NOT EXISTS NOMBRE_CLASIFICACION (
   `Id_NomClasificacion` INT NOT NULL UNIQUE,
   `Nombre_Clasificacion` VARCHAR(10) NOT NULL,
   PRIMARY KEY (`Id_NomClasificacion`)
-) ENGINE = InnoDB;
+);
 
 -- Tabla REPORTE
 CREATE TABLE IF NOT EXISTS REPORTE (
@@ -235,30 +236,7 @@ CREATE TABLE IF NOT EXISTS REPORTE (
     REFERENCES `USUARIO` (`Id_User`)
     ON DELETE CASCADE
     ON UPDATE NO ACTION
-) ENGINE = InnoDB;
-
--- Tabla HISTORIAL
-CREATE TABLE IF NOT EXISTS HISTORIAL (
-  `Id_User` INT NOT NULL,
-  `Id_Actividad` INT NOT NULL,
-  `Id_SubCategoria` INT NOT NULL,
-  PRIMARY KEY (`Id_User`, `Id_Actividad`, `Id_SubCategoria`),
-  CONSTRAINT `FK_Historial_Usuario`
-    FOREIGN KEY (`Id_User`)
-    REFERENCES `USUARIO` (`Id_User`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Historial_Actividad`
-    FOREIGN KEY (`Id_Actividad`)
-    REFERENCES `ACTIVIDAD` (`Id_Actividad`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION,
-  CONSTRAINT `FK_Historial_SubCategoria`
-    FOREIGN KEY (`Id_SubCategoria`)
-    REFERENCES `ACTIVIDAD` (`Id_SubCategoria`)
-    ON DELETE CASCADE
-    ON UPDATE NO ACTION
-) ENGINE = InnoDB;
+);
 
 -- Habilitar restricciones de claves foráneas
 SET FOREIGN_KEY_CHECKS = 1;
@@ -273,11 +251,12 @@ AFTER INSERT ON `ACTIVIDAD`
 FOR EACH ROW
 BEGIN
     INSERT INTO `PARTICIPANTE` (
-        `Id_Actividad`, `Id_User`, `Id_Asistencia`
+        `Id_Actividad`, `Id_User`, `Tipo_Participante`, `Id_Asistencia`
     ) 
     VALUES (
         NEW.Id_Actividad, 
         NEW.Id_Anfitrion_Actividad,
+        100,
         800
     );
 END //
@@ -289,12 +268,12 @@ DELIMITER //
 
 CREATE PROCEDURE InscribirParticipanteSimple(
     IN p_Id_Actividad INT, 
-    IN p_Id_User INT
+    IN p_Id_User INT,
+    IN p_Tipo_Participante INT
 )
 BEGIN
-    -- Insertar el participante en la actividad sin validaciones
-    INSERT INTO `PARTICIPANTE` (Id_Actividad, Id_User, Id_Asistencia)
-    VALUES (p_Id_Actividad, p_Id_User, 1); -- 1: Asistencia predeterminada
+    INSERT INTO `PARTICIPANTE` (Id_Actividad, Id_User, Tipo_Participante, Id_Asistencia)
+    VALUES (p_Id_Actividad, p_Id_User, p_Tipo_Participante, 900);
 END //
 
 DELIMITER ;
@@ -307,17 +286,14 @@ AFTER DELETE ON USUARIO
 FOR EACH ROW
 BEGIN
     -- Elimina los registros relacionados en la tabla actividad
-    DELETE FROM clasificacion WHERE Id_User = OLD.Id_User;
-    DELETE FROM reporte WHERE Id_User = OLD.Id_User;
-    DELETE FROM favorito WHERE Id_User = OLD.Id_User;
-    DELETE FROM participante WHERE Id_User = OLD.Id_User;
+    DELETE FROM CLASIFICACION WHERE Id_User = OLD.Id_User;
+    DELETE FROM REPORTE WHERE Id_User = OLD.Id_User;
+    DELETE FROM FAVORITO WHERE Id_User = OLD.Id_User;
+    DELETE FROM PARTICIPANTE WHERE Id_User = OLD.Id_User;
     DELETE FROM ACTIVIDAD WHERE Id_Anfitrion_Actividad = OLD.Id_User;
-    DELETE FROM historial WHERE Id_User = OLD.Id_User;
 END //
 
 DELIMITER ;
-
-
 
 -- Inserción en REGION
 INSERT INTO REGION (`Id_Region`,`Nombre_Region`) VALUES 
@@ -382,7 +358,10 @@ INSERT INTO ASISTENCIA (`Id_Asistencia`, `Tipo_Asistencia`) VALUES
 INSERT INTO USUARIO 
 (`Run_User`, `Tipo_User`, `Nom_User`, `Correo_User`, `Contra_User`, `Celular_User`, `FechaNac_User`, `FechaCreacion_User`, `Id_Comuna`, `Id_Estado`, `Id_Clasificacion`) 
 VALUES
-('21202969-6', 102, 'Admin', 'playtab.app2024@gmail.com', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56999991010', '1989-12-12', '2024-10-21', 100, 15, 30);
+('00000000-0', 102, 'Admin', 'playtab.app2024@gmail.com', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56900000000', '1989-12-12', '2024-10-21', 100, 15, 30),
+('00000000-1', 101, 'Kevin', 'kev.vivanco@duocuc.cl', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56900000001', '2002-12-12', '2024-10-21', 100, 15, 30),
+('00000000-2', 101, 'Ricardo', 'rica.ojeda@duocuc.cl', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56900000002', '2002-12-13', '2024-10-21', 100, 15, 30),
+('00000000-3', 101, 'Sebastian', 'seba.carrera@duocuc.cl', '$2a$10$8CRMgXGnji.jAoBgZwTT9uo5eNScNX9.21C6/40E8FlqDJF6Rgkyq','+56900000003', '2004-12-14', '2024-10-21', 100, 15, 30);
 
 -- insert imagenes aactividades
 insert into imagen(Id_SubCategoria,Url) values(10002,"assets/portrait/lol.jpg");
@@ -399,36 +378,14 @@ insert into  imagen(Id_SubCategoria,Url) values(10005,"assets/portrait/csgo.png"
 insert into  imagen(Id_SubCategoria,Url) values(10004,"assets/portrait/apexlegends.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10003,"assets/portrait/valorant.jpg");
 insert into  imagen(Id_SubCategoria,Url) values(10001,"assets/portrait/fortnite.jpg");
--- select * from imagen
-USE PLAYTAB;
-Select * from USUARIO;
-SELECT p.Id_Actividad, p.Id_User, i.Nom_Actividad FROM PARTICIPANTE p
-INNER JOIN ACTIVIDAD i on p.Id_Actividad=i.Id_Actividad;
-SELECT * FROM ACTIVIDAD;
-select * from subcategoria;
+
 
 Use PlayTab;
 Select * from USUARIO;
 Select * from Actividad;
 select * from participante;
--- SELECT * from participante where Id_user=103;
-SELECT COUNT(*) FROM `PlayTab`.`PARTICIPANTE` WHERE Id_Actividad = 1003;
-    
-SELECT m.Cantidad_MaxJugador
-    FROM `PlayTab`.`ACTIVIDAD` a
-    JOIN `PlayTab`.`MAXJUGADOR` m ON a.Id_MaxJugador = m.Id_MaxJugador
-    WHERE a.Id_Actividad = 1003;
 
-USE PLAYTAB;
--- Select solo para el historial de las partidas donde haya o esté presente el jugador.
-SELECT DISTINCT a.Nom_Actividad, p.Id_User, a.Fecha_INI_Actividad, a.Fecha_TER_Actividad, s.Nom_SubCategoria, i.url
-FROM Participante p
-JOIN ACTIVIDAD a ON p.Id_Actividad = a.Id_Anfitrion_Actividad
-JOIN subcategoria s ON s.Id_SubCategoria = a.Id_SubCategoria
-JOIN imagen i ON a.Id_SubCategoria = i.Id_SubCategoria
-WHERE p.Id_User = 106;
-
--- delete para borrar una actividad credada
+-- delete para borrar una actividad credad
 DELETE FROM ACTIVIDAD
 WHERE Id_Anfitrion_Actividad=102 AND Id_Actividad=1002;
 
@@ -441,13 +398,9 @@ UPDATE USUARIO
 SET Id_Comuna= 100 
 WHERE Id_User = 106;
 
-USE PLAYTAB;
-SELECT * FROM FAVORITO;
-
 INSERT INTO FAVORITO (`Id_User`, `Id_SubCategoria`)
 VALUES (101, 20001);
 
 UPDATE FAVORITO 
 SET Id_SubCategoria=20001
 WHERE Id_User= 100;
-
