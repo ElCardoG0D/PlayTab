@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class DatabaseService {
   
-  private apiUrl = 'playtab2024.com'; // URL de tu servidor Node.js
+  private apiUrl = 'http://localhost:3000';
   
   constructor(private http: HttpClient) { }
   
@@ -148,7 +148,7 @@ export class DatabaseService {
   getActividadesActivas(Id_User: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/actividad_activa?Id_User=${Id_User}`);
   }
-  // Método para eliminar un usuario de una actividad
+  //13 .Método para eliminar un usuario de una actividad
   eliminarUsuarioDeActividad(Id_User: number, Id_Actividad: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminar_usuario_actividad`, {
       params: { Id_User: String(Id_User), Id_Actividad: String(Id_Actividad) },

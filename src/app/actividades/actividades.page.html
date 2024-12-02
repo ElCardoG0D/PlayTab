@@ -27,11 +27,6 @@
     <ion-input type="text" [(ngModel)]="descActividad" placeholder="Ej: Partido amistoso de fútbol" required></ion-input>
   </ion-item>
 
-  <ion-item>
-    <ion-label position="stacked">Dirección actividad</ion-label>
-    <ion-input type="text" [(ngModel)]="direccionActividad" placeholder="Ingrese una dirección precisa" [disabled]="categoriaSeleccionada === 1000" required></ion-input>
-  </ion-item>
-
   <!-- Categoría y Subcategoría -->
   <ion-item>
     <ion-label position="stacked">Categoría</ion-label>
@@ -49,6 +44,11 @@
         {{ subcategoria.Nom_SubCategoria }}
       </ion-select-option>
     </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label position="stacked">Dirección actividad</ion-label>
+    <ion-input type="text" [(ngModel)]="direccionActividad" placeholder="Ingrese una dirección precisa" [disabled]="categoriaSeleccionada === 1000" required></ion-input>
   </ion-item>
 
   <!-- Jugadores -->
