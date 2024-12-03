@@ -1,13 +1,7 @@
 {
   "name": "PlayTab",
   "integrations": {
-      "cordova": {}
+    "capacitor": {}
   },
-  "proxies": [
-      {
-          "context": "/login",
-          "target": "http://backendplaytab-production.up.railway.app",
-          "secure": false
-      }
-  ]
+  "type": "angular"
 }
