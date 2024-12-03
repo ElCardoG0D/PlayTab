@@ -1,7 +1,7 @@
 {
   "name": "PlayTab",
   "integrations": {
-    "capacitor": {}
+    "cordova": {}
   },
   "type": "angular"
 }
