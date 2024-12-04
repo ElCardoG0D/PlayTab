@@ -1,0 +1,54 @@
+<ion-header class="ion-no-border">
+  <ion-toolbar class="toolbar">
+    <ion-buttons (click)="Volver()" class="volver" slot="start">
+      <ion-icon class="icono" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <div class="toolbar-container">
+      <label class="toolbar-text"><strong>Gestión de mis actividades</strong></label>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+    <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+      <ion-refresher-content
+        pullingText="Desliza hacia abajo para refrescar"
+        refreshingSpinner="crescent"
+        refreshingText="Actualizando actividades...">
+      </ion-refresher-content>
+    </ion-refresher>
+
+    <!-- Filtro por categoría -->
+    <ion-toolbar class="filter-container">
+      <div class="scroll-container">
+        <ion-segment scrollable [(ngModel)]="filtroCategoria" (ionChange)="filtrarActividades()">
+          <ion-segment-button *ngFor="let categoria of categorias" [value]="categoria">
+            {{ categoria }}
+          </ion-segment-button>
+        </ion-segment>
+      </div>
+    </ion-toolbar>
+
+    <!-- Actividades -->  
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12" *ngFor="let actividad of actividadesFiltradas">
+          <ion-card class="card-container" (click)="onCardClick(actividad)">
+            <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
+            <ion-card-header>
+              <div class="card-title-container">
+                <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
+              </div>
+              <ion-card-subtitle class="date-cont">{{ actividad.Fecha_TER_Actividad | date:'short' }}</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="card-contenid">
+              <p>{{ actividad.Nom_SubCategoria }}</p>
+              <p>{{ actividad.Desc_Actividad }}</p>
+              <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
+              <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+</ion-content>

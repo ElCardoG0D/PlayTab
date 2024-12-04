@@ -71,6 +71,10 @@ export class Tab4Page implements OnInit {
     this.router.navigate(['./historial']);
   }
 
+  MisActividades(){
+    this.router.navigate(['./actividadanfitrion']);
+  }
+
   handleRefresh(event: any) {
     this.cargarActividades();
     event.target.complete();

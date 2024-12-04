@@ -1,27 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
 import { Router } from '@angular/router';
 import { AlertController, ModalController } from '@ionic/angular';
-import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
+import { ActividadAnfitrionDetallePage } from '../actividad-anfitrion-detalle/actividad-anfitrion-detalle.page';
 
 @Component({
-  selector: 'app-tab2', 
-  templateUrl: './tab2.page.html', 
-  styleUrls: ['./tab2.page.scss'], 
+  selector: 'app-actividadanfitrion',
+  templateUrl: './actividadanfitrion.page.html',
+  styleUrls: ['./actividadanfitrion.page.scss'],
 })
-export class Tab2Page implements OnInit {
+export class ActividadanfitrionPage implements OnInit {
   actividades: any[] = [];
-
   actividadesFiltradas: any[] = [];
   categorias: string[] = [];
   filtroCategoria: string = 'Todas';
-  
-  coloresActividades: string[] = [];
-  colors = [
-    'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
-  ];
-  private intervalId: any;
+
+  @Input() actividad: any; // Recibe la actividad desde el modal
+  jugadoresInscritos: number | undefined;
 
   constructor(
     private localS: LocalStorageService,
@@ -29,31 +25,32 @@ export class Tab2Page implements OnInit {
     private alertController: AlertController,
     private router: Router,
     private modalController: ModalController
-  ) {}
+  ) { }
 
   ionViewWillEnter() {
-    const user = this.localS.ObtenerUsuario('user');
-    this.cargarActividades(); 
+    this.cargarActividades();
   }
 
   ngOnInit() {
-
   }
 
   cargarActividades() {
     const user = this.localS.ObtenerUsuario('user');
-    const idComuna = user?.Id_Comuna;
-
-    this.dbService.getActividades(idComuna).subscribe(
+    const idUser = user?.Id_User; // Cambiamos para obtener el Id_User
+  
+    // Llamar al servicio con Id_User
+    this.dbService.getActividadesAnfitrion(idUser).subscribe(
       (data) => {
-        this.actividades = data;
-        this.actividadesFiltradas = [...this.actividades];
-        this.categorias = ['Todas', ...new Set(this.actividades.map((act) => act.Nom_SubCategoria))];
-
+        this.actividades = data; // Asignar directamente las actividades recibidas
+        this.actividadesFiltradas = [...this.actividades]; // Copiar actividades para filtrar
+  
+        // Generar categorías únicas
+        this.categorias = ['Todas', ...new Set(this.actividades.map((act) => act.Nom_SubCategoria || 'Sin Categoría'))];
+  
         console.log('Actividades cargadas:', this.actividades);
         console.log('Categorías disponibles:', this.categorias);
-
-        this.coloresActividades = this.actividades.map(() => this.getRandomColor());
+  
+        // Asegurar imágenes por defecto
         this.actividades.forEach((actividad) => {
           actividad.Url = actividad.Url || 'assets/default-image.jpg';
         });
@@ -64,6 +61,7 @@ export class Tab2Page implements OnInit {
       }
     );
   }
+  
 
   filtrarActividades() {
     console.log('Filtro seleccionado:', this.filtroCategoria);
@@ -88,28 +86,24 @@ export class Tab2Page implements OnInit {
     await alert.present();
   }
 
-  getRandomColor() {
-    const randomIndex = Math.floor(Math.random() * this.colors.length);
-    return this.colors[randomIndex];
-  }
-
-  enviarPagAct() {
-    this.router.navigate(['./actividades']);
+  handleRefresh(event: any) {
+    this.cargarActividades();
+    event.target.complete();
   }
 
   async onCardClick(actividad: any) {
     console.log('Actividad clickeada:', actividad);
         
     const modal = await this.modalController.create({
-      component: ActividadDetalleModalPage,
+      component: ActividadAnfitrionDetallePage,
       componentProps: { actividad }
     });
         
     return await modal.present();
   }
 
-  handleRefresh(event: any) {
-    this.cargarActividades();
-    event.target.complete();
+  Volver(){
+    this.router.navigate(['./tabs/tab4']);
   }
+
 }

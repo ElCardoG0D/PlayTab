@@ -159,4 +159,38 @@ export class DatabaseService {
     return this.http.get(`${this.apiUrl}/api/maps-key`);
   }  
   
+  getActividadesAnfitrion(Id_User: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/actividadesAnfitrion?Id_User=${Id_User}`);
+  }  
+
+  updateActividad(
+    Id_Actividad: number,
+    Desc_Actividad: string,
+    Direccion_Actividad: string,
+    Id_MaxJugador: number
+  ): Observable<any> {
+    const url = `${this.apiUrl}/updateActividad/${Id_Actividad}`;
+    const body = {
+      Desc_Actividad,
+      Direccion_Actividad,
+      Id_MaxJugador,
+    };
+    console.log('Cuerpo de la solicitud:', body); 
+    return this.http.put(url, body);
+  }  
+
+  deleteActividad(Id_Actividad: number): Observable<any> {
+    const url = `${this.apiUrl}/actividad/${Id_Actividad}`;
+    return this.http.delete(url);
+  }
+
+  getUsuariosInscritos(idActividad: number): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios-inscritos/${idActividad}`);
+  }
+
+  actualizarAsistencia(Id_User: number, Id_Actividad: number, Id_Asistencia: number): Observable<any> {
+    const url = `${this.apiUrl}/actualizar-asistencia`;
+    const body = { Id_User, Id_Actividad, Id_Asistencia };
+    return this.http.put(url, body);
+  }
 }

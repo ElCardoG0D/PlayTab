@@ -1,0 +1,89 @@
+<ion-header [translucent]="true">
+  <ion-toolbar >
+    <ion-title color="black">Modificar Actividad</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Sección de encabezado de la actividad -->
+  <!--<ion-card>
+    <ion-card-header>
+      <ion-card-title color="black">{{ actividad.Nom_Actividad }}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
+      <p><strong>Dirección:</strong> {{ actividad.Direccion_Actividad }}</p>
+      <p><strong>Jugadores Actuales:</strong> {{ jugadoresInscritos }} de {{ actividad.Cantidad_MaxJugador }}</p>
+    </ion-card-content>
+  </ion-card>-->
+
+  <!-- Formulario para modificar la actividad -->
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title color="black">Puedes editar</ion-card-title>
+    </ion-card-header>
+    <form (ngSubmit)="actualizarActividad()">
+      <ion-item>
+        <ion-input label="Descripción: " [(ngModel)]="actividad.Desc_actividad" name="Desc_Actividad"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-input label="Dirección: " [(ngModel)]="actividad.Direccion_Actividad" name="Direccion_Actividad" [disabled]="actividad.isCategoriaDisabled"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label>Jugadores:</ion-label>
+        <ion-select [(ngModel)]="actividad.Id_MaxJugador" name="Id_MaxJugador" placeholder="Cambia la cantidad" slot="end">
+          <ion-select-option *ngFor="let jugador of MaxjugadorId" [value]="jugador.Id_MaxJugador">
+            {{ jugador.Cantidad_MaxJugador }}
+          </ion-select-option>
+        </ion-select>
+      </ion-item>
+    </form>
+    <div class="ion-text-center ion-padding">
+      <ion-button color="secondary" class="action-button" expand="block" (click)="actualizarActividad()">Guardar Cambios</ion-button>
+    </div>
+  </ion-card>
+
+  <!-- Lista de usuarios inscritos y su asistencia -->
+  <ion-card>
+    <ion-card-header class="asistencia-header">
+      <ion-card-title>Asistencia</ion-card-title>
+    </ion-card-header>
+    <ion-list class="asistencia-list">
+      <ion-item *ngFor="let usuario of usuariosInscritos" lines="full" class="asistencia-item">
+        <ion-label>
+          <h3 class="usuario-nombre">{{ usuario.Nom_User }}</h3>          
+          <p class="usuario-celular">
+            <strong>Contacto:</strong> 
+            <a 
+              href="tel:{{ usuario.Celular_User }}" 
+              style="text-decoration: none; color: inherit;">
+              {{ usuario.Celular_User }}
+            </a>
+          </p>
+          <p class="asistencia-estado">
+            <strong>Asistencia Actual:</strong> 
+            <span [ngClass]="{'asistencia-presente': usuario.Tipo_Asistencia === 'Presente', 'asistencia-ausente': usuario.Tipo_Asistencia === 'Ausente'}">
+              {{ usuario.Tipo_Asistencia || 'No Registrada' }}
+            </span>
+          </p>
+        </ion-label>
+        <ion-select
+        [(ngModel)]="usuario.Id_Asistencia"
+        interface="popover"
+        placeholder="Seleccionar Asistencia"
+        slot="end"
+        (ionChange)="actualizarAsistencia(usuario.Id_User, actividad.Id_Actividad, $event.detail.value)">
+        <ion-select-option *ngFor="let asistencia of asistencias" [value]="asistencia.id">
+          {{ asistencia.tipo }}
+        </ion-select-option>
+      </ion-select>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+
+  <!-- Botones de acciones principales -->
+  <div class="ion-text-center ion-padding">
+    <ion-button color="secondary" class="action-button" expand="block" (click)="volver()">Volver</ion-button>
+    <ion-button color="danger" class="action-button" expand="block" (click)="borrarActividad()">Borrar Actividad</ion-button>
+  </div>
+</ion-content>

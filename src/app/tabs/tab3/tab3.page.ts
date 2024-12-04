@@ -48,35 +48,77 @@ export class Tab3Page implements OnInit {
     }
   }
 
-  deleteAccount(){
-    const usuario = this.localS.ObtenerUsuario('user');
-    if (usuario && usuario.Id_User) {
-      const idUser = usuario.Id_User;
-      this.dataBase.deleteUsuario(idUser).subscribe(
-        (response) => {
-          this.presentAlert('Lamentamos tu partida :(','Su cuenta ha sido eliminada con éxito.');
-          this.localS.LimpiarUsuario();
-          localStorage.removeItem('isAuthenticated');
-          this.router.navigate(['./login']);
+  async deleteAccount() {
+    const alert = await this.alertController.create({
+      header: 'Eliminación de la cuenta',
+      message: '¿Estás seguro? Esta acción no se puede deshacer.',
+      buttons: [
+        {
+          text: 'No',
+          role: 'cancel',
+          cssClass: 'secondary',
         },
-        (error) => {
-          this.presentAlert('¿Qué?','Al parecer su cuenta quedará para siempre aquí :3');
-        }
-      );      
-    } else {
-      this.presentAlert('Error','No se pudo encontrar el ID de usuario');
-    }
+        {
+          text: 'Si',
+          handler: () => {
+            const usuario = this.localS.ObtenerUsuario('user');
+            if (usuario && usuario.Id_User) {
+              const idUser = usuario.Id_User;
+              this.dataBase.deleteUsuario(idUser).subscribe(
+                (response) => {
+                  this.presentAlert(
+                    'Lamentamos tu partida :(',
+                    'Su cuenta ha sido eliminada con éxito.'
+                  );
+                  this.localS.LimpiarUsuario();
+                  localStorage.removeItem('isAuthenticated');
+                  this.router.navigate(['./login']);
+                },
+                (error) => {
+                  this.presentAlert(
+                    '¿Qué?',
+                    'Al parecer su cuenta quedará para siempre aquí :3'
+                  );
+                }
+              );
+            } else {
+              this.presentAlert('Error', 'No se pudo encontrar el ID de usuario');
+            }
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
   }
 
   cambiarComuna(){
     this.router.navigate(['./cambiacomuna']);
   }
 
-  logOut(){
-    this.localS.ElimnarUsuario('user');
-    this.localS.LimpiarUsuario();
-    localStorage.removeItem('isAuthenticated');
-    this.router.navigate(['./login']);
+  async logOut() {
+    const alert = await this.alertController.create({
+      header: 'Cierre de sesión',
+      message: '¿Deseas cerrar sesión?',
+      buttons: [
+        {
+          text: 'No',
+          role: 'Si',
+          cssClass: 'secondary',
+        },
+        {
+          text: 'Cerrar Sesión',
+          handler: () => {
+            this.localS.ElimnarUsuario('user');
+            this.localS.LimpiarUsuario();
+            localStorage.removeItem('isAuthenticated');
+            this.router.navigate(['./login']);
+          },
+        },
+      ],
+    });
+  
+    await alert.present();
   }
 
   handleRefresh(event: any) {

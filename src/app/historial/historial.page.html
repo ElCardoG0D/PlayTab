@@ -1,10 +1,10 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
-    <ion-buttons slot="start">
-      <ion-back-button></ion-back-button>
+    <ion-buttons (click)="Volver()" slot="start">
+      <ion-icon class="icono" name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <div class="toolbar-logo-container">
-      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
+    <div class="toolbar-container">
+      <label class="toolbar-text">Historial de Actividades</label>
     </div>
   </ion-toolbar>
 </ion-header>
@@ -22,16 +22,10 @@
             </div>
           </ion-card-header>
           <ion-card-content class="card-contenid">
-            <p>Fecha de la actividad: {{ actividad.Fecha_TER_Actividad | date:'yyyy-MM-dd' }}</p>
-          </ion-card-content>
-          <ion-card-content class="card-contenid">
-            <p>Anfitrion de la actividad: {{ actividad.Nom_User }}</p>
-          </ion-card-content>
-          <ion-card-content class="card-contenid">
-            <p>Detalles: {{ actividad.Desc_actividad }}</p>
-          </ion-card-content>
-          <ion-card-content class="card-contenid">
-            <p>
+            <div><p>Fecha de la actividad: {{ actividad.Fecha_TER_Actividad | date:'yyyy-MM-dd' }}</p></div>
+            <div><p>Anfitrion de la actividad: {{ actividad.Nom_User }}</p></div>
+            <div><p>Detalles: {{ actividad.Desc_actividad }}</p></div>
+            <div><p>
               Ubicación: 
               <a 
                 href="https://www.google.com/maps/search/?api=1&query={{ actividad.Direccion_Actividad }}" 
@@ -40,10 +34,15 @@
               >
                 {{ actividad.Direccion_Actividad }}
               </a>
-            </p>
-          </ion-card-content>
-          <ion-card-content class="card-contenid">
-            <p>Número del anfitrion: {{ actividad.Celular_User }}</p>
+            </p></div>
+            <div><p>
+              Celular Anfitrión:
+              <a 
+                href="tel:{{ actividad.Celular_User }}" 
+                style="text-decoration: none; color: inherit; font-weight: bold;">
+                {{ actividad.Celular_User }}
+              </a>
+            </p></div>
           </ion-card-content>
         </ion-card>
       </ion-col>

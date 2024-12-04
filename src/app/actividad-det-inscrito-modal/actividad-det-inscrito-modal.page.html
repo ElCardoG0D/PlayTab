@@ -13,6 +13,14 @@
     
     <ion-card-content>
       <p><strong>Anfitrión :</strong> {{ actividad.Nom_User }}</p>
+      <p>
+        <strong>Celular Anfitrión :</strong>
+        <a 
+          href="tel:{{ actividad.Celular_User }}" 
+          style="text-decoration: none; color: inherit; font-weight: bold;">
+          {{ actividad.Celular_User }}
+        </a>
+      </p>
       <p><strong>Descripción:</strong> {{ actividad.Desc_Actividad }}</p>
       <p>
         <strong>Dirección:</strong>

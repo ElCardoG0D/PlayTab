@@ -5,6 +5,7 @@ import { AlertController, ModalController } from '@ionic/angular';
 import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
 import { Router } from '@angular/router';
 import { WeatherService } from '../../weather.service';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-tab1',
@@ -120,15 +121,15 @@ export class Tab1Page implements OnInit, OnDestroy {
 
   // Método para obtener la ubicación y el clima
   getLocationAndWeather() {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
+    Geolocation.getCurrentPosition()
+      .then(position => {
         const lat = position.coords.latitude;
         const lon = position.coords.longitude;
-
+  
         this.weatherService.getWeatherByLocation(lat, lon).subscribe(data => {
           this.weatherData = data;
           console.log('Datos del clima:', this.weatherData);
-
+  
           const weatherIconCode = this.weatherData.weather[0].icon;
           this.weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`;
           console.log('URL del ícono del clima:', this.weatherIconUrl);
@@ -136,14 +137,11 @@ export class Tab1Page implements OnInit, OnDestroy {
           console.error('Error al obtener el clima:', error);
           this.presentAlert('Error', 'No se pudo obtener el clima.');
         });
-      }, error => {
+      })
+      .catch(error => {
         console.error('Error al obtener la ubicación:', error);
         this.presentAlert('Error', 'No se pudo obtener la ubicación.');
       });
-    } else {
-      console.error('Geolocalización no es soportada en este navegador.');
-      this.presentAlert('Error', 'Geolocalización no es soportada.');
-    }
   }
 
   handleRefresh(event: any) {

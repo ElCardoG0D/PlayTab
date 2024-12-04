@@ -1,0 +1,65 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+// Variables de colores para el degradado
+$gradient-start: #FFA500;
+$gradient-end: #FF8C00;
+
+// Estilos generales
+:host {
+  display: block;
+  --background: #f0f0f0; 
+}
+
+// Estilos del encabezado con degradado
+ion-header {
+    background: linear-gradient(135deg, #FFA500, #FF8C00); 
+    color: rgb(2, 2, 2);
+  
+    ion-toolbar {
+      --background: transparent;
+      color: white;
+  
+      ion-title {
+        font-size: 1.5rem;
+        font-weight: bold;
+        color: white; // Texto en blanco para visibilidad sobre el degradado
+      }
+    }
+  }
+  
+
+// Estilos del contenido
+ion-content {
+  .ion-padding {
+    padding: 16px;
+  }
+
+  // Estilos para las tarjetas de detalles de actividad
+  ion-card {
+    margin-bottom: 16px;
+
+    ion-card-header {
+      background: linear-gradient(135deg, $gradient-start, $gradient-end); // Degradado para el encabezado de la tarjeta
+      color: white;
+      padding: 12px;
+      
+      ion-card-title {
+        font-size: 1.25rem;
+        font-weight: bold;
+        color: white;
+      }
+    }
+
+    ion-card-content {
+      font-size: 1rem;
+      color: #333;
+
+      p {
+        margin: 8px 0;
+        strong {
+          font-weight: 600;
+          color: $gradient-end;
+        }
+      }
+    }
+  }  
+}

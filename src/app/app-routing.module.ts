@@ -84,10 +84,19 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
+    path: 'actividadanfitrion',
+    loadChildren: () => import('./actividadanfitrion/actividadanfitrion.module').then( m => m.ActividadanfitrionPageModule),
+    canActivate:[authGuard]
+  },
+  {
+    path: 'actividad-anfitrion-detalle',
+    loadChildren: () => import('./actividad-anfitrion-detalle/actividad-anfitrion-detalle.module').then( m => m.ActividadAnfitrionDetallePageModule),
+    canActivate:[authGuard]
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },
-
 ];
 
 @NgModule({
