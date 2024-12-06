@@ -31,10 +31,20 @@
       </ion-item>
       <ion-item>
         <ion-label>Jugadores:</ion-label>
-        <ion-select [(ngModel)]="actividad.Id_MaxJugador" name="Id_MaxJugador" placeholder="Cambia la cantidad" slot="end">
-          <ion-select-option *ngFor="let jugador of MaxjugadorId" [value]="jugador.Id_MaxJugador">
-            {{ jugador.Cantidad_MaxJugador }}
-          </ion-select-option>
+        <ion-select
+          [(ngModel)]="actividad.Id_MaxJugador"
+          name="Id_MaxJugador"
+          placeholder="Cambia la cantidad"
+          slot="end"
+        >
+          <ng-container *ngFor="let jugador of MaxjugadorId">
+            <ion-select-option
+              *ngIf="jugador.Cantidad_MaxJugador >= jugadoresInscritos"
+              [value]="jugador.Id_MaxJugador"
+            >
+              {{ jugador.Cantidad_MaxJugador }}
+            </ion-select-option>
+          </ng-container>
         </ion-select>
       </ion-item>
     </form>
