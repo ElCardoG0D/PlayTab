@@ -27,7 +27,11 @@ export class ResetPasswordPage implements OnInit {
   }
 
   ngOnInit() {
-    this.token = this.route.snapshot.paramMap.get('token') || '';  // Obtenemos el token desde la URL
+    this.token = this.route.snapshot.paramMap.get('token') || '';
+    if (!this.token) {
+      this.presentAlert('Error', 'Token inválido o ausente.');
+      this.router.navigate(['/']);
+    }
   }
 
   async presentAlert(header: string, message: string) {
@@ -47,7 +51,7 @@ export class ResetPasswordPage implements OnInit {
         return;
       }
 
-      this.http.post('http://localhost:3000/reset-password', { token: this.token, newPassword })
+      this.http.post('https://backendplaytab-production.up.railway.app/reset-password', { token: this.token, newPassword })
         .subscribe({
           next: () => {
             this.presentAlert('¡Muy Bien!', 'Contraseña restablecida exitosamente.');

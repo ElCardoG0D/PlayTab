@@ -48,7 +48,7 @@ export class RecoverPwPage implements OnInit {
   RecoverPW() {
     if (!this.validateInputs()) return;
 
-    this.http.post<{ message: string, token: string, expiry: number }>('http://localhost:3000/recover-password', {
+    this.http.post<{ message: string, token: string, expiry: number }>('https://backendplaytab-production.up.railway.app/recover-password', {
       RUT: this.rut,
       correo: this.mailuser
     })
