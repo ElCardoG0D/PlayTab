@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AlertController } from '@ionic/angular';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-reset-password',
@@ -11,28 +11,21 @@ import { AlertController } from '@ionic/angular';
 })
 export class ResetPasswordPage implements OnInit {
   resetForm: FormGroup;
-  token!: string;
 
   constructor(
-    private route: ActivatedRoute,
-    private router: Router,
     private http: HttpClient,
     private fb: FormBuilder,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private router: Router
   ) {
     this.resetForm = this.fb.group({
+      token: ['', [Validators.required]],
       newPassword: ['', [Validators.required, Validators.minLength(6)]],
       confirmPassword: ['', [Validators.required]]
     });
   }
 
-  ngOnInit() {
-    this.token = this.route.snapshot.paramMap.get('token') || '';
-    if (!this.token) {
-      this.presentAlert('Error', 'Token inválido o ausente.');
-      this.router.navigate(['/']);
-    }
-  }
+  ngOnInit() {}
 
   async presentAlert(header: string, message: string) {
     const alert = await this.alertController.create({
@@ -45,20 +38,20 @@ export class ResetPasswordPage implements OnInit {
 
   onSubmit() {
     if (this.resetForm.valid) {
-      const { newPassword, confirmPassword } = this.resetForm.value;
+      const { token, newPassword, confirmPassword } = this.resetForm.value;
       if (newPassword !== confirmPassword) {
-        this.presentAlert('Error :(', 'Las contraseñas no coinciden.');
+        this.presentAlert('Error', 'Las contraseñas no coinciden.');
         return;
       }
 
-      this.http.post('https://backendplaytab-production.up.railway.app/reset-password', { token: this.token, newPassword })
+      this.http.post('https://backendplaytab-production.up.railway.app/reset-password', { token, newPassword })
         .subscribe({
           next: () => {
             this.presentAlert('¡Muy Bien!', 'Contraseña restablecida exitosamente.');
             this.router.navigate(['/login']);
           },
           error: (error) => {
-            this.presentAlert('Error :(', 'No logramos restablecer la contraseña.');
+            this.presentAlert('Error', 'Token inválido para actualizar la contraseña.');
             console.error(error);
           }
         });

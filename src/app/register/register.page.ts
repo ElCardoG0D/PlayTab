@@ -102,8 +102,8 @@ export class RegisterPage {
     }
 
     // Validar la contraseña
-    if (this.password.length < 4 || this.password.length > 8) {
-      this.presentAlert('Error','La contraseña debe tener mínimo 4 caracteres y máximo 8.');
+    if (this.password.length < 6 || this.password.length > 8) {
+      this.presentAlert('Error','La contraseña debe tener mínimo 6 caracteres y máximo 8.');
       return;
     }
 
