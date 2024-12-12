@@ -2,9 +2,9 @@
 
 ion-header {
   .toolbar {
-    --background: #f46b45;  /* fallback for old browsers */
-    --background: -webkit-linear-gradient(to top, #eea849, #f46b45);  /* Chrome 10-25, Safari 5.1-6 */
-    --background: linear-gradient(to top, #eea849, #f46b45); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */    
+    --background: #f46b45;  
+    --background: -webkit-linear-gradient(to top, #eea849, #f46b45);  
+    --background: linear-gradient(to top, #eea849, #f46b45); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -88,23 +88,42 @@ ion-card-content {
   border-radius: 5px;
 }
 
+.weather-card {
+  --background: linear-gradient(to top, #4facfe, #00f2fe);
+  border-radius: 15px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  color: white;
+  font-family: 'Oswald', sans-serif;
+}
+
 .weather-info {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
+
 .weather-details {
   flex: 1;
+  font-size: 20px;
+  color: white;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6); 
 }
+
+.weather-details p {
+  margin: 5px 0;
+}
+
 .weather-icon {
-  width: 110px; 
-  height: auto;
+  width:125px; 
+  height: 50;
+  filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.3)); /* Sombras para destacar */
 }
-.weather-card{
-  color: white;
-  --background: #d3d3d3;
-  border-radius: 5px;
-}
-.tit-card-weather{
-  color: white;
+
+.tit-card-weather {
+  font-size: 35px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 10px;
+  color: #ffffff;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }

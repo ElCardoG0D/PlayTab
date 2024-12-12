@@ -3,7 +3,6 @@ import { LocalStorageService } from 'src/app/services/local-storage.service';
 import { DatabaseService } from 'src/app/database.service';
 import { AlertController, ModalController } from '@ionic/angular';
 import { ActividadDetalleModalPage } from '../../actividad-detalle-modal/actividad-detalle-modal.page';
-import { Router } from '@angular/router';
 import { WeatherService } from '../../weather.service';
 import { Geolocation } from '@capacitor/geolocation';
 
@@ -16,18 +15,13 @@ export class Tab1Page implements OnInit, OnDestroy {
   weatherData: any;
   weatherIconUrl: string = '';
   actividades: any[] = []; // Almacenar las actividades
-  coloresActividades: string[] = []; // Array para almacenar los colores
   actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
-  colors = [
-    'col-card1', 'col-card2', 'col-card3', 'col-card4', 'col-card5'
-  ];
   private intervalId: any;
 
   constructor(
     private localS: LocalStorageService,
     private dbService: DatabaseService,
     private alertController: AlertController,
-    private router: Router,
     private modalController: ModalController,
     private weatherService: WeatherService
   ) {}
@@ -68,9 +62,7 @@ export class Tab1Page implements OnInit, OnDestroy {
         (data) => {
           this.actividades = data;
           this.actividadesAleatorias = this.getRandomActivities(this.actividades, 6);
-          this.coloresActividades = this.actividadesAleatorias.map(() => this.getRandomColor());
           console.log('Actividades aleatorias:', this.actividadesAleatorias);
-          console.log('Colores asignados:', this.coloresActividades);
         },
         (error) => {
           console.error('Error al obtener actividades:', error);
@@ -92,15 +84,8 @@ export class Tab1Page implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  // Método para obtener un color aleatorio
-  getRandomColor() {
-    const randomIndex = Math.floor(Math.random() * this.colors.length);
-    return this.colors[randomIndex];
-  }
-
   // Actividades aleatorias
   getRandomActivities(actividades: any[], count: number): any[] {
-    // Hacer una copia del array para no modificar el original
     const shuffled = [...actividades].sort(() => 0.5 - Math.random());
     return shuffled.slice(0, count);
   }
@@ -131,7 +116,7 @@ export class Tab1Page implements OnInit, OnDestroy {
           console.log('Datos del clima:', this.weatherData);
   
           const weatherIconCode = this.weatherData.weather[0].icon;
-          this.weatherIconUrl = `http://openweathermap.org/img/wn/${weatherIconCode}@2x.png`;
+          this.weatherIconUrl = `https://openweathermap.org/img/wn/${weatherIconCode}@2x.png`;
           console.log('URL del ícono del clima:', this.weatherIconUrl);
         }, error => {
           console.error('Error al obtener el clima:', error);

@@ -21,13 +21,13 @@
   <h1 class="actividades-rapidas">Considera el clima para tus actividades</h1>
   <ion-card *ngIf="weatherData" class="weather-card">
     <ion-card-header>
-      <ion-card-title class="tit-card-weather">{{ weatherData.name }}</ion-card-title>
+      <ion-card-title class="tit-card-weather"><strong>{{ weatherData.name }}</strong></ion-card-title>
     </ion-card-header>
     <ion-card-content>
       <div class="weather-info">
         <div class="weather-details">
           <p>Temperatura: {{ weatherData.main.temp }} °C</p>
-          <p>Descripción: {{ weatherData.weather[0].description }}</p>
+          <p>Descripción: {{ weatherData.weather[0].description }}.</p>
           <p>Humedad: {{ weatherData.main.humidity }}%</p>
         </div>
         <img *ngIf="weatherIconUrl" [src]="weatherIconUrl" alt="Icono del clima" class="weather-icon" />
@@ -47,7 +47,7 @@
     <ion-row>
       <!-- Mostrar solo 6 actividades aleatorias -->
       <ion-col size="12" *ngFor="let actividad of actividadesAleatorias; let i = index">
-        <ion-card [ngClass]="coloresActividades[i]" (click)="onCardClick(actividad)" class="card-container">
+        <ion-card (click)="onCardClick(actividad)" class="card-container">
           <!-- Fondo de la imagen con desenfoque -->
           <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
   
