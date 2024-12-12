@@ -20,12 +20,10 @@
 
   <h1 class="actividades-rapidas">Considera el clima para tus actividades</h1>
   <ion-card *ngIf="weatherData" class="weather-card">
-    <ion-card-header>
-      <ion-card-title class="tit-card-weather"><strong>{{ weatherData.name }}</strong></ion-card-title>
-    </ion-card-header>
     <ion-card-content>
       <div class="weather-info">
         <div class="weather-details">
+          <ion-card-title class="tit-card-weather"><strong>{{ weatherData.name }}</strong></ion-card-title>
           <p>Temperatura: {{ weatherData.main.temp }} °C</p>
           <p>Descripción: {{ weatherData.weather[0].description }}.</p>
           <p>Humedad: {{ weatherData.main.humidity }}%</p>

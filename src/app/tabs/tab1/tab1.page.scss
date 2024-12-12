@@ -89,7 +89,7 @@ ion-card-content {
 }
 
 .weather-card {
-  --background: linear-gradient(to top, #4facfe, #00f2fe);
+  --background: linear-gradient(180deg, #3c6fd1 0%, #3a76eb 0.01%, #7ca9ff 100%);
   border-radius: 15px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
   color: white;
@@ -120,9 +120,9 @@ ion-card-content {
 }
 
 .tit-card-weather {
-  font-size: 35px;
+  font-size: 30px;
   font-weight: 700;
-  text-align: center;
+  text-align: left;
   margin-bottom: 10px;
   color: #ffffff;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
