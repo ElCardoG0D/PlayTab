@@ -18,6 +18,9 @@ export class Tab1Page implements OnInit, OnDestroy {
   actividadesAleatorias: any[] = []; //Almacenar actividades aleatorias
   private intervalId: any;
 
+  actividadesFavoritas: any[] = []; // Almacenar las actividades
+  actividadesFavoritasAleatorias: any[] = []; //Almacenar actividades aleatorias
+
   constructor(
     private localS: LocalStorageService,
     private dbService: DatabaseService,
@@ -33,6 +36,7 @@ export class Tab1Page implements OnInit, OnDestroy {
     }
 
     this.cargarActividades();
+    this.cargarActividadFavorito();
     this.getLocationAndWeather();
     
     this.intervalId = setInterval(() => {
@@ -72,16 +76,27 @@ export class Tab1Page implements OnInit, OnDestroy {
       console.error('No se encontró el Id_Comuna del usuario o el usuario no está autenticado.');
     }
   }
-  
 
-  // Método para mostrar una alerta
-  async presentAlert(header: string, message: string) {
-    const alert = await this.alertController.create({
-      header: header,
-      message: message,
-      buttons: ['OK'],
-    });
-    await alert.present();
+  cargarActividadFavorito() {
+    const user = this.localS.ObtenerUsuario('user');
+    if (user && user.Id_Comuna) {
+      const Id_Comuna = user.Id_Comuna;
+      const Id_SubCategoria = user.Id_SubCategoria;
+
+  
+      this.dbService.getActividadFavorita(Id_Comuna,Id_SubCategoria).subscribe(
+        (data) => {
+          this.actividadesFavoritas = data;
+          this.actividadesFavoritasAleatorias = this.getRandomActivities(this.actividadesFavoritas, 3);
+          console.log('Actividades favoritas aleatorias:', this.actividadesFavoritasAleatorias);
+        },
+        (error) => {
+          console.error('Error al obtener actividades favoritas:', error);
+        }
+      );
+    } else {
+      console.error('No se encontró el Id_Comuna o el usuario no tiene favoritos.');
+    }
   }
 
   // Actividades aleatorias
@@ -102,6 +117,16 @@ export class Tab1Page implements OnInit, OnDestroy {
     });
 
     return await modal.present();
+  }  
+
+  // Método para mostrar una alerta
+  async presentAlert(header: string, message: string) {
+    const alert = await this.alertController.create({
+      header: header,
+      message: message,
+      buttons: ['OK'],
+    });
+    await alert.present();
   }
 
   // Método para obtener la ubicación y el clima

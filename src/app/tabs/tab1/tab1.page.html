@@ -69,6 +69,32 @@
   </ion-grid>
 
   <h1 class="actividades-rapidas">También te podría interesar</h1>
+  <ion-grid>
+    <ion-row>
+      <!-- Mostrar solo 3 actividades favoritas aleatorias -->
+      <ion-col size="12" *ngFor="let actividad of actividadesFavoritasAleatorias; let i = index">
+        <ion-card (click)="onCardClick(actividad)" class="card-container">
+          <!-- Fondo de la imagen con desenfoque -->
+          <div class="card-background" [style.backgroundImage]="'url(' + (actividad.Url || 'assets/portrait/nocover.jpg') + ')'"></div>
+  
+          <!-- Contenido de la tarjeta encima del fondo -->
+          <ion-card-header>
+            <div class="card-title-container">
+              <ion-card-title class="tit-card-cont">{{ actividad.Nom_Actividad }}</ion-card-title>
+            </div>
+            <ion-card-subtitle class="date-cont">{{ actividad.Fecha_Termino }}, {{actividad.Hora_Termino}}</ion-card-subtitle>
+          </ion-card-header>
+  
+          <ion-card-content class="card-contenid">
+            <p>{{ actividad.Nom_SubCategoria }}</p>
+            <p>{{ actividad.Desc_Actividad }}</p>
+            <p>Dirección: {{ actividad.Direccion_Actividad }}</p>
+            <p>Jugadores: {{ actividad.Cantidad_MaxJugador }}</p>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   
 </ion-content>
