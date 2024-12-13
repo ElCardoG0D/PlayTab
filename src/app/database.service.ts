@@ -193,4 +193,16 @@ export class DatabaseService {
     const body = { Id_User, Id_Actividad, Id_Asistencia };
     return this.http.put(url, body);
   }
+
+  InsertUpdateFavorito(IdSubCategoria: number, idUser: number): Observable<any> {
+    const url = `${this.apiUrl}/cambiarFavorito`;
+    const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    
+    const body = {
+      Id_SubCategoria: IdSubCategoria,
+      Id_User: idUser,
+    };
+    
+    return this.http.post(url, body, { headers });
+  }
 }

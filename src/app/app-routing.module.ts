@@ -94,6 +94,11 @@ const routes: Routes = [
     canActivate:[authGuard]
   },
   {
+    path: 'cambio-actividad-favorita',
+    loadChildren: () => import('./cambio-actividad-favorita/cambio-actividad-favorita.module').then( m => m.CambioActividadFavoritaPageModule),
+    canActivate:[authGuard]
+  },
+  {
     path: '**',
     loadChildren: () => import('./e404/e404.module').then( m => m.E404PageModule)
   },

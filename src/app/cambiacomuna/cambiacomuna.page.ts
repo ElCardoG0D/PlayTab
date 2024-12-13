@@ -81,9 +81,12 @@ export class CambiacomunaPage implements OnInit {
         }
       );
     } else {
-      this.presentAlert('Advertencia', 'Seleccione una región y comuna.');
+      this.presentAlert('Error', 'Seleccione una región y comuna.');
     }
   }
-  
+
+  Volver(){
+    this.router.navigate(['./tabs/tab3']);
+  }  
 
 }

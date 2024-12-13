@@ -1,9 +1,11 @@
 <ion-header>
   <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button default-href="#"></ion-back-button>
+    <ion-buttons (click)="Volver()" slot="start">
+      <ion-icon class="icono" name="arrow-back-outline"></ion-icon>
     </ion-buttons>
-    <ion-title>Cambia de comuna</ion-title>
+    <div class="toolbar-container">
+      <ion-title><strong>Localidad</strong></ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
@@ -11,7 +13,8 @@
   <ion-grid class="singup-container">
     <ion-row class="cont-titulo ion-justify-content-center">
       <ion-col size="12" class="ion-text-start">
-        <ion-title><strong>¿Te moviste de comuna?</strong></ion-title>
+        <ion-title><strong>¿Te cambiaste de</strong></ion-title>
+        <ion-title><strong>comuna?</strong></ion-title>
       </ion-col>
     </ion-row>
 
@@ -22,7 +25,7 @@
           <!-- Campo para seleccionar la región -->
           <ion-item>
             <ion-label>Region:</ion-label>
-            <ion-select [(ngModel)]="region" (ionChange)="onRegionChange()" placeholder = 'Nueva región' required>
+            <ion-select [(ngModel)]="region" (ionChange)="onRegionChange()" placeholder = 'Nueva región' slot="end" required>
               <ion-select-option *ngFor="let region of regionId" [value]="region.Id_Region">{{ region.Nombre_Region }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -30,7 +33,7 @@
           <!-- Campo para seleccionar la comuna -->
           <ion-item>
             <ion-label>Comuna:</ion-label>
-            <ion-select [(ngModel)]="comuna" placeholder = 'Nueva comuna' required>
+            <ion-select [(ngModel)]="comuna" placeholder = 'Nueva comuna' slot="end" required>
               <ion-select-option *ngFor="let comuna of comunaId" [value]="comuna.Id_Comuna">{{ comuna.Nombre_Comuna }}</ion-select-option>
             </ion-select>                      
           </ion-item>

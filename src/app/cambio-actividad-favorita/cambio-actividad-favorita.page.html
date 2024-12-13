@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons (click)="Volver()" slot="start">
+      <ion-icon class="icono" name="arrow-back-outline"></ion-icon>
+    </ion-buttons>
+    <div class="toolbar-container">
+      <ion-title><strong>Favorito</strong></ion-title>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="fondo">
+  <ion-grid class="singup-container">
+    <ion-row class="cont-titulo ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-title><strong>¡Selecciona tu</strong></ion-title>
+        <ion-title><strong>actividad Favorita!</strong></ion-title>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="cont-singup ion-justify-content-center">
+      <ion-col size="12" class="ion-text-start">
+        <ion-list lines="none" class="form">
+
+          <!-- Campo para seleccionar la categoria -->
+          <ion-item>
+            <ion-label>Categoría: </ion-label>
+            <ion-select [(ngModel)]="categoriaSeleccionada" (ionChange)="cargarCategorias()" placeholder="Selecciona una categoría..." slot="end" required>
+              <ion-select-option *ngFor="let categoria of categoriaId" [value]="categoria.Id_Categoria">{{ categoria.Nom_Categoria }}</ion-select-option>
+            </ion-select>                      
+          </ion-item>
+
+          <!-- Campo para seleccionar la subcategoria -->
+          <ion-item>
+            <ion-label>Subcategoría: </ion-label>
+            <ion-select [(ngModel)]="subcategoriaSeleccionada" slot="end" required>
+              <ion-select-option *ngFor="let subcategoria of subcategoriaId" [value]="subcategoria.Id_SubCategoria">
+                {{ subcategoria.Nom_SubCategoria }}
+              </ion-select-option>
+            </ion-select>
+          </ion-item>
+
+          <!-- Botón para crear la cuenta -->
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="12" class="ion-text-center">
+              <ion-button class="botonA2" expand="block" (click)="guardarFavorito()"><strong>Guardar Cambios</strong></ion-button>
+            </ion-col>
+          </ion-row>
+
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
