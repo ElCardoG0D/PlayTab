@@ -24,7 +24,7 @@
     </ion-card-header>
     <form (ngSubmit)="actualizarActividad()">
       <ion-item>
-        <ion-input label="Descripción: " [(ngModel)]="actividad.Desc_actividad" name="Desc_Actividad"></ion-input>
+        <ion-input label="Descripción: " [(ngModel)]="actividad.Desc_Actividad" name="Desc_Actividad"></ion-input>
       </ion-item>
       <ion-item>
         <ion-input label="Dirección: " [(ngModel)]="actividad.Direccion_Actividad" name="Direccion_Actividad" [disabled]="actividad.isCategoriaDisabled"></ion-input>
