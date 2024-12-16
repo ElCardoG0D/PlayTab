@@ -23,14 +23,62 @@
   <ion-list>
     <ion-card *ngFor="let usuario of usuariosFiltrados">
       <ion-card-header>
-        <ion-card-title>{{ usuario.Nom_User }}</ion-card-title>
+        <ion-card-title>{{ usuario?.Nom_User }}</ion-card-title>
       </ion-card-header>
       <ion-card-content>
-        <p><b>Correo:</b> {{ usuario.Correo_User }}</p>
-        <p><b>RUT:</b> {{ usuario.Run_User }}</p>
-        <p><b>Tipo de Usuario:</b> {{ usuario.Tipo_User }}</p>
-        <p><b>Clasificación:</b> {{ usuario.Id_Clasificacion }}</p>
+        <p><b>Correo:</b> {{ usuario?.Correo_User }}</p>
+        <p><b>RUT:</b> {{ usuario?.Run_User }}</p>
+        <p><b>Tipo de Usuario:</b> {{ usuario?.Tipo_User }}</p>
+        <p><b>Clasificación:</b> {{ usuario?.Id_Clasificacion }}</p>
+
+        <!-- Botón para eliminar usuario -->
+        <ion-button expand="block" color="danger" (click)="confirmarEliminar(usuario)">
+          Eliminar Cuenta
+        </ion-button>
+
+        <!-- Botón para abrir modal de actualización -->
+        <ion-button expand="block" color="primary" (click)="abrirActualizarModal(usuario)">
+          Actualizar Datos
+        </ion-button>
       </ion-card-content>
     </ion-card>
   </ion-list>
 </ion-content>
+
+<!-- Modal para Actualizar Datos -->
+<ion-modal [isOpen]="isUpdateModalOpen" (didDismiss)="cerrarModal()">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Actualizar Datos</ion-title>
+      <ion-buttons slot="end">
+        <ion-button (click)="cerrarModal()">Cerrar</ion-button>
+      </ion-buttons>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label position="floating">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Nom_User"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Correo</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Correo_User"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Celular</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Celular_User"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Tipo de Usuario</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Tipo_User"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label position="floating">Comuna</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Id_Comuna"></ion-input>
+      </ion-item>
+    </ion-list>
+    <ion-button expand="block" color="success" (click)="actualizarDatos()">Guardar Cambios</ion-button>
+  </ion-content>
+</ion-modal>

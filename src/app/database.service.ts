@@ -219,4 +219,25 @@ export class DatabaseService {
   getUsuarios(): Observable<any> {
     return this.http.get(`${this.apiUrl}/usuarios`);
   }
+  // 23. Método para actualizar los datos desde admin view
+  updateUsuario(
+    Id_User: number,
+    Tipo_User: number,
+    Nom_User: string,
+    Correo_User: string,
+    Celular_User: string,
+    Id_Comuna: number
+  ): Observable<any> {
+    const url = `${this.apiUrl}/update-usuario/${Id_User}`;
+    const body = {
+      Tipo_User,
+      Nom_User,
+      Correo_User,
+      Celular_User,
+      Id_Comuna,
+    };
+    return this.http.put(url, body);
+  }
+  
+
 }
