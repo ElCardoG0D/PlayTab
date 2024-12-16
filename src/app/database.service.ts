@@ -152,7 +152,7 @@ export class DatabaseService {
   eliminarUsuarioDeActividad(Id_User: number, Id_Actividad: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/eliminar_usuario_actividad`, {params: { Id_User, Id_Actividad},});
   }
-
+  
   //14 .Método para el acceso de la Api Key de MAPS
   getGoogleMapsKey(): Observable<any> {
     return this.http.get(`${this.apiUrl}/api/maps-key`);
@@ -162,7 +162,7 @@ export class DatabaseService {
   getActividadesAnfitrion(Id_User: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/actividadesAnfitrion?Id_User=${Id_User}`);
   }  
-
+  
   //16. Método para actualizar la actividad del anfitrión
   updateActividad(
     Id_Actividad: number,
@@ -179,25 +179,25 @@ export class DatabaseService {
     console.log('Cuerpo de la solicitud:', body); 
     return this.http.put(url, body);
   }  
-
+  
   //17. Método para borrar una actividad del anfitrión
   deleteActividad(Id_Actividad: number): Observable<any> {
     const url = `${this.apiUrl}/actividad/${Id_Actividad}`;
     return this.http.delete(url);
   }
-
+  
   //18. Método pata obtener los usuarios inscritos en la actividad del anfitrión
   getUsuariosInscritos(idActividad: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/usuarios-inscritos/${idActividad}`);
   }
-
+  
   //19. Método actualizo la asistencia de los jugadores
   actualizarAsistencia(Id_User: number, Id_Actividad: number, Id_Asistencia: number): Observable<any> {
     const url = `${this.apiUrl}/actualizar-asistencia`;
     const body = { Id_User, Id_Actividad, Id_Asistencia };
     return this.http.put(url, body);
   }
-
+  
   //20. Método para insertar/actualizar el favorito del usuario
   InsertUpdateFavorito(IdSubCategoria: number, idUser: number): Observable<any> {
     const url = `${this.apiUrl}/cambiarFavorito`;
@@ -210,9 +210,13 @@ export class DatabaseService {
     
     return this.http.post(url, body, { headers });
   }
-
+  
   //21. Método para obtener las actividades favoritas del usuario
   getActividadFavorita(Id_Comuna: number, Id_SubCategoria: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/actividadFavorito`,{params: { Id_Comuna, Id_SubCategoria }});
+  }
+  // 22. Método para obtener todos los usuarios
+  getUsuarios(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/usuarios`);
   }
 }

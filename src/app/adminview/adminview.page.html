@@ -1,11 +1,9 @@
 <ion-header class="ion-no-border">
   <ion-toolbar class="toolbar">
     <div class="toolbar-left" slot="start">
-      <h1>Administrador</h1>
+      <h1 class="tit-adm"><b>Panel administración</b></h1>
     </div>
-    <div class="toolbar-logo-container">
-      <ion-img class="logoW" src="../../assets/img/logo.png"></ion-img>
-    </div>
+    <div class="toolbar-logo-container"></div>
     <ion-buttons slot="end">
       <ion-button (click)="logOut()">
         <ion-icon name="log-out-outline"></ion-icon>
@@ -14,6 +12,25 @@
   </ion-toolbar>
 </ion-header>
 
-
 <ion-content [fullscreen]="true" class="ion-padding">
+  <!-- Barra de búsqueda -->
+  <ion-searchbar 
+    placeholder="Buscar usuario por nombre o correo..." 
+    (ionInput)="onSearch($event)">
+  </ion-searchbar>
+
+  <!-- Lista de usuarios filtrados -->
+  <ion-list>
+    <ion-card *ngFor="let usuario of usuariosFiltrados">
+      <ion-card-header>
+        <ion-card-title>{{ usuario.Nom_User }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p><b>Correo:</b> {{ usuario.Correo_User }}</p>
+        <p><b>RUT:</b> {{ usuario.Run_User }}</p>
+        <p><b>Tipo de Usuario:</b> {{ usuario.Tipo_User }}</p>
+        <p><b>Clasificación:</b> {{ usuario.Id_Clasificacion }}</p>
+      </ion-card-content>
+    </ion-card>
+  </ion-list>
 </ion-content>
