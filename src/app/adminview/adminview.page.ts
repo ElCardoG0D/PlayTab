@@ -20,7 +20,13 @@ export class AdminviewPage implements OnInit {
     Celular_User: '',
     Id_Comuna: null
   };
+  comunas: any[] = []; 
   isUpdateModalOpen: boolean = false; // Estado del modal de actualización
+  tipoUsuarioOptions = [
+    { value: 101, label: 'Jugador' },
+    { value: 102, label: 'Administrador' },
+    { value: 103, label: 'Deshabilitado' }
+  ];
   
   
   constructor(
@@ -101,9 +107,29 @@ export class AdminviewPage implements OnInit {
   }
   // Abrir modal de actualización
   abrirActualizarModal(usuario: any) {
-    this.usuarioSeleccionado = { ...usuario }; // Clonar el objeto del usuario
+    if (!usuario) {
+      console.error('Error: usuario no válido para actualizar.');
+      return;
+    }
+  
+    this.cargarComunas();
+  
+    // Clonar los datos del usuario seleccionado
+    this.usuarioSeleccionado = { 
+      Id_User: usuario.Id_User || null,
+      Tipo_User: usuario.Tipo_User || 101, // Valor por defecto si no existe (101 = Jugador)
+      Nom_User: usuario.Nom_User || '',
+      Correo_User: usuario.Correo_User || '',
+      Celular_User: usuario.Celular_User || '',
+      Id_Comuna: usuario.Id_Comuna || null
+    };
+  
+    console.log('Usuario seleccionado para actualización:', this.usuarioSeleccionado);
     this.isUpdateModalOpen = true;
   }
+  
+  
+  
   // Cerrar el modal
   cerrarModal() {
     this.isUpdateModalOpen = false;
@@ -134,6 +160,30 @@ export class AdminviewPage implements OnInit {
         },
       });
   }
+
+    // Método para cargar todas las comunas
+    cargarComunas(): Promise<void> {
+      return new Promise((resolve, reject) => {
+        this.dataBase.getTodasLasComunas().subscribe({
+          next: (data) => {
+            this.comunas = data; // Asignar comunas al array
+            console.log('Comunas cargadas:', this.comunas);
+            resolve();
+          },
+          error: async (err) => {
+            console.error('Error al cargar comunas:', err);
+            const alert = await this.alertController.create({
+              header: 'Error',
+              message: 'No se pudieron cargar las comunas. Intente más tarde.',
+              buttons: ['OK'],
+            });
+            await alert.present();
+            reject(err);
+          },
+        });
+      });
+    }
+    
   
   
   // Método para cerrar sesión

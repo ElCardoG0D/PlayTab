@@ -62,3 +62,42 @@ ion-header {
     color: black;
     font-style: italic;
   }
+
+
+//estilos para modal
+/* Estilo general del header */
+.text-center {
+  text-align: center;
+}
+
+/* Encabezado de actualización */
+.update-header {
+  text-align: center;
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  color: #4a90e2;
+  text-transform: uppercase;
+}
+
+/* Personalización del formulario */
+.custom-form ion-item {
+  margin-bottom: 10px;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  --padding-start: 16px;
+  --padding-end: 16px;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Botones de acción */
+.action-buttons {
+  margin-top: 1.5rem;
+  text-align: center;
+}
+
+.action-buttons ion-button {
+  font-size: 1rem;
+  font-weight: 500;
+  border-radius: 8px;
+}

@@ -15,7 +15,7 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <!-- Barra de búsqueda -->
   <ion-searchbar 
-    placeholder="Buscar usuario por nombre o correo..." 
+    placeholder="Buscar Nombre/Mail" 
     (ionInput)="onSearch($event)">
   </ion-searchbar>
 
@@ -45,40 +45,71 @@
   </ion-list>
 </ion-content>
 
-<!-- Modal para Actualizar Datos -->
 <ion-modal [isOpen]="isUpdateModalOpen" (didDismiss)="cerrarModal()">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Actualizar Datos</ion-title>
-      <ion-buttons slot="end">
-        <ion-button (click)="cerrarModal()">Cerrar</ion-button>
-      </ion-buttons>
+    <ion-toolbar color="primary">
+      <ion-title class="text-center">Actualización de Datos</ion-title>
     </ion-toolbar>
   </ion-header>
 
-  <ion-content>
-    <ion-list>
+  <ion-content *ngIf="usuarioSeleccionado && comunas.length > 0" class="ion-padding">
+    <!-- Encabezado de sección -->
+    <div class="update-header">
+      <h2>Actualiza los datos del usuario</h2>
+    </div>
+
+    <!-- Formulario -->
+    <ion-list lines="full" class="custom-form">
       <ion-item>
-        <ion-label position="floating">Nombre</ion-label>
-        <ion-input [(ngModel)]="usuarioSeleccionado.Nom_User"></ion-input>
+        <ion-label position="floating" color="medium">Nombre</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Nom_User" required></ion-input>
       </ion-item>
+      
       <ion-item>
-        <ion-label position="floating">Correo</ion-label>
-        <ion-input [(ngModel)]="usuarioSeleccionado.Correo_User"></ion-input>
+        <ion-label position="floating" color="medium">Correo</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Correo_User" type="email" required></ion-input>
       </ion-item>
+      
       <ion-item>
-        <ion-label position="floating">Celular</ion-label>
-        <ion-input [(ngModel)]="usuarioSeleccionado.Celular_User"></ion-input>
+        <ion-label position="floating" color="medium">Celular</ion-label>
+        <ion-input [(ngModel)]="usuarioSeleccionado.Celular_User" type="tel" required></ion-input>
       </ion-item>
+      
       <ion-item>
-        <ion-label position="floating">Tipo de Usuario</ion-label>
-        <ion-input [(ngModel)]="usuarioSeleccionado.Tipo_User"></ion-input>
+        <ion-label position="floating" color="medium">Comuna</ion-label>
+        <ion-select [(ngModel)]="usuarioSeleccionado.Id_Comuna" required>
+          <ion-select-option *ngFor="let comuna of comunas" [value]="comuna?.Id_Comuna">
+            {{ comuna?.Nombre_Comuna }}
+          </ion-select-option>
+        </ion-select>
       </ion-item>
+      
       <ion-item>
-        <ion-label position="floating">Comuna</ion-label>
-        <ion-input [(ngModel)]="usuarioSeleccionado.Id_Comuna"></ion-input>
+        <ion-label position="floating" color="medium">Tipo Cuenta</ion-label>
+        <ion-select [(ngModel)]="usuarioSeleccionado.Tipo_User" required>
+          <ion-select-option [value]="101">Jugador</ion-select-option>
+          <ion-select-option [value]="102">Administrador</ion-select-option>
+          <ion-select-option [value]="103">Deshabilitado</ion-select-option>
+        </ion-select>
       </ion-item>
     </ion-list>
-    <ion-button expand="block" color="success" (click)="actualizarDatos()">Guardar Cambios</ion-button>
+
+    <!-- Botón Guardar -->
+    <div class="action-buttons">
+      <ion-button 
+        expand="block" 
+        color="success" 
+        (click)="actualizarDatos()" 
+        [disabled]="!usuarioSeleccionado.Nom_User || !usuarioSeleccionado.Correo_User || 
+                     !usuarioSeleccionado.Celular_User || !usuarioSeleccionado.Id_Comuna">
+        Guardar Cambios
+      </ion-button>
+      <ion-button 
+        expand="block" 
+        color="danger" 
+        (click)="cerrarModal()">
+        Cancelar
+      </ion-button>
+    </div>
   </ion-content>
 </ion-modal>

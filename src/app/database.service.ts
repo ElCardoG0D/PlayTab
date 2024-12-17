@@ -238,6 +238,10 @@ export class DatabaseService {
     };
     return this.http.put(url, body);
   }
+  //24. Obtener todas las comunas
+  getTodasLasComunas(): Observable<any> {
+    return this.http.get(`${this.apiUrl}/comunas`);
+  }
   
 
 }
