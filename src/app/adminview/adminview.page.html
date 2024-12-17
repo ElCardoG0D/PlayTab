@@ -13,6 +13,14 @@
 </ion-header>
 
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-refresher slot="fixed" (ionRefresh)="handleRefresh($event)">
+    <ion-refresher-content
+      pullingText="Desliza hacia abajo para refrescar"
+      refreshingSpinner="crescent"
+      refreshingText="Actualizando actividades...">
+    </ion-refresher-content>
+  </ion-refresher>
+
   <!-- Barra de búsqueda -->
   <ion-searchbar 
     placeholder="Buscar Nombre/Mail" 
@@ -29,7 +37,7 @@
         <p><b>Correo:</b> {{ usuario?.Correo_User }}</p>
         <p><b>RUT:</b> {{ usuario?.Run_User }}</p>
         <p><b>Tipo de Usuario:</b> {{ usuario?.Tipo_User }}</p>
-        <p><b>Clasificación:</b> {{ usuario?.Id_Clasificacion }}</p>
+        <p><b>Clasificación:</b> {{ usuario?.Rating }}</p>
 
         <!-- Botón para eliminar usuario -->
         <ion-button expand="block" color="danger" (click)="confirmarEliminar(usuario)">

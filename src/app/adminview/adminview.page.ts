@@ -193,4 +193,9 @@ export class AdminviewPage implements OnInit {
     localStorage.removeItem('isAuthenticated');
     this.router.navigate(['./login']);
   }
+
+  handleRefresh(event: any) {
+    this.cargarUsuarios();
+    event.target.complete(); // Detiene el refresco
+  }
 }
