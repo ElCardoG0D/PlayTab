@@ -37,7 +37,7 @@
         <p><b>Correo:</b> {{ usuario?.Correo_User }}</p>
         <p><b>RUT:</b> {{ usuario?.Run_User }}</p>
         <p><b>Tipo de Usuario:</b> {{ usuario?.Tipo_User }}</p>
-        <p><b>Clasificación:</b> {{ usuario?.Rating }}</p>
+        <p><b>Clasificación:</b> {{ usuario?.Rating != null ? (usuario.Rating | number:'1.1-1') : 'sin datos' }}</p>
 
         <!-- Botón para eliminar usuario -->
         <ion-button expand="block" color="danger" (click)="confirmarEliminar(usuario)">
@@ -63,7 +63,7 @@
   <ion-content *ngIf="usuarioSeleccionado && comunas.length > 0" class="ion-padding">
     <!-- Encabezado de sección -->
     <div class="update-header">
-      <h2>Actualiza los datos del usuario</h2>
+      <h2><b>Actualiza los datos del usuario</b></h2>
     </div>
 
     <!-- Formulario -->

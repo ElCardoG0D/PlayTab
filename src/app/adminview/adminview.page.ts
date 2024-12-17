@@ -198,4 +198,7 @@ export class AdminviewPage implements OnInit {
     this.cargarUsuarios();
     event.target.complete(); // Detiene el refresco
   }
+
+
 }
+
