@@ -40,7 +40,7 @@
         <p><b>Clasificación:</b> {{ usuario?.Rating != null ? (usuario.Rating | number:'1.1-1') : 'sin datos' }}</p>
 
         <!-- Botón para eliminar usuario -->
-        <ion-button expand="block" color="danger" (click)="confirmarEliminar(usuario)">
+        <ion-button expand="block" color="danger" style="padding-top: 8px;" (click)="confirmarEliminar(usuario)">
           Eliminar Cuenta
         </ion-button>
 
@@ -60,11 +60,14 @@
     </ion-toolbar>
   </ion-header>
 
-  <ion-content *ngIf="usuarioSeleccionado && comunas.length > 0" class="ion-padding">
-    <!-- Encabezado de sección -->
-    <div class="update-header">
-      <h2><b>Actualiza los datos del usuario</b></h2>
-    </div>
+  <ion-content *ngIf="usuarioSeleccionado && comunas.length > 0">
+    <ion-header class="ion-no-border">
+      <ion-toolbar class="toolbar">
+        <div class="toolbar-left" slot="start">
+          <h1 class="tit-adm"><b>Actualiza los datos del usuario</b></h1>
+        </div>
+      </ion-toolbar>
+    </ion-header>
 
     <!-- Formulario -->
     <ion-list lines="full" class="custom-form">
@@ -104,17 +107,21 @@
 
     <!-- Botón Guardar -->
     <div class="action-buttons">
-      <ion-button 
+      <ion-button
+        class="ion-button-modal" 
         expand="block" 
-        color="success" 
+        color="success"
+        shape="round" 
         (click)="actualizarDatos()" 
         [disabled]="!usuarioSeleccionado.Nom_User || !usuarioSeleccionado.Correo_User || 
                      !usuarioSeleccionado.Celular_User || !usuarioSeleccionado.Id_Comuna">
         Guardar Cambios
       </ion-button>
-      <ion-button 
+      <ion-button
+        class="ion-button-modal"  
         expand="block" 
-        color="danger" 
+        color="danger"
+        shape="round" 
         (click)="cerrarModal()">
         Cancelar
       </ion-button>
