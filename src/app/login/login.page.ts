@@ -62,6 +62,9 @@ export class LoginPage {
           this.router.navigate(['./tabs/tab1']);
         } else if (userType === 102) {
           this.router.navigate(['./adminview']);
+        } else if (userType === 103) {
+          this.presentAlert('El usuario está deshabilitado.');
+          this.router.navigate(['./login']);
         } else {
           this.presentAlert('El tipo de usuario no está definido.');
         }
