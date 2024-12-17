@@ -11,11 +11,11 @@
 <ion-content [fullscreen]="true">
 
   <div class="ion-no-border">
-    <ion-title>¡Crea tu actividad!</ion-title>
+    <ion-title slot="start">¡Crea tu actividad!</ion-title>
   </div>
 
   <!-- Datos de la actividad -->
-  <div class="section-title">Datos de la actividad</div>
+  <div class="section-title">Datos de la actividad:</div>
   
   <ion-item>
     <ion-label position="stacked">Nombre de la actividad</ion-label>
@@ -75,7 +75,7 @@
   </ion-item>
 
   <!-- Botones de acción -->
-  <ion-item lines="none">
+  <ion-item lines="none" style="box-shadow: none">
     <ion-button expand="block" color="primary" (click)="crearActividad()">Crear</ion-button>
     <ion-button expand="block" color="medium" (click)="volver()">Volver</ion-button>
   </ion-item>

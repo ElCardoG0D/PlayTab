@@ -1,6 +1,6 @@
 ion-header {
   .toolbar {
-    --background: linear-gradient(135deg, #ff6600, #c0b626);
+    --background: linear-gradient(to top, #eea849, #f46b45); 
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -41,7 +41,7 @@ ion-header {
   font-size: 1.1em;
   color: #4a4a4a;
   margin: 20px 16px 10px; 
-  padding: 0 16px;
+
 }
 
 
